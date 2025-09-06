@@ -16,7 +16,6 @@ interface ScrollRevealProps {
   opacity?: number
   rotate?: { x?: number; y?: number; z?: number }
   mobile?: boolean
-  desktop?: boolean
 }
 
 export function ScrollRevealComponent({
@@ -32,7 +31,6 @@ export function ScrollRevealComponent({
   opacity = 0,
   rotate = { x: 0, y: 0, z: 0 },
   mobile = true,
-  desktop = true,
 }: ScrollRevealProps) {
   const elementRef = useRef<HTMLDivElement>(null)
 
@@ -50,7 +48,6 @@ export function ScrollRevealComponent({
         opacity,
         rotate,
         mobile,
-        desktop,
       })
     }
 
@@ -59,7 +56,7 @@ export function ScrollRevealComponent({
         ScrollReveal().clean(element)
       }
     }
-  }, [delay, distance, duration, easing, origin, reset, scale, opacity, rotate, mobile, desktop])
+  }, [delay, distance, duration, easing, origin, reset, scale, opacity, rotate, mobile])
 
   return (
     <div ref={elementRef} className={className}>
