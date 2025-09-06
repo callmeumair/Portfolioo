@@ -3,6 +3,11 @@
 import { useRef, useEffect } from "react"
 import Lottie from "lottie-react"
 
+interface LottieRef {
+  setSpeed: (speed: number) => void
+  setDirection: (direction: 1 | -1) => void
+}
+
 interface LottieAnimationProps {
   animationData: object
   className?: string
@@ -28,7 +33,7 @@ export function LottieAnimation({
   onEnterFrame,
   style,
 }: LottieAnimationProps) {
-  const lottieRef = useRef<object>(null)
+  const lottieRef = useRef<LottieRef>(null)
 
   useEffect(() => {
     if (lottieRef.current) {
