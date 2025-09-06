@@ -15,8 +15,8 @@ const projects = [
     description: "A cutting-edge fitness application that revolutionizes personal training using Artificial Intelligence. Features personalized workout plans, real-time form analysis, and intelligent progress tracking with OpenAI integration.",
     image: "/fitness-app.jpg",
     technologies: ["Next.js", "React", "Python", "OpenAI API", "Machine Learning"],
-    liveUrl: "https://fitness-ai-demo.vercel.app",
-    githubUrl: "https://github.com/callmeumair/fitness-app",
+    liveUrl: "https://pulsefitai.vercel.app/",
+    githubUrl: "https://github.com/callmeumair/PulseFit.AI",
     featured: true,
     highlights: ["AI-Powered", "Real-time Analysis", "Personalized Training", "OpenAI Integration"]
   },
@@ -25,8 +25,8 @@ const projects = [
     description: "A comprehensive e-commerce solution showcasing advanced full-stack development skills. Includes secure user authentication, real-time inventory management, payment processing, and admin dashboard with analytics.",
     image: "/ecommerce.jpg",
     technologies: ["React", "Firebase", "Tailwind CSS", "Redux", "Stripe API"],
-    liveUrl: "https://ecommerce-platform-demo.vercel.app",
-    githubUrl: "https://github.com/callmeumair/ecommerce-platform",
+    liveUrl: "https://ecom-web3.vercel.app/",
+    githubUrl: "https://github.com/callmeumair/E-Commerce",
     featured: true,
     highlights: ["Full-Stack", "Payment Integration", "Real-time Updates", "Admin Dashboard"]
   },
@@ -35,9 +35,9 @@ const projects = [
     description: "A full-stack social media application built with the MERN stack. Features real-time messaging, user profiles, content sharing, and advanced social features with scalable architecture.",
     image: "/social-media.jpg",
     technologies: ["Next.js", "OpenAI API", "Node.js", "MongoDB", "Socket.io"],
-    liveUrl: "https://social-media-demo.vercel.app",
-    githubUrl: "https://github.com/callmeumair/social-media-app",
-    featured: true,
+    liveUrl: "https://umerpatel.vercel.app/#",
+    githubUrl: "https://github.com/callmeumair/Social-Media-App",
+    featured: false,
     highlights: ["Real-time Chat", "MERN Stack", "Scalable Architecture", "AI Features"]
   },
   {
@@ -45,9 +45,9 @@ const projects = [
     description: "An innovative Web3 project exploring blockchain technologies and decentralized applications. Features token management, smart contracts, and DeFi integration with modern UI/UX.",
     image: "/web3-app.jpg",
     technologies: ["React Native", "TypeScript", "D3.js", "Firebase", "Web3.js"],
-    liveUrl: "https://web3-token-demo.vercel.app",
-    githubUrl: "https://github.com/callmeumair/web3-token-app",
-    featured: false,
+    liveUrl: "https://web3-app1.vercel.app/",
+    githubUrl: "https://github.com/callmeumair/web3",
+    featured: true,
     highlights: ["Web3", "Blockchain", "Smart Contracts", "DeFi Integration"]
   },
   {
@@ -55,8 +55,8 @@ const projects = [
     description: "A comprehensive car rental web application with advanced booking system, vehicle management, and customer portal. Features real-time availability, pricing algorithms, and integrated payment processing.",
     image: "/car-rental.jpg",
     technologies: ["React", "Weather API", "Chart.js", "Styled Components", "Node.js"],
-    liveUrl: "https://car-rental-demo.vercel.app",
-    githubUrl: "https://github.com/callmeumair/car-rental-website",
+    liveUrl: "https://car-web-orpin.vercel.app/",
+    githubUrl: "https://github.com/callmeumair/Car-rental",
     featured: false,
     highlights: ["Booking System", "Real-time Data", "Payment Processing", "Admin Panel"]
   },
@@ -65,8 +65,8 @@ const projects = [
     description: "A highly secure password management application with end-to-end encryption, biometric authentication, and cross-platform synchronization. Features secure vault, password generator, and breach monitoring.",
     image: "/password-manager.jpg",
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript", "Encryption"],
-    liveUrl: "https://password-manager-demo.vercel.app",
-    githubUrl: "https://github.com/callmeumair/password-manager",
+    liveUrl: "https://password-manager-eight-sigma.vercel.app/",
+    githubUrl: "https://github.com/callmeumair/Password-Manager",
     featured: false,
     highlights: ["End-to-End Encryption", "Biometric Auth", "Cross-Platform", "Security First"]
   }

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef, useState } from "react"
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
+import { Mail, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -15,15 +15,9 @@ const contactInfo = [
     href: "mailto:umerpatel1540@gmail.com"
   },
   {
-    icon: Phone,
-    title: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567"
-  },
-  {
     icon: MapPin,
     title: "Location",
-    value: "San Francisco, CA",
+    value: "India",
     href: "#"
   }
 ]
