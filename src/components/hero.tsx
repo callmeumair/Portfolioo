@@ -35,7 +35,7 @@ export function Hero() {
               className="space-y-4"
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi, I'm{" "}
+                Hi, I&apos;m{" "}
                 <span className="text-gradient">Umer Patel</span>
               </h1>
               <motion.h2
@@ -54,7 +54,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0"
             >
-              I'm passionate about creating innovative digital solutions and 
+              I&apos;m passionate about creating innovative digital solutions and 
               beautiful user experiences. I specialize in modern web technologies 
               and love turning complex problems into simple, elegant solutions.
             </motion.p>

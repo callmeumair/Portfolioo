@@ -105,8 +105,8 @@ export function Contact() {
             Get In <span className="text-gradient">Touch</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Have a project in mind or just want to chat? I'd love to hear from you. 
-            Let's create something amazing together.
+            Have a project in mind or just want to chat? I&apos;d love to hear from you. 
+            Let&apos;s create something amazing together.
           </p>
         </motion.div>
 
@@ -119,9 +119,9 @@ export function Contact() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
+              <h3 className="text-2xl font-semibold mb-6">Let&apos;s Connect</h3>
               <p className="text-muted-foreground mb-8">
-                I'm always interested in new opportunities and exciting projects. 
+                I&apos;m always interested in new opportunities and exciting projects. 
                 Whether you have a question or just want to say hi, feel free to reach out!
               </p>
             </div>
@@ -315,7 +315,7 @@ export function Contact() {
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold mb-4">Ready to Start Your Project?</h3>
               <p className="text-muted-foreground mb-6">
-                Let's discuss your ideas and bring them to life with cutting-edge technology.
+                Let&apos;s discuss your ideas and bring them to life with cutting-edge technology.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" asChild>

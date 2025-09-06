@@ -151,7 +151,7 @@ export function Skills() {
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold mb-4">Always Learning</h3>
               <p className="text-muted-foreground mb-6">
-                Technology evolves rapidly, and I'm committed to staying current. 
+                Technology evolves rapidly, and I&apos;m committed to staying current. 
                 Currently exploring:
               </p>
               <div className="flex flex-wrap justify-center gap-3">

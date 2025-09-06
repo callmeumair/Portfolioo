@@ -31,7 +31,7 @@ export function About() {
             About <span className="text-gradient">Me</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm a passionate full-stack developer with a love for creating 
+            I&apos;m a passionate full-stack developer with a love for creating 
             innovative solutions and beautiful user experiences.
           </p>
         </motion.div>
@@ -52,7 +52,7 @@ export function About() {
                 building complex, scalable applications that solve real-world problems.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Over the years, I've had the opportunity to work with various 
+                Over the years, I&apos;ve had the opportunity to work with various 
                 technologies and frameworks, always staying up-to-date with the 
                 latest trends and best practices in web development.
               </p>
@@ -62,11 +62,11 @@ export function About() {
               <h3 className="text-2xl font-semibold">What I Do</h3>
               <p className="text-muted-foreground leading-relaxed">
                 I specialize in creating full-stack web applications using modern 
-                technologies like React, Next.js, Node.js, and TypeScript. I'm 
+                technologies like React, Next.js, Node.js, and TypeScript. I&apos;m 
                 passionate about clean code, user experience, and performance optimization.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you can find me exploring new technologies, 
+                When I&apos;m not coding, you can find me exploring new technologies, 
                 contributing to open-source projects, or sharing knowledge with 
                 the developer community.
               </p>
@@ -151,7 +151,7 @@ export function About() {
               </div>
               <h4 className="text-xl font-semibold">Innovation</h4>
               <p className="text-muted-foreground">
-                I'm always exploring new technologies and approaches to 
+                I&apos;m always exploring new technologies and approaches to 
                 solve problems more efficiently and creatively.
               </p>
             </motion.div>

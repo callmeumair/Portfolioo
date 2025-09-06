@@ -235,7 +235,7 @@ export function Projects() {
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold mb-4">Interested in Working Together?</h3>
               <p className="text-muted-foreground mb-6">
-                I'm always excited to take on new challenges and collaborate on interesting projects.
+                I&apos;m always excited to take on new challenges and collaborate on interesting projects.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" asChild>
