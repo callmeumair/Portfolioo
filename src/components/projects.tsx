@@ -11,58 +11,64 @@ import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-
 
 const projects = [
   {
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution built with Next.js, featuring user authentication, payment integration, and admin dashboard.",
-    image: "/project1.jpg",
-    technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
-    liveUrl: "https://ecommerce-demo.vercel.app",
-    githubUrl: "https://github.com/umerpatel1/ecommerce-platform",
-    featured: true
+    title: "AI-Powered Fitness App",
+    description: "A cutting-edge fitness application that revolutionizes personal training using Artificial Intelligence. Features personalized workout plans, real-time form analysis, and intelligent progress tracking with OpenAI integration.",
+    image: "/fitness-app.jpg",
+    technologies: ["Next.js", "React", "Python", "OpenAI API", "Machine Learning"],
+    liveUrl: "https://fitness-ai-demo.vercel.app",
+    githubUrl: "https://github.com/callmeumair/fitness-app",
+    featured: true,
+    highlights: ["AI-Powered", "Real-time Analysis", "Personalized Training", "OpenAI Integration"]
   },
   {
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-    image: "/project2.jpg",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express"],
-    liveUrl: "https://taskmanager-demo.vercel.app",
-    githubUrl: "https://github.com/umerpatel1/task-manager",
-    featured: true
+    title: "Full-Stack E-Commerce Platform",
+    description: "A comprehensive e-commerce solution showcasing advanced full-stack development skills. Includes secure user authentication, real-time inventory management, payment processing, and admin dashboard with analytics.",
+    image: "/ecommerce.jpg",
+    technologies: ["React", "Firebase", "Tailwind CSS", "Redux", "Stripe API"],
+    liveUrl: "https://ecommerce-platform-demo.vercel.app",
+    githubUrl: "https://github.com/callmeumair/ecommerce-platform",
+    featured: true,
+    highlights: ["Full-Stack", "Payment Integration", "Real-time Updates", "Admin Dashboard"]
   },
   {
-    title: "Weather Dashboard",
-    description: "A responsive weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-    image: "/project3.jpg",
-    technologies: ["React", "OpenWeather API", "Chart.js", "CSS Modules"],
-    liveUrl: "https://weather-dashboard-demo.vercel.app",
-    githubUrl: "https://github.com/umerpatel1/weather-dashboard",
-    featured: false
+    title: "Social Media Platform",
+    description: "A full-stack social media application built with the MERN stack. Features real-time messaging, user profiles, content sharing, and advanced social features with scalable architecture.",
+    image: "/social-media.jpg",
+    technologies: ["Next.js", "OpenAI API", "Node.js", "MongoDB", "Socket.io"],
+    liveUrl: "https://social-media-demo.vercel.app",
+    githubUrl: "https://github.com/callmeumair/social-media-app",
+    featured: true,
+    highlights: ["Real-time Chat", "MERN Stack", "Scalable Architecture", "AI Features"]
   },
   {
-    title: "Blog CMS",
-    description: "A headless CMS for bloggers with markdown support, SEO optimization, and content management features.",
-    image: "/project4.jpg",
-    technologies: ["Next.js", "MDX", "Prisma", "PostgreSQL", "Tailwind CSS"],
-    liveUrl: "https://blog-cms-demo.vercel.app",
-    githubUrl: "https://github.com/umerpatel1/blog-cms",
-    featured: false
+    title: "Web3 Token Application",
+    description: "An innovative Web3 project exploring blockchain technologies and decentralized applications. Features token management, smart contracts, and DeFi integration with modern UI/UX.",
+    image: "/web3-app.jpg",
+    technologies: ["React Native", "TypeScript", "D3.js", "Firebase", "Web3.js"],
+    liveUrl: "https://web3-token-demo.vercel.app",
+    githubUrl: "https://github.com/callmeumair/web3-token-app",
+    featured: false,
+    highlights: ["Web3", "Blockchain", "Smart Contracts", "DeFi Integration"]
   },
   {
-    title: "Portfolio Website",
-    description: "A modern, responsive portfolio website with smooth animations, dark mode, and optimized performance.",
-    image: "/project5.jpg",
-    technologies: ["Next.js", "Framer Motion", "TypeScript", "Tailwind CSS"],
-    liveUrl: "https://portfolio-demo.vercel.app",
-    githubUrl: "https://github.com/umerpatel1/portfolio",
-    featured: false
+    title: "Car Rental Management System",
+    description: "A comprehensive car rental web application with advanced booking system, vehicle management, and customer portal. Features real-time availability, pricing algorithms, and integrated payment processing.",
+    image: "/car-rental.jpg",
+    technologies: ["React", "Weather API", "Chart.js", "Styled Components", "Node.js"],
+    liveUrl: "https://car-rental-demo.vercel.app",
+    githubUrl: "https://github.com/callmeumair/car-rental-website",
+    featured: false,
+    highlights: ["Booking System", "Real-time Data", "Payment Processing", "Admin Panel"]
   },
   {
-    title: "Chat Application",
-    description: "A real-time chat application with multiple rooms, file sharing, and user presence indicators.",
-    image: "/project6.jpg",
-    technologies: ["React", "Socket.io", "Node.js", "Express", "MongoDB"],
-    liveUrl: "https://chat-app-demo.vercel.app",
-    githubUrl: "https://github.com/umerpatel1/chat-app",
-    featured: false
+    title: "Secure Password Manager",
+    description: "A highly secure password management application with end-to-end encryption, biometric authentication, and cross-platform synchronization. Features secure vault, password generator, and breach monitoring.",
+    image: "/password-manager.jpg",
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript", "Encryption"],
+    liveUrl: "https://password-manager-demo.vercel.app",
+    githubUrl: "https://github.com/callmeumair/password-manager",
+    featured: false,
+    highlights: ["End-to-End Encryption", "Biometric Auth", "Cross-Platform", "Security First"]
   }
 ]
 
@@ -147,7 +153,14 @@ export function Projects() {
               >
                 <div className="relative overflow-hidden">
                   <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center project-image">
-                    <div className="text-6xl opacity-50">🚀</div>
+                    <div className="text-6xl opacity-50">
+                      {project.title.includes("Fitness") ? "💪" : 
+                       project.title.includes("E-Commerce") ? "🛒" : 
+                       project.title.includes("Social") ? "👥" : 
+                       project.title.includes("Web3") ? "⛓️" : 
+                       project.title.includes("Car") ? "🚗" : 
+                       project.title.includes("Password") ? "🔐" : "🚀"}
+                    </div>
                   </div>
                   <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-4">
                     <Button size="sm" asChild>
@@ -176,12 +189,29 @@ export function Projects() {
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
+                  {/* Project Highlights */}
+                  {project.highlights && (
+                    <div className="space-y-2">
+                      <h4 className="text-sm font-semibold text-foreground">Key Features:</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {project.highlights.map((highlight) => (
+                          <Badge key={highlight} variant="default" className="text-xs bg-primary/10 text-primary border-primary/20">
+                            ✨ {highlight}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-foreground">Technologies:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="text-xs">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                   
                   <div className="flex space-x-4 pt-2">
@@ -227,7 +257,14 @@ export function Projects() {
                 >
                   <div className="relative overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center project-image">
-                      <div className="text-4xl opacity-50">💻</div>
+                      <div className="text-4xl opacity-50">
+                        {project.title.includes("Fitness") ? "💪" : 
+                         project.title.includes("E-Commerce") ? "🛒" : 
+                         project.title.includes("Social") ? "👥" : 
+                         project.title.includes("Web3") ? "⛓️" : 
+                         project.title.includes("Car") ? "🚗" : 
+                         project.title.includes("Password") ? "🔐" : "💻"}
+                      </div>
                     </div>
                     <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-2">
                       <Button size="sm" variant="secondary" asChild>
@@ -294,7 +331,7 @@ export function Projects() {
                   </a>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
-                  <a href="https://github.com/umerpatel1" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/callmeumair" target="_blank" rel="noopener noreferrer">
                     <Github className="mr-2 h-4 w-4" />
                     View All Projects
                   </a>
