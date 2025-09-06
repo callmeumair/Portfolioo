@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
 
 interface LoadingAnimationProps {
   isLoading: boolean
@@ -15,58 +14,65 @@ export function LoadingAnimation({ isLoading, onComplete }: LoadingAnimationProp
 
   useEffect(() => {
     if (!isLoading) return
+    if (typeof window === "undefined") return
 
-    const ctx = gsap.context(() => {
-      // Initial setup
-      gsap.set(logoRef.current, {
-        scale: 0,
-        rotation: -180,
-        opacity: 0
-      })
+    const initGSAP = async () => {
+      const { gsap } = await import("gsap")
+      
+      const ctx = gsap.context(() => {
+        // Initial setup
+        gsap.set(logoRef.current, {
+          scale: 0,
+          rotation: -180,
+          opacity: 0
+        })
 
-      gsap.set(dotsRef.current, {
-        opacity: 0,
-        scale: 0
-      })
+        gsap.set(dotsRef.current, {
+          opacity: 0,
+          scale: 0
+        })
 
-      // Create loading timeline
-      const tl = gsap.timeline({
-        onComplete: () => {
-          onComplete?.()
-        }
-      })
+        // Create loading timeline
+        const tl = gsap.timeline({
+          onComplete: () => {
+            onComplete?.()
+          }
+        })
 
-      // Logo animation
-      tl.to(logoRef.current, {
-        scale: 1,
-        rotation: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "back.out(1.7)"
-      })
+        // Logo animation
+        tl.to(logoRef.current, {
+          scale: 1,
+          rotation: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "back.out(1.7)"
+        })
 
-      // Dots animation
-      tl.to(dotsRef.current, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        stagger: 0.2,
-        ease: "power2.out"
-      }, "-=0.5")
+        // Dots animation
+        tl.to(dotsRef.current, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: "power2.out"
+        }, "-=0.5")
 
-      // Continuous dots animation
-      tl.to(dotsRef.current, {
-        y: -10,
-        duration: 0.6,
-        stagger: 0.1,
-        repeat: -1,
-        yoyo: true,
-        ease: "power2.inOut"
-      }, "-=0.3")
+        // Continuous dots animation
+        tl.to(dotsRef.current, {
+          y: -10,
+          duration: 0.6,
+          stagger: 0.1,
+          repeat: -1,
+          yoyo: true,
+          ease: "power2.inOut"
+        }, "-=0.3")
 
-    }, containerRef)
+      }, containerRef)
 
-    return () => ctx.revert()
+      return () => ctx.revert()
+    }
+
+    initGSAP()
   }, [isLoading, onComplete])
 
   if (!isLoading) return null
@@ -110,22 +116,30 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   const pageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(pageRef.current, 
-        {
-          opacity: 0,
-          y: 20
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out"
-        }
-      )
-    }, pageRef)
+    if (typeof window === "undefined") return
 
-    return () => ctx.revert()
+    const initGSAP = async () => {
+      const { gsap } = await import("gsap")
+      
+      const ctx = gsap.context(() => {
+        gsap.fromTo(pageRef.current, 
+          {
+            opacity: 0,
+            y: 20
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out"
+          }
+        )
+      }, pageRef)
+
+      return () => ctx.revert()
+    }
+
+    initGSAP()
   }, [])
 
   return (
@@ -148,24 +162,32 @@ export function AnimatedCounter({
   const counterRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(counterRef.current,
-        { innerText: 0 },
-        {
-          innerText: end,
-          duration,
-          ease: "power2.out",
-          snap: { innerText: 1 },
-          onUpdate: function() {
-            if (counterRef.current) {
-              counterRef.current.innerText = Math.ceil(this.targets()[0].innerText).toString()
+    if (typeof window === "undefined") return
+
+    const initGSAP = async () => {
+      const { gsap } = await import("gsap")
+      
+      const ctx = gsap.context(() => {
+        gsap.fromTo(counterRef.current,
+          { innerText: 0 },
+          {
+            innerText: end,
+            duration,
+            ease: "power2.out",
+            snap: { innerText: 1 },
+            onUpdate: function() {
+              if (counterRef.current) {
+                counterRef.current.innerText = Math.ceil(this.targets()[0].innerText).toString()
+              }
             }
           }
-        }
-      )
-    }, counterRef)
+        )
+      }, counterRef)
 
-    return () => ctx.revert()
+      return () => ctx.revert()
+    }
+
+    initGSAP()
   }, [end, duration])
 
   return (

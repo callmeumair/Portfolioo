@@ -5,11 +5,6 @@ import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger)
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -29,100 +24,113 @@ export function Hero() {
   }
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Create master timeline
-      const tl = gsap.timeline({ delay: 0.5 })
+    // Only run GSAP animations on client side
+    if (typeof window === "undefined") return
 
-      // Set initial states
-      gsap.set([titleRef.current, subtitleRef.current, descriptionRef.current, buttonsRef.current, socialRef.current], {
-        opacity: 0,
-        y: 50
-      })
+    const initGSAP = async () => {
+      const { gsap } = await import("gsap")
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger")
+      
+      // Register GSAP plugins
+      gsap.registerPlugin(ScrollTrigger)
 
-      gsap.set(avatarRef.current, {
-        opacity: 0,
-        scale: 0.8,
-        rotation: -10
-      })
+      const ctx = gsap.context(() => {
+        // Create master timeline
+        const tl = gsap.timeline({ delay: 0.5 })
 
-      gsap.set(floatingElementsRef.current, {
-        opacity: 0,
-        scale: 0
-      })
+        // Set initial states
+        gsap.set([titleRef.current, subtitleRef.current, descriptionRef.current, buttonsRef.current, socialRef.current], {
+          opacity: 0,
+          y: 50
+        })
 
-      // Animate elements in sequence
-      tl.to(titleRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out"
-      })
-      .to(subtitleRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.5")
-      .to(descriptionRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.3")
-      .to(buttonsRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.3")
-      .to(socialRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.3")
-      .to(avatarRef.current, {
-        opacity: 1,
-        scale: 1,
-        rotation: 0,
-        duration: 1.2,
-        ease: "back.out(1.7)"
-      }, "-=0.8")
-      .to(floatingElementsRef.current, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.6,
-        ease: "power2.out",
-        stagger: 0.2
-      }, "-=0.5")
+        gsap.set(avatarRef.current, {
+          opacity: 0,
+          scale: 0.8,
+          rotation: -10
+        })
 
-      // Continuous floating animation for elements
-      gsap.to(floatingElementsRef.current, {
-        y: "random(-20, 20)",
-        x: "random(-10, 10)",
-        rotation: "random(-5, 5)",
-        duration: "random(3, 5)",
-        ease: "power2.inOut",
-        repeat: -1,
-        yoyo: true,
-        stagger: 0.5
-      })
+        gsap.set(floatingElementsRef.current, {
+          opacity: 0,
+          scale: 0
+        })
 
-      // Parallax effect for background elements
-      gsap.to(".bg-gradient", {
-        y: -100,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true
-        }
-      })
+        // Animate elements in sequence
+        tl.to(titleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out"
+        })
+        .to(subtitleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, "-=0.5")
+        .to(descriptionRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, "-=0.3")
+        .to(buttonsRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, "-=0.3")
+        .to(socialRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        }, "-=0.3")
+        .to(avatarRef.current, {
+          opacity: 1,
+          scale: 1,
+          rotation: 0,
+          duration: 1.2,
+          ease: "back.out(1.7)"
+        }, "-=0.8")
+        .to(floatingElementsRef.current, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.2
+        }, "-=0.5")
 
-    }, heroRef)
+        // Continuous floating animation for elements
+        gsap.to(floatingElementsRef.current, {
+          y: "random(-20, 20)",
+          x: "random(-10, 10)",
+          rotation: "random(-5, 5)",
+          duration: "random(3, 5)",
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true,
+          stagger: 0.5
+        })
 
-    return () => ctx.revert()
+        // Parallax effect for background elements
+        gsap.to(".bg-gradient", {
+          y: -100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        })
+
+      }, heroRef)
+
+      return () => ctx.revert()
+    }
+
+    initGSAP()
   }, [])
 
   return (

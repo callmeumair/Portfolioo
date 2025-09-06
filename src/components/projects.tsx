@@ -7,7 +7,6 @@ import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { gsap } from "gsap"
 import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-reveal"
 
 const projects = [
@@ -76,33 +75,42 @@ export function Projects() {
   const otherProjects = projects.filter(project => !project.featured)
 
   useEffect(() => {
-    // Add GSAP hover animations to project cards
-    projectCardsRef.current.forEach((card) => {
-      if (card) {
-        const tl = gsap.timeline({ paused: true })
-        
-        tl.to(card, {
-          y: -10,
-          scale: 1.02,
-          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-          duration: 0.3,
-          ease: "power2.out"
-        })
-        .to(card.querySelector(".project-image"), {
-          scale: 1.1,
-          duration: 0.3,
-          ease: "power2.out"
-        }, 0)
-        .to(card.querySelector(".project-overlay"), {
-          opacity: 1,
-          duration: 0.3,
-          ease: "power2.out"
-        }, 0)
+    // Only run GSAP animations on client side
+    if (typeof window === "undefined") return
 
-        card.addEventListener("mouseenter", () => tl.play())
-        card.addEventListener("mouseleave", () => tl.reverse())
-      }
-    })
+    const initGSAP = async () => {
+      const { gsap } = await import("gsap")
+      
+      // Add GSAP hover animations to project cards
+      projectCardsRef.current.forEach((card) => {
+        if (card) {
+          const tl = gsap.timeline({ paused: true })
+          
+          tl.to(card, {
+            y: -10,
+            scale: 1.02,
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            duration: 0.3,
+            ease: "power2.out"
+          })
+          .to(card.querySelector(".project-image"), {
+            scale: 1.1,
+            duration: 0.3,
+            ease: "power2.out"
+          }, 0)
+          .to(card.querySelector(".project-overlay"), {
+            opacity: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          }, 0)
+
+          card.addEventListener("mouseenter", () => tl.play())
+          card.addEventListener("mouseleave", () => tl.reverse())
+        }
+      })
+    }
+
+    initGSAP()
   }, [])
 
   return (

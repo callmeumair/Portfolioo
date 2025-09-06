@@ -35,27 +35,36 @@ export function ScrollRevealComponent({
   const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const element = elementRef.current
-    if (element) {
-      ScrollReveal().reveal(element, {
-        delay,
-        distance,
-        duration,
-        easing,
-        origin,
-        reset,
-        scale,
-        opacity,
-        rotate,
-        mobile,
-      })
-    }
+    // Only run ScrollReveal on client side
+    if (typeof window === "undefined") return
 
-    return () => {
+    const initScrollReveal = async () => {
+      const ScrollReveal = (await import("scrollreveal")).default
+      
+      const element = elementRef.current
       if (element) {
-        ScrollReveal().clean(element)
+        ScrollReveal().reveal(element, {
+          delay,
+          distance,
+          duration,
+          easing,
+          origin,
+          reset,
+          scale,
+          opacity,
+          rotate,
+          mobile,
+        })
+      }
+
+      return () => {
+        if (element) {
+          ScrollReveal().clean(element)
+        }
       }
     }
+
+    initScrollReveal()
   }, [delay, distance, duration, easing, origin, reset, scale, opacity, rotate, mobile])
 
   return (
