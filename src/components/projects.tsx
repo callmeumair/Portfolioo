@@ -79,6 +79,11 @@ export function Projects() {
 
   const featuredProjects = projects.filter(project => project.featured)
   const otherProjects = projects.filter(project => !project.featured)
+  
+  // Debug logging
+  console.log('Total projects:', projects.length)
+  console.log('Featured projects:', featuredProjects.length)
+  console.log('Other projects:', otherProjects.length)
 
   useEffect(() => {
     // Only run GSAP animations on client side
@@ -140,10 +145,11 @@ export function Projects() {
         {/* Featured Projects */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
           {featuredProjects.map((project, index) => (
-            <ScrollRevealComponent
+            <motion.div
               key={project.title}
-              {...ScrollRevealPresets.fadeUp}
-              delay={index * 200}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
             >
               <Card 
                 ref={(el) => {
@@ -230,7 +236,7 @@ export function Projects() {
                   </div>
                 </CardContent>
               </Card>
-            </ScrollRevealComponent>
+            </motion.div>
           ))}
         </div>
 
@@ -244,10 +250,11 @@ export function Projects() {
           <h3 className="text-2xl font-semibold text-center mb-8">Other Projects</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {otherProjects.map((project, index) => (
-              <ScrollRevealComponent
+              <motion.div
                 key={project.title}
-                {...ScrollRevealPresets.scaleUp}
-                delay={index * 100}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
               >
                 <Card 
                   ref={(el) => {
@@ -305,7 +312,7 @@ export function Projects() {
                     </div>
                   </CardContent>
                 </Card>
-              </ScrollRevealComponent>
+              </motion.div>
             ))}
           </div>
         </motion.div>
