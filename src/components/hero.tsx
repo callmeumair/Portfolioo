@@ -4,8 +4,23 @@ import { motion } from "framer-motion"
 import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useEffect, useRef } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger)
 
 export function Hero() {
+  const heroRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const subtitleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const buttonsRef = useRef<HTMLDivElement>(null)
+  const socialRef = useRef<HTMLDivElement>(null)
+  const avatarRef = useRef<HTMLDivElement>(null)
+  const floatingElementsRef = useRef<HTMLDivElement[]>([])
+
   const scrollToNext = () => {
     const aboutSection = document.querySelector("#about")
     if (aboutSection) {
@@ -13,59 +28,131 @@ export function Hero() {
     }
   }
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Create master timeline
+      const tl = gsap.timeline({ delay: 0.5 })
+
+      // Set initial states
+      gsap.set([titleRef.current, subtitleRef.current, descriptionRef.current, buttonsRef.current, socialRef.current], {
+        opacity: 0,
+        y: 50
+      })
+
+      gsap.set(avatarRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        rotation: -10
+      })
+
+      gsap.set(floatingElementsRef.current, {
+        opacity: 0,
+        scale: 0
+      })
+
+      // Animate elements in sequence
+      tl.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      })
+      .to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.5")
+      .to(descriptionRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.3")
+      .to(buttonsRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.3")
+      .to(socialRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.3")
+      .to(avatarRef.current, {
+        opacity: 1,
+        scale: 1,
+        rotation: 0,
+        duration: 1.2,
+        ease: "back.out(1.7)"
+      }, "-=0.8")
+      .to(floatingElementsRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.2
+      }, "-=0.5")
+
+      // Continuous floating animation for elements
+      gsap.to(floatingElementsRef.current, {
+        y: "random(-20, 20)",
+        x: "random(-10, 10)",
+        rotation: "random(-5, 5)",
+        duration: "random(3, 5)",
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.5
+      })
+
+      // Parallax effect for background elements
+      gsap.to(".bg-gradient", {
+        y: -100,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      })
+
+    }, heroRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 bg-gradient" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-8 text-center lg:text-left"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-4"
-            >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+          <div className="space-y-8 text-center lg:text-left">
+            <div className="space-y-4">
+              <h1 ref={titleRef} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
                 Hi, I&apos;m{" "}
                 <span className="text-gradient">Umer Patel</span>
               </h1>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-xl sm:text-2xl lg:text-3xl font-medium text-muted-foreground"
-              >
+              <h2 ref={subtitleRef} className="text-xl sm:text-2xl lg:text-3xl font-medium text-muted-foreground">
                 Full Stack Developer
-              </motion.h2>
-            </motion.div>
+              </h2>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0"
-            >
+            <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0">
               I&apos;m passionate about creating innovative digital solutions and 
               beautiful user experiences. I specialize in modern web technologies 
               and love turning complex problems into simple, elegant solutions.
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
+            <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
                 className="group"
@@ -85,15 +172,10 @@ export function Hero() {
                   Download Resume
                 </a>
               </Button>
-            </motion.div>
+            </div>
 
             {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-              className="flex justify-center lg:justify-start space-x-4 pt-4"
-            >
+            <div ref={socialRef} className="flex justify-center lg:justify-start space-x-4 pt-4">
               <motion.a
                 href="https://github.com/umerpatel1"
                 target="_blank"
@@ -125,21 +207,12 @@ export function Hero() {
                 <Mail className="h-5 w-5" />
                 <span className="sr-only">Email</span>
               </motion.a>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Right Column - Profile Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="flex justify-center lg:justify-end"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="relative"
-            >
+          <div className="flex justify-center lg:justify-end">
+            <div ref={avatarRef} className="relative">
               <div className="relative w-80 h-80 lg:w-96 lg:h-96">
                 {/* Background Circle */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl" />
@@ -157,39 +230,35 @@ export function Hero() {
                 </Avatar>
                 
                 {/* Floating Elements */}
-                <motion.div
-                  animate={{ 
-                    y: [0, -10, 0],
-                    rotate: [0, 5, 0]
-                  }}
-                  transition={{ 
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
+                <div
+                  ref={(el) => {
+                    if (el) floatingElementsRef.current[0] = el
                   }}
                   className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
                 >
                   <span className="text-2xl">💻</span>
-                </motion.div>
+                </div>
                 
-                <motion.div
-                  animate={{ 
-                    y: [0, 10, 0],
-                    rotate: [0, -5, 0]
-                  }}
-                  transition={{ 
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1
+                <div
+                  ref={(el) => {
+                    if (el) floatingElementsRef.current[1] = el
                   }}
                   className="absolute -bottom-4 -left-4 w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
                 >
                   <span className="text-xl">🚀</span>
-                </motion.div>
+                </div>
+
+                <div
+                  ref={(el) => {
+                    if (el) floatingElementsRef.current[2] = el
+                  }}
+                  className="absolute top-1/2 -right-8 w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+                >
+                  <span className="text-lg">⚡</span>
+                </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
         {/* Scroll Indicator */}

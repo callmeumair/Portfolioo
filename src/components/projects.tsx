@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { gsap } from "gsap"
+import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-reveal"
 
 const projects = [
   {
@@ -68,9 +70,40 @@ const projects = [
 export function Projects() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const projectCardsRef = useRef<HTMLDivElement[]>([])
 
   const featuredProjects = projects.filter(project => project.featured)
   const otherProjects = projects.filter(project => !project.featured)
+
+  useEffect(() => {
+    // Add GSAP hover animations to project cards
+    projectCardsRef.current.forEach((card, index) => {
+      if (card) {
+        const tl = gsap.timeline({ paused: true })
+        
+        tl.to(card, {
+          y: -10,
+          scale: 1.02,
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          duration: 0.3,
+          ease: "power2.out"
+        })
+        .to(card.querySelector(".project-image"), {
+          scale: 1.1,
+          duration: 0.3,
+          ease: "power2.out"
+        }, 0)
+        .to(card.querySelector(".project-overlay"), {
+          opacity: 1,
+          duration: 0.3,
+          ease: "power2.out"
+        }, 0)
+
+        card.addEventListener("mouseenter", () => tl.play())
+        card.addEventListener("mouseleave", () => tl.reverse())
+      }
+    })
+  }, [])
 
   return (
     <section id="projects" className="py-20 bg-muted/30">
@@ -93,18 +126,22 @@ export function Projects() {
         {/* Featured Projects */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {featuredProjects.map((project, index) => (
-            <motion.div
+            <ScrollRevealComponent
               key={project.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.8, delay: 0.2 + index * 0.2 }}
+              {...ScrollRevealPresets.fadeUp}
+              delay={index * 200}
             >
-              <Card className="h-full group hover:shadow-xl transition-all duration-300 overflow-hidden">
+              <Card 
+                ref={(el) => {
+                  if (el) projectCardsRef.current[index] = el
+                }}
+                className="h-full group hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+              >
                 <div className="relative overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center project-image">
                     <div className="text-6xl opacity-50">🚀</div>
                   </div>
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                  <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-4">
                     <Button size="sm" asChild>
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="mr-2 h-4 w-4" />
@@ -169,18 +206,22 @@ export function Projects() {
           <h3 className="text-2xl font-semibold text-center mb-8">Other Projects</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherProjects.map((project, index) => (
-              <motion.div
+              <ScrollRevealComponent
                 key={project.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                {...ScrollRevealPresets.scaleUp}
+                delay={index * 100}
               >
-                <Card className="h-full group hover:shadow-lg transition-all duration-300">
+                <Card 
+                  ref={(el) => {
+                    if (el) projectCardsRef.current[featuredProjects.length + index] = el
+                  }}
+                  className="h-full group hover:shadow-lg transition-all duration-300 cursor-pointer"
+                >
                   <div className="relative overflow-hidden">
-                    <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                    <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center project-image">
                       <div className="text-4xl opacity-50">💻</div>
                     </div>
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2">
+                    <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-2">
                       <Button size="sm" variant="secondary" asChild>
                         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="h-4 w-4" />
