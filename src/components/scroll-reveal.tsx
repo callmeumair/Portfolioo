@@ -37,8 +37,9 @@ export function ScrollRevealComponent({
   const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (elementRef.current) {
-      ScrollReveal().reveal(elementRef.current, {
+    const element = elementRef.current
+    if (element) {
+      ScrollReveal().reveal(element, {
         delay,
         distance,
         duration,
@@ -54,7 +55,9 @@ export function ScrollRevealComponent({
     }
 
     return () => {
-      ScrollReveal().clean(elementRef.current)
+      if (element) {
+        ScrollReveal().clean(element)
+      }
     }
   }, [delay, distance, duration, easing, origin, reset, scale, opacity, rotate, mobile, desktop])
 

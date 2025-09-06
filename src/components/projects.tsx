@@ -77,7 +77,7 @@ export function Projects() {
 
   useEffect(() => {
     // Add GSAP hover animations to project cards
-    projectCardsRef.current.forEach((card, index) => {
+    projectCardsRef.current.forEach((card) => {
       if (card) {
         const tl = gsap.timeline({ paused: true })
         

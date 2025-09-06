@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react"
 import Lottie from "lottie-react"
 
 interface LottieAnimationProps {
-  animationData: any
+  animationData: object
   className?: string
   loop?: boolean
   autoplay?: boolean
@@ -28,7 +28,7 @@ export function LottieAnimation({
   onEnterFrame,
   style,
 }: LottieAnimationProps) {
-  const lottieRef = useRef<any>(null)
+  const lottieRef = useRef<object>(null)
 
   useEffect(() => {
     if (lottieRef.current) {
@@ -37,14 +37,6 @@ export function LottieAnimation({
     }
   }, [speed, direction])
 
-  const defaultOptions = {
-    loop,
-    autoplay,
-    animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  }
 
   return (
     <Lottie
