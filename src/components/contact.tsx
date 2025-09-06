@@ -11,8 +11,8 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "umerpatel1@gmail.com",
-    href: "mailto:umerpatel1@gmail.com"
+    value: "umerpatel1540@gmail.com",
+    href: "mailto:umerpatel1540@gmail.com"
   },
   {
     icon: Phone,
@@ -31,20 +31,24 @@ const contactInfo = [
 const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com/umerpatel1",
+    href: "https://github.com/callmeumair",
     icon: Github,
     color: "hover:text-gray-900 dark:hover:text-gray-100"
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/umerpatel1",
+    href: "https://www.linkedin.com/in/umerpatel",
     icon: Linkedin,
     color: "hover:text-blue-600"
   },
   {
-    name: "Twitter",
-    href: "https://twitter.com/umerpatel1",
-    icon: Twitter,
+    name: "X (Twitter)",
+    href: "https://x.com/Umerpatel11",
+    icon: () => (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    ),
     color: "hover:text-blue-400"
   }
 ]
@@ -319,7 +323,7 @@ export function Contact() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" asChild>
-                  <a href="mailto:umerpatel1@gmail.com">
+                  <a href="mailto:umerpatel1540@gmail.com">
                     <Mail className="mr-2 h-4 w-4" />
                     Send Email
                   </a>

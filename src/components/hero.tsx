@@ -185,7 +185,7 @@ export function Hero() {
             {/* Social Links */}
             <div ref={socialRef} className="flex justify-center lg:justify-start space-x-4 pt-4">
               <motion.a
-                href="https://github.com/umerpatel1"
+                href="https://github.com/callmeumair"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
@@ -196,7 +196,7 @@ export function Hero() {
                 <span className="sr-only">GitHub</span>
               </motion.a>
               <motion.a
-                href="https://linkedin.com/in/umerpatel1"
+                href="https://www.linkedin.com/in/umerpatel"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
@@ -207,13 +207,26 @@ export function Hero() {
                 <span className="sr-only">LinkedIn</span>
               </motion.a>
               <motion.a
-                href="mailto:umerpatel1@gmail.com"
+                href="mailto:umerpatel1540@gmail.com"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors duration-200"
               >
                 <Mail className="h-5 w-5" />
                 <span className="sr-only">Email</span>
+              </motion.a>
+              <motion.a
+                href="https://x.com/Umerpatel11"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors duration-200"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                <span className="sr-only">X (Twitter)</span>
               </motion.a>
             </div>
           </div>
