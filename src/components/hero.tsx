@@ -140,30 +140,30 @@ export function Hero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 lg:py-0">
           {/* Left Column - Text Content */}
-          <div className="space-y-8 text-center lg:text-left">
-            <div className="space-y-4">
-              <h1 ref={titleRef} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+          <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
+            <div className="space-y-3 lg:space-y-4">
+              <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
                 Hi, I&apos;m{" "}
                 <span className="text-gradient">Umer Patel</span>
               </h1>
-              <h2 ref={subtitleRef} className="text-xl sm:text-2xl lg:text-3xl font-medium text-muted-foreground">
+              <h2 ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-muted-foreground">
                 Full Stack Developer
               </h2>
             </div>
 
-            <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+            <p ref={descriptionRef} className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               I&apos;m passionate about creating innovative digital solutions and 
               beautiful user experiences. I specialize in modern web technologies 
               and love turning complex problems into simple, elegant solutions.
             </p>
 
             {/* CTA Buttons */}
-            <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="group"
+                className="group w-full sm:w-auto"
                 onClick={() => scrollToNext()}
               >
                 View My Work
@@ -172,7 +172,7 @@ export function Hero() {
               <Button
                 variant="outline"
                 size="lg"
-                className="group"
+                className="group w-full sm:w-auto"
                 asChild
               >
                 <a href="/resume.pdf" download>
@@ -183,7 +183,7 @@ export function Hero() {
             </div>
 
             {/* Social Links */}
-            <div ref={socialRef} className="flex justify-center lg:justify-start space-x-4 pt-4">
+            <div ref={socialRef} className="flex justify-center lg:justify-start space-x-3 sm:space-x-4 pt-2 lg:pt-4">
               <motion.a
                 href="https://github.com/callmeumair"
                 target="_blank"
@@ -232,9 +232,9 @@ export function Hero() {
           </div>
 
           {/* Right Column - Profile Image */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
             <div ref={avatarRef} className="relative">
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96">
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
                 {/* Background Circle */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl" />
                 
@@ -255,27 +255,27 @@ export function Hero() {
                   ref={(el) => {
                     if (el) floatingElementsRef.current[0] = el
                   }}
-                  className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+                  className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-12 h-12 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
                 >
-                  <span className="text-2xl">💻</span>
+                  <span className="text-lg sm:text-2xl">💻</span>
                 </div>
                 
                 <div
                   ref={(el) => {
                     if (el) floatingElementsRef.current[1] = el
                   }}
-                  className="absolute -bottom-4 -left-4 w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+                  className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 bg-secondary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
                 >
-                  <span className="text-xl">🚀</span>
+                  <span className="text-base sm:text-xl">🚀</span>
                 </div>
 
                 <div
                   ref={(el) => {
                     if (el) floatingElementsRef.current[2] = el
                   }}
-                  className="absolute top-1/2 -right-8 w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+                  className="absolute top-1/2 -right-4 sm:-right-8 w-8 h-8 sm:w-10 sm:h-10 bg-accent/20 rounded-full flex items-center justify-center backdrop-blur-sm"
                 >
-                  <span className="text-lg">⚡</span>
+                  <span className="text-sm sm:text-lg">⚡</span>
                 </div>
               </div>
             </div>

@@ -138,7 +138,7 @@ export function Projects() {
         </motion.div>
 
         {/* Featured Projects */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
           {featuredProjects.map((project, index) => (
             <ScrollRevealComponent
               key={project.title}
@@ -242,7 +242,7 @@ export function Projects() {
           className="mb-8"
         >
           <h3 className="text-2xl font-semibold text-center mb-8">Other Projects</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {otherProjects.map((project, index) => (
               <ScrollRevealComponent
                 key={project.title}

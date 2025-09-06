@@ -70,7 +70,7 @@ export function Skills() {
         </motion.div>
 
         {/* Skill Categories */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}

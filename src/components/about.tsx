@@ -36,7 +36,7 @@ export function About() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - Story */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -78,7 +78,7 @@ export function About() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-2 gap-4 sm:gap-6"
           >
             {stats.map((stat, index) => (
               <motion.div
@@ -107,7 +107,7 @@ export function About() {
           className="mt-20"
         >
           <h3 className="text-2xl font-semibold text-center mb-12">My Values</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
