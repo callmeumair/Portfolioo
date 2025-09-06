@@ -192,7 +192,7 @@ export function Projects() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </ScrollRevealComponent>
           ))}
         </div>
 
@@ -260,7 +260,7 @@ export function Projects() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </ScrollRevealComponent>
             ))}
           </div>
         </motion.div>
