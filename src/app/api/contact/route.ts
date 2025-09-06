@@ -3,15 +3,6 @@ import { insertMessage, testConnection } from '@/lib/database'
 
 export async function POST(request: NextRequest) {
   try {
-    // Test database connection first
-    const isConnected = await testConnection()
-    if (!isConnected) {
-      return NextResponse.json(
-        { error: 'Database connection failed' },
-        { status: 500 }
-      )
-    }
-
     // Parse request body
     const body = await request.json()
     const { name, email, subject, message } = body
@@ -33,6 +24,43 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if database is available
+    if (!process.env.DATABASE_URL) {
+      // Fallback: Log the message and return success
+      console.log('📧 Contact Form Submission (No Database):', {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        subject: subject.trim(),
+        message: message.trim(),
+        timestamp: new Date().toISOString()
+      })
+      
+      return NextResponse.json({
+        success: true,
+        message: 'Message received! I\'ll get back to you soon.',
+        note: 'Message logged to console (database not configured)'
+      })
+    }
+
+    // Test database connection
+    const isConnected = await testConnection()
+    if (!isConnected) {
+      // Fallback: Log the message and return success
+      console.log('📧 Contact Form Submission (DB Connection Failed):', {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        subject: subject.trim(),
+        message: message.trim(),
+        timestamp: new Date().toISOString()
+      })
+      
+      return NextResponse.json({
+        success: true,
+        message: 'Message received! I\'ll get back to you soon.',
+        note: 'Message logged to console (database connection failed)'
+      })
+    }
+
     // Insert message into database
     const result = await insertMessage({
       name: name.trim(),
@@ -51,6 +79,25 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Contact form error:', error)
+    
+    // Fallback: Log the message even if there's an error
+    try {
+      const body = await request.json()
+      console.log('📧 Contact Form Submission (Error Fallback):', {
+        name: body.name?.trim(),
+        email: body.email?.trim(),
+        subject: body.subject?.trim(),
+        message: body.message?.trim(),
+        timestamp: new Date().toISOString(),
+        error: error.message
+      })
+    } catch (parseError) {
+      console.log('📧 Contact Form Submission (Parse Error):', {
+        timestamp: new Date().toISOString(),
+        error: error.message
+      })
+    }
+    
     return NextResponse.json(
       { error: 'Failed to send message. Please try again.' },
       { status: 500 }

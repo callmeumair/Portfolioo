@@ -1,0 +1,15 @@
+# Database Configuration Template
+# Copy this content to .env.local and add your actual database URL
+
+# Neon Database URL (get this from https://console.neon.tech/)
+DATABASE_URL="postgresql://neondb_owner:your_password@ep-cool-name-123456.us-east-2.aws.neon.tech/neondb?sslmode=require"
+
+# Example format:
+# DATABASE_URL="postgresql://username:password@hostname:port/database?sslmode=require"
+
+# To set up your database:
+# 1. Go to https://console.neon.tech/
+# 2. Create a new project
+# 3. Copy the connection string
+# 4. Replace the DATABASE_URL above with your actual connection string
+# 5. Run the SQL schema from database/schema.sql in your Neon console
