@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import ScrollReveal from "scrollreveal"
+// import ScrollReveal from "scrollreveal"
 
 interface ScrollRevealProps {
   children: React.ReactNode

@@ -89,12 +89,12 @@ export async function POST(request: NextRequest) {
         subject: body.subject?.trim(),
         message: body.message?.trim(),
         timestamp: new Date().toISOString(),
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       })
-    } catch (parseError) {
+    } catch {
       console.log('📧 Contact Form Submission (Parse Error):', {
         timestamp: new Date().toISOString(),
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       })
     }
     
