@@ -1,23 +1,24 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import type { ThreeElements } from "@react-three/fiber" // ensure module stays a TS module
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
+import * as THREE from "three"
 
 function Globe() {
+  const g1 = useMemo(() => new THREE.SphereGeometry(1.4, 32, 32), [])
+  const m1 = useMemo(() => new THREE.MeshBasicMaterial({ wireframe: true, color: new THREE.Color('#7c3aed'), opacity: 0.4, transparent: true }), [])
+  const g2 = useMemo(() => new THREE.SphereGeometry(1.42, 32, 32), [])
+  const m2 = useMemo(() => new THREE.MeshBasicMaterial({ wireframe: true, color: new THREE.Color('#06b6d4'), opacity: 0.25, transparent: true }), [])
+
   return (
     <>
-      {/* @ts-expect-error r3f intrinsic typing not inferred in this file */}
       <mesh rotation={[0.5, 0.6, 0]}>
-        <sphereGeometry args={[1.4, 32, 32]} />
-        {/* @ts-expect-error three fiber type narrowing */}
-        <meshBasicMaterial wireframe color="#7c3aed" opacity={0.4} transparent />
+        <primitive object={g1} attach="geometry" />
+        <primitive object={m1} attach="material" />
       </mesh>
-      {/* @ts-expect-error r3f intrinsic typing not inferred in this file */}
       <mesh rotation={[0.5, 0.6, 0]}>
-        <sphereGeometry args={[1.42, 32, 32]} />
-        {/* @ts-expect-error three fiber type narrowing */}
-        <meshBasicMaterial wireframe color="#06b6d4" opacity={0.25} transparent />
+        <primitive object={g2} attach="geometry" />
+        <primitive object={m2} attach="material" />
       </mesh>
     </>
   )
