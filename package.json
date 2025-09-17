@@ -53,5 +53,8 @@
   "resolutions": {
     "react": "18.3.1",
     "react-dom": "18.3.1"
+  },
+  "overrides": {
+    "scheduler": "0.23.2"
   }
 }
