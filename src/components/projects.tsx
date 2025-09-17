@@ -92,37 +92,53 @@ export function Projects() {
     const initGSAP = async () => {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
       const { gsap } = await import("gsap")
-      
+
+      const cleanups: Array<() => void> = []
+
       // Add GSAP hover animations to project cards
       projectCardsRef.current.forEach((card) => {
-        if (card) {
-          const tl = gsap.timeline({ paused: true })
-          
-          tl.to(card, {
-            y: -10,
-            scale: 1.02,
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-            duration: 0.3,
-            ease: "power2.out"
-          })
-          .to(card.querySelector(".project-image"), {
-            scale: 1.1,
-            duration: 0.3,
-            ease: "power2.out"
-          }, 0)
-          .to(card.querySelector(".project-overlay"), {
-            opacity: 1,
-            duration: 0.3,
-            ease: "power2.out"
-          }, 0)
+        if (!card) return
+        const image = card.querySelector(".project-image")
+        const overlay = card.querySelector(".project-overlay")
+        if (!image || !overlay) return
 
-          card.addEventListener("mouseenter", () => tl.play())
-          card.addEventListener("mouseleave", () => tl.reverse())
-        }
+        const tl = gsap.timeline({ paused: true })
+
+        tl.to(card, {
+          y: -10,
+          scale: 1.02,
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          duration: 0.3,
+          ease: "power2.out"
+        })
+        .to(image as Element, {
+          scale: 1.1,
+          duration: 0.3,
+          ease: "power2.out"
+        }, 0)
+        .to(overlay as Element, {
+          opacity: 1,
+          duration: 0.3,
+          ease: "power2.out"
+        }, 0)
+
+        const enter = () => tl.play()
+        const leave = () => tl.reverse()
+        card.addEventListener("mouseenter", enter)
+        card.addEventListener("mouseleave", leave)
+        cleanups.push(() => {
+          card.removeEventListener("mouseenter", enter)
+          card.removeEventListener("mouseleave", leave)
+          tl.kill()
+        })
       })
+
+      return () => cleanups.forEach(fn => fn())
     }
 
-    initGSAP()
+    let disposer: void | (() => void)
+    initGSAP().then(fn => { if (typeof fn === 'function') disposer = fn })
+    return () => { if (typeof disposer === 'function') disposer() }
   }, [])
 
   return (

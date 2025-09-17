@@ -34,102 +34,137 @@ export function Hero() {
     const initGSAP = async () => {
       const { gsap } = await import("gsap")
       const { ScrollTrigger } = await import("gsap/ScrollTrigger")
-      
-      // Register GSAP plugins
+
       gsap.registerPlugin(ScrollTrigger)
 
+      const scopeEl = heroRef.current ?? document.body
+      if (!scopeEl) return
+
+      const getExisting = <T extends Element>(els: (T | null | undefined)[]) => els.filter(Boolean) as T[]
+
       const ctx = gsap.context(() => {
-        // Create master timeline
         const tl = gsap.timeline({ delay: 0.5 })
 
-        // Set initial states
-        gsap.set([titleRef.current, subtitleRef.current, descriptionRef.current, buttonsRef.current, socialRef.current], {
+        // Set initial states (only on existing elements)
+        const initialEls = getExisting([
+          titleRef.current,
+          subtitleRef.current,
+          descriptionRef.current,
+          buttonsRef.current,
+          socialRef.current,
+        ])
+        if (initialEls.length) {
+          gsap.set(initialEls, {
           opacity: 0,
           y: 50
-        })
+          })
+        }
 
-        gsap.set(avatarRef.current, {
-          opacity: 0,
-          scale: 0.8,
-          rotation: -10
-        })
+        if (avatarRef.current) {
+          gsap.set(avatarRef.current, {
+            opacity: 0,
+            scale: 0.8,
+            rotation: -10
+          })
+        }
 
-        gsap.set(floatingElementsRef.current, {
-          opacity: 0,
-          scale: 0
-        })
+        const floatingEls = getExisting(floatingElementsRef.current)
+        if (floatingEls.length) {
+          gsap.set(floatingEls, {
+            opacity: 0,
+            scale: 0
+          })
+        }
 
         // Animate elements in sequence
-        tl.to(titleRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out"
-        })
-        .to(subtitleRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out"
-        }, "-=0.5")
-        .to(descriptionRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out"
-        }, "-=0.3")
-        .to(buttonsRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out"
-        }, "-=0.3")
-        .to(socialRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out"
-        }, "-=0.3")
-        .to(avatarRef.current, {
-          opacity: 1,
-          scale: 1,
-          rotation: 0,
-          duration: 1.2,
-          ease: "back.out(1.7)"
-        }, "-=0.8")
-        .to(floatingElementsRef.current, {
-          opacity: 1,
-          scale: 1,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.2
-        }, "-=0.5")
+        if (titleRef.current) {
+          tl.to(titleRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out"
+          })
+        }
+        if (subtitleRef.current) {
+          tl.to(subtitleRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out"
+          }, "-=0.5")
+        }
+        if (descriptionRef.current) {
+          tl.to(descriptionRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out"
+          }, "-=0.3")
+        }
+        if (buttonsRef.current) {
+          tl.to(buttonsRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out"
+          }, "-=0.3")
+        }
+        if (socialRef.current) {
+          tl.to(socialRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out"
+          }, "-=0.3")
+        }
+        if (avatarRef.current) {
+          tl.to(avatarRef.current, {
+            opacity: 1,
+            scale: 1,
+            rotation: 0,
+            duration: 1.2,
+            ease: "back.out(1.7)"
+          }, "-=0.8")
+        }
+        if (floatingEls.length) {
+          tl.to(floatingEls, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            stagger: 0.2
+          }, "-=0.5")
+        }
 
         // Continuous floating animation for elements
-        gsap.to(floatingElementsRef.current, {
-          y: "random(-20, 20)",
-          x: "random(-10, 10)",
-          rotation: "random(-5, 5)",
-          duration: "random(3, 5)",
-          ease: "power2.inOut",
-          repeat: -1,
-          yoyo: true,
-          stagger: 0.5
-        })
+        if (floatingEls.length) {
+          gsap.to(floatingEls, {
+            y: "random(-20, 20)",
+            x: "random(-10, 10)",
+            rotation: "random(-5, 5)",
+            duration: "random(3, 5)",
+            ease: "power2.inOut",
+            repeat: -1,
+            yoyo: true,
+            stagger: 0.5
+          })
+        }
 
         // Parallax effect for background elements
-        gsap.to(".bg-gradient", {
-          y: -100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-          }
-        })
+        if (document.querySelector(".bg-gradient")) {
+          gsap.to(".bg-gradient", {
+            y: -100,
+            ease: "none",
+            scrollTrigger: {
+              trigger: scopeEl,
+              start: "top top",
+              end: "bottom top",
+              scrub: true
+            }
+          })
+        }
 
-      }, heroRef)
+      }, scopeEl)
 
       return () => ctx.revert()
     }
