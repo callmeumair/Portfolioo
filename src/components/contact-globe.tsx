@@ -1,7 +1,14 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
+import type { ThreeElements } from "@react-three/fiber" // ensure JSX.IntrinsicElements augmentation is loaded
 import { Suspense } from "react"
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements extends ThreeElements {}
+  }
+}
 
 function Globe() {
   return (
