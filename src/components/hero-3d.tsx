@@ -1,32 +1,41 @@
 "use client"
 
-import { Canvas } from "@react-three/fiber"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Float, Environment, PresentationControls } from "@react-three/drei"
-import { Suspense, useMemo } from "react"
-import { Color } from "three"
+import { Suspense, useEffect, useMemo } from "react"
+import { Color, DirectionalLight, AmbientLight, Mesh, TorusKnotGeometry, MeshStandardMaterial } from "three"
 
 function Geom() {
+  const { scene } = useThree()
   const color = useMemo(() => new Color("#7c3aed"), [])
-  return (
-    <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.8}>
-      <mesh>
-        <torusKnotGeometry args={[1, 0.32, 220, 32]} />
-        {/* @ts-expect-error three fiber material typing */}
-        <meshStandardMaterial color={color} metalness={0.4} roughness={0.2} />
-      </mesh>
-    </Float>
-  )
+
+  const geom = useMemo(() => new TorusKnotGeometry(1, 0.32, 220, 32), [])
+  const mat = useMemo(() => new MeshStandardMaterial({ color, metalness: 0.4, roughness: 0.2 }), [color])
+  const mesh = useMemo(() => new Mesh(geom, mat), [geom, mat])
+
+  useEffect(() => {
+    scene.add(mesh)
+    return () => {
+      scene.remove(mesh)
+    }
+  }, [scene, mesh])
+
+  useFrame(() => {
+    mesh.rotation.y += 0.01
+  })
+
+  return null
 }
 
 export function Hero3D() {
   return (
     <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden>
       <Canvas camera={{ position: [0, 0, 4.2], fov: 45 }}>
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[3, 3, 3]} intensity={1.2} />
         <Suspense fallback={null}>
           <PresentationControls enabled snap global zoom={1}>
-            <Geom />
+            <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.8}>
+              <Geom />
+            </Float>
           </PresentationControls>
           <Environment preset="city" />
         </Suspense>

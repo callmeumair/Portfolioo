@@ -2,11 +2,10 @@
 
 import { Canvas } from "@react-three/fiber"
 import { Points, PointMaterial } from "@react-three/drei"
-import { Suspense, useMemo, useRef } from "react"
-import * as THREE from "three"
+import { Suspense, useMemo } from "react"
+//
 
 function SpherePoints() {
-  const ref = useRef<THREE.Points>(null)
   const positions = useMemo(() => {
     const points: number[] = []
     const count = 800
@@ -24,11 +23,9 @@ function SpherePoints() {
   }, [])
 
   return (
-    <group ref={ref} rotation={[0.2, 0.4, 0]}>
-      <Points positions={positions} stride={3} frustumCulled>
-        <PointMaterial color="#7c3aed" size={0.02} sizeAttenuation depthWrite={false} transparent opacity={0.9} />
-      </Points>
-    </group>
+    <Points positions={positions} stride={3} frustumCulled rotation={[0.2, 0.4, 0]}>
+      <PointMaterial color="#7c3aed" size={0.02} sizeAttenuation depthWrite={false} transparent opacity={0.9} />
+    </Points>
   )
 }
 
@@ -36,7 +33,7 @@ export function SkillsSphere() {
   return (
     <div className="mx-auto h-64 w-64 sm:h-80 sm:w-80 lg:h-96 lg:w-96 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 3.5], fov: 45 }}>
-        <ambientLight intensity={0.6} />
+        { /* ambient light added via drei Environment or default lighting */ }
         <Suspense fallback={null}>
           <SpherePoints />
         </Suspense>

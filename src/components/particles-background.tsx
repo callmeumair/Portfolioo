@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useState } from "react"
 import Particles from "react-tsparticles"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type TspOptions = any
+
 type ParticlesBackgroundProps = {
   className?: string
 }
@@ -17,7 +20,7 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
     window.addEventListener("particles-toggle", onToggle)
     return () => window.removeEventListener("particles-toggle", onToggle)
   }, [])
-  const options = useMemo(
+  const options: TspOptions = useMemo(
     () => ({
       fpsLimit: 60,
       background: { color: "transparent" },

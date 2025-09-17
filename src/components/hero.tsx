@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 
 const Hero3D = dynamic(() => import("@/components/hero-3d").then(m => m.Hero3D), { ssr: false, loading: () => null })
