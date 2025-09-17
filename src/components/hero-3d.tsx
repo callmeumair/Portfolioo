@@ -3,14 +3,15 @@
 import { Canvas } from "@react-three/fiber"
 import { Float, Environment, PresentationControls } from "@react-three/drei"
 import { Suspense, useMemo } from "react"
+import { Color } from "three"
 
 function Geom() {
-  const color = useMemo(() => new (require("three").Color)("#7c3aed"), [])
+  const color = useMemo(() => new Color("#7c3aed"), [])
   return (
     <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.8}>
       <mesh>
         <torusKnotGeometry args={[1, 0.32, 220, 32]} />
-        {/* @ts-ignore */}
+        {/* @ts-expect-error three fiber material typing */}
         <meshStandardMaterial color={color} metalness={0.4} roughness={0.2} />
       </mesh>
     </Float>

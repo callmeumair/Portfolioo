@@ -137,12 +137,12 @@ export function Hero() {
     initGSAP()
   }, [])
 
-  const titles = [
+  const titles = useMemo(() => [
     "Full Stack Developer",
     "Next.js + TypeScript",
     "Framer Motion + GSAP",
     "Three.js + R3F",
-  ]
+  ], [])
   const [titleIndex, setTitleIndex] = useState(0)
   const [typed, setTyped] = useState("")
   const [deleting, setDeleting] = useState(false)
@@ -167,7 +167,7 @@ export function Hero() {
       })
     }, speed)
     return () => clearTimeout(timeout)
-  }, [typed, deleting, titleIndex])
+  }, [typed, deleting, titleIndex, titles])
 
   return (
     <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">

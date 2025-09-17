@@ -8,12 +8,12 @@ function Globe() {
     <group>
       <mesh rotation={[0.5, 0.6, 0]}>
         <sphereGeometry args={[1.4, 32, 32]} />
-        {/* @ts-ignore */}
+        {/* @ts-expect-error three fiber type narrowing */}
         <meshBasicMaterial wireframe color="#7c3aed" opacity={0.4} transparent />
       </mesh>
       <mesh rotation={[0.5, 0.6, 0]}>
         <sphereGeometry args={[1.42, 32, 32]} />
-        {/* @ts-ignore */}
+        {/* @ts-expect-error three fiber type narrowing */}
         <meshBasicMaterial wireframe color="#06b6d4" opacity={0.25} transparent />
       </mesh>
     </group>
