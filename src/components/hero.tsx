@@ -4,7 +4,10 @@ import { motion } from "framer-motion"
 import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
+
+const Hero3D = dynamic(() => import("@/components/hero-3d").then(m => m.Hero3D), { ssr: false, loading: () => null })
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -26,6 +29,7 @@ export function Hero() {
   useEffect(() => {
     // Only run GSAP animations on client side
     if (typeof window === "undefined") return
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const initGSAP = async () => {
       const { gsap } = await import("gsap")
@@ -133,11 +137,44 @@ export function Hero() {
     initGSAP()
   }, [])
 
+  const titles = [
+    "Full Stack Developer",
+    "Next.js + TypeScript",
+    "Framer Motion + GSAP",
+    "Three.js + R3F",
+  ]
+  const [titleIndex, setTitleIndex] = useState(0)
+  const [typed, setTyped] = useState("")
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const current = titles[titleIndex]
+    const speed = deleting ? 40 : 80
+    const timeout = setTimeout(() => {
+      setTyped(prev => {
+        if (!deleting) {
+          const next = current.slice(0, prev.length + 1)
+          if (next === current) setDeleting(true)
+          return next
+        } else {
+          const next = current.slice(0, prev.length - 1)
+          if (next.length === 0) {
+            setDeleting(false)
+            setTitleIndex((titleIndex + 1) % titles.length)
+          }
+          return next
+        }
+      })
+    }, speed)
+    return () => clearTimeout(timeout)
+  }, [typed, deleting, titleIndex])
+
   return (
     <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 bg-gradient" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
+      <Hero3D />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 lg:py-0">
@@ -148,8 +185,9 @@ export function Hero() {
                 Hi, I&apos;m{" "}
                 <span className="text-gradient">Umer Patel</span>
               </h1>
-              <h2 ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-muted-foreground">
-                Full Stack Developer
+              <h2 ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-muted-foreground min-h-8">
+                <span className="inline-block">{typed}&nbsp;</span>
+                <span className="inline-block w-3 bg-foreground/70 ml-0.5 animate-pulse" style={{ height: '1.2em' }} />
               </h2>
             </div>
 
@@ -163,10 +201,10 @@ export function Hero() {
             <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="group w-full sm:w-auto"
+                className="group w-full sm:w-auto shadow-lg hover:shadow-xl"
                 onClick={() => scrollToNext()}
               >
-                View My Work
+                View Projects
                 <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 transition-transform duration-200" />
               </Button>
               <Button
@@ -178,6 +216,17 @@ export function Hero() {
                 <a href="/resume.pdf" download>
                   <Download className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform duration-200" />
                   Download Resume
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="group w-full sm:w-auto"
+                asChild
+              >
+                <a href="#contact">
+                  <Mail className="mr-2 h-4 w-4" />
+                  Contact Me
                 </a>
               </Button>
             </div>

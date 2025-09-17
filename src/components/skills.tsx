@@ -5,6 +5,9 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import dynamic from "next/dynamic"
+
+const SkillsSphere = dynamic(() => import("@/components/skills-sphere").then(m => m.SkillsSphere), { ssr: false, loading: () => null })
 
 const skillCategories = [
   {
@@ -67,6 +70,16 @@ export function Skills() {
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Here are the technologies and tools I work with to bring ideas to life.
           </p>
+        </motion.div>
+
+        {/* Skill Visualization */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="mb-12 lg:mb-16 flex items-center justify-center"
+        >
+          <SkillsSphere />
         </motion.div>
 
         {/* Skill Categories */}

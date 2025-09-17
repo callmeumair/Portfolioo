@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Moon, Sun, Menu, X } from "lucide-react"
+import { Moon, Sun, Menu, X, Stars } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 
@@ -10,6 +10,7 @@ const navItems = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
+  { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ]
@@ -32,6 +33,13 @@ export function Navbar() {
     setTheme(theme === "dark" ? "light" : "dark")
   }
 
+  const toggleParticles = () => {
+    const current = localStorage.getItem("particles-enabled")
+    const next = current === "true" ? "false" : "true"
+    localStorage.setItem("particles-enabled", next)
+    window.dispatchEvent(new Event("particles-toggle"))
+  }
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
@@ -45,6 +53,7 @@ export function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      role="navigation" aria-label="Primary"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "glass border-b border-border/50"
@@ -78,6 +87,15 @@ export function Navbar() {
 
           {/* Theme Toggle & Mobile Menu */}
           <div className="flex items-center space-x-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleParticles}
+              className="h-9 w-9"
+            >
+              <Stars className="h-4 w-4" />
+              <span className="sr-only">Toggle background particles</span>
+            </Button>
             <Button
               variant="ghost"
               size="icon"

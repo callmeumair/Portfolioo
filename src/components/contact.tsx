@@ -3,9 +3,12 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef, useState } from "react"
-import { Mail, MapPin, Send, Github, Linkedin } from "lucide-react"
+import { Mail, MapPin, Send, Github, Linkedin, ShieldCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import dynamic from "next/dynamic"
+
+const ContactGlobe = dynamic(() => import("@/components/contact-globe").then(m => m.ContactGlobe), { ssr: false, loading: () => null })
 
 const contactInfo = [
   {
@@ -61,6 +64,7 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
+  const [errors, setErrors] = useState<{[k: string]: string}>({})
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -70,8 +74,19 @@ export function Contact() {
     }))
   }
 
+  const validate = () => {
+    const newErrors: {[k: string]: string} = {}
+    if (!formData.name.trim()) newErrors.name = 'Please enter your name.'
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Enter a valid email address.'
+    if (formData.subject.trim().length < 3) newErrors.subject = 'Subject is too short.'
+    if (formData.message.trim().length < 10) newErrors.message = 'Message should be at least 10 characters.'
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!validate()) return
     setIsSubmitting(true)
     setSubmitStatus('idle')
     setSubmitMessage('')
@@ -214,7 +229,7 @@ export function Contact() {
                 <CardTitle>Send me a message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -234,6 +249,7 @@ export function Contact() {
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                         placeholder="Your name"
                       />
+                      {errors.name && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.name}</p>}
                     </motion.div>
                     
                     <motion.div
@@ -254,6 +270,7 @@ export function Contact() {
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                         placeholder="your.email@example.com"
                       />
+                      {errors.email && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
                     </motion.div>
                   </div>
 
@@ -275,6 +292,7 @@ export function Contact() {
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                       placeholder="What's this about?"
                     />
+                    {errors.subject && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.subject}</p>}
                   </motion.div>
 
                   <motion.div
@@ -295,6 +313,7 @@ export function Contact() {
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 resize-none"
                       placeholder="Tell me about your project or just say hello!"
                     />
+                    {errors.message && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.message}</p>}
                   </motion.div>
 
                   {/* Status Message */}
@@ -352,6 +371,31 @@ export function Contact() {
             </Card>
           </motion.div>
         </div>
+
+        {/* Optional Globe */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="mt-16"
+        >
+          <Card className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="p-8">
+                  <h4 className="text-xl font-semibold mb-2 flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Availability & Collaboration</h4>
+                  <p className="text-muted-foreground">
+                    Open to full-time roles and select freelance projects. Based in India, available for remote.
+                  </p>
+                </div>
+                <div className="min-h-[240px]">
+                  <ContactGlobe />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Bottom CTA */}
         <motion.div

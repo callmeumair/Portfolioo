@@ -7,6 +7,8 @@ import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useState } from "react"
 // import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-reveal"
 
 const projects = [
@@ -73,6 +75,7 @@ const projects = [
 ]
 
 export function Projects() {
+  const [activeProject, setActiveProject] = useState<typeof projects[number] | null>(null)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const projectCardsRef = useRef<HTMLDivElement[]>([])
@@ -80,16 +83,14 @@ export function Projects() {
   const featuredProjects = projects.filter(project => project.featured)
   const otherProjects = projects.filter(project => !project.featured)
   
-  // Debug logging
-  console.log('Total projects:', projects.length)
-  console.log('Featured projects:', featuredProjects.length)
-  console.log('Other projects:', otherProjects.length)
+  // Debug logging removed for performance
 
   useEffect(() => {
     // Only run GSAP animations on client side
     if (typeof window === "undefined") return
 
     const initGSAP = async () => {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
       const { gsap } = await import("gsap")
       
       // Add GSAP hover animations to project cards
@@ -169,12 +170,12 @@ export function Projects() {
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-4">
-                    <Button size="sm" asChild>
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <DialogTrigger asChild>
+                      <Button size="sm" onClick={() => setActiveProject(project)}>
                         <ExternalLink className="mr-2 h-4 w-4" />
-                        Live Demo
-                      </a>
+                        Quick View
                     </Button>
+                    </DialogTrigger>
                     <Button variant="outline" size="sm" asChild>
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
@@ -221,12 +222,12 @@ export function Projects() {
                   </div>
                   
                   <div className="flex space-x-4 pt-2">
-                    <Button variant="outline" size="sm" asChild className="group">
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        View Live
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                      </a>
+                    <DialogTrigger asChild>
+                      <Button size="sm" onClick={() => setActiveProject(project)}>
+                        Case Study
+                        <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
+                    </DialogTrigger>
                     <Button variant="ghost" size="sm" asChild>
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
@@ -274,11 +275,11 @@ export function Projects() {
                       </div>
                     </div>
                     <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-2">
-                      <Button size="sm" variant="secondary" asChild>
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <DialogTrigger asChild>
+                        <Button size="sm" variant="secondary" onClick={() => setActiveProject(project)}>
                           <ExternalLink className="h-4 w-4" />
-                        </a>
                       </Button>
+                      </DialogTrigger>
                       <Button size="sm" variant="secondary" asChild>
                         <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                           <Github className="h-4 w-4" />
@@ -348,6 +349,58 @@ export function Projects() {
           </Card>
         </motion.div>
       </div>
+      <Dialog open={!!activeProject} onOpenChange={(open: boolean) => !open && setActiveProject(null)}>
+        <DialogContent>
+          {activeProject && (
+            <div>
+              <DialogHeader>
+                <DialogTitle>{activeProject.title}</DialogTitle>
+              </DialogHeader>
+              <div className="mt-4 grid gap-4">
+                <p className="text-muted-foreground">{activeProject.description}</p>
+                <div className="aspect-video w-full bg-gradient-to-br from-primary/10 to-secondary/10 rounded-md flex items-center justify-center text-5xl">
+                  {activeProject.title.includes("Fitness") ? "💪" : 
+                   activeProject.title.includes("E-Commerce") ? "🛒" : 
+                   activeProject.title.includes("Social") ? "👥" : 
+                   activeProject.title.includes("Web3") ? "⛓️" : 
+                   activeProject.title.includes("Car") ? "🚗" : 
+                   activeProject.title.includes("Password") ? "🔐" : "🚀"}
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold mb-2">Stack</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {activeProject.technologies.map((tech) => (
+                      <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>
+                    ))}
+                  </div>
+                </div>
+                {activeProject.highlights && (
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Highlights</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {activeProject.highlights.map((h) => (
+                        <Badge key={h} className="text-xs bg-primary/10 text-primary border-primary/20">✨ {h}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="flex gap-3 pt-2">
+                  <Button asChild>
+                    <a href={activeProject.liveUrl} target="_blank" rel="noopener noreferrer">
+                      Live Demo
+                    </a>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <a href={activeProject.githubUrl} target="_blank" rel="noopener noreferrer">
+                      GitHub
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   )
 }
