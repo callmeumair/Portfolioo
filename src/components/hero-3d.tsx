@@ -3,7 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Float, Environment, PresentationControls } from "@react-three/drei"
 import { Suspense, useEffect, useMemo } from "react"
-import { Color, DirectionalLight, AmbientLight, Mesh, TorusKnotGeometry, MeshStandardMaterial } from "three"
+import { Color, Mesh, TorusKnotGeometry, MeshStandardMaterial } from "three"
 
 function Geom() {
   const { scene } = useThree()
