@@ -1,23 +1,19 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import type { ThreeElements } from "@react-three/fiber" // ensure JSX.IntrinsicElements augmentation is loaded
+import type { ThreeElements } from "@react-three/fiber" // ensure module stays a TS module
 import { Suspense } from "react"
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 function Globe() {
   return (
     <>
+      {/* @ts-expect-error r3f intrinsic typing not inferred in this file */}
       <mesh rotation={[0.5, 0.6, 0]}>
         <sphereGeometry args={[1.4, 32, 32]} />
         {/* @ts-expect-error three fiber type narrowing */}
         <meshBasicMaterial wireframe color="#7c3aed" opacity={0.4} transparent />
       </mesh>
+      {/* @ts-expect-error r3f intrinsic typing not inferred in this file */}
       <mesh rotation={[0.5, 0.6, 0]}>
         <sphereGeometry args={[1.42, 32, 32]} />
         {/* @ts-expect-error three fiber type narrowing */}
