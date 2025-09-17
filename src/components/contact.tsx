@@ -246,6 +246,7 @@ export function Contact() {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
+                        autoComplete="name"
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                         placeholder="Your name"
                       />
@@ -267,6 +268,7 @@ export function Contact() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
+                        autoComplete="email"
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                         placeholder="your.email@example.com"
                       />
@@ -289,6 +291,7 @@ export function Contact() {
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
+                      autoComplete="off"
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                       placeholder="What's this about?"
                     />
@@ -310,6 +313,7 @@ export function Contact() {
                       onChange={handleInputChange}
                       required
                       rows={6}
+                      autoComplete="off"
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 resize-none"
                       placeholder="Tell me about your project or just say hello!"
                     />
