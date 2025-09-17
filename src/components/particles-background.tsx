@@ -1,7 +1,12 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import Particles from "react-tsparticles"
+import dynamic from "next/dynamic"
+
+const Particles = dynamic(() => import("react-tsparticles").then(m => m.default), {
+  ssr: false,
+  loading: () => null
+})
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TspOptions = any
@@ -15,7 +20,8 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
 
   useEffect(() => {
     const initial = localStorage.getItem("particles-enabled")
-    setEnabled(initial !== "false")
+    // Default OFF for compatibility; opt-in by setting to "true"
+    setEnabled(initial === "true")
     const onToggle = () => setEnabled(localStorage.getItem("particles-enabled") !== "false")
     window.addEventListener("particles-toggle", onToggle)
     return () => window.removeEventListener("particles-toggle", onToggle)
