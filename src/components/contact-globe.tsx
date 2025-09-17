@@ -5,7 +5,7 @@ import { Suspense } from "react"
 
 function Globe() {
   return (
-    <group>
+    <>
       <mesh rotation={[0.5, 0.6, 0]}>
         <sphereGeometry args={[1.4, 32, 32]} />
         {/* @ts-expect-error three fiber type narrowing */}
@@ -16,7 +16,7 @@ function Globe() {
         {/* @ts-expect-error three fiber type narrowing */}
         <meshBasicMaterial wireframe color="#06b6d4" opacity={0.25} transparent />
       </mesh>
-    </group>
+    </>
   )
 }
 
