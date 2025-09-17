@@ -13,7 +13,7 @@ Create a `.env.local` file in your project root:
 
 ```bash
 # Neon Database Configuration
-DATABASE_URL="your_neon_connection_string_here"
+DATABASE_URL="psql 'postgresql://neondb_owner:npg_TLpkR5NsKJM3@ep-damp-term-ad2rxnxw-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require' "
 ```
 
 **Example:**
