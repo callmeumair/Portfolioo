@@ -11,7 +11,6 @@ function Geom() {
     <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.8}>
       <mesh>
         <torusKnotGeometry args={[1, 0.32, 220, 32]} />
-        {/* @ts-expect-error three fiber material typing */}
         <meshStandardMaterial color={color} metalness={0.4} roughness={0.2} />
       </mesh>
     </Float>
@@ -34,5 +33,4 @@ export function Hero3D() {
     </div>
   )
 }
-
 

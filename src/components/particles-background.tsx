@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Particles from "react-tsparticles"
+import type { RecursivePartial, IOptions } from "tsparticles-engine"
 
 type ParticlesBackgroundProps = {
   className?: string
@@ -17,7 +18,7 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
     window.addEventListener("particles-toggle", onToggle)
     return () => window.removeEventListener("particles-toggle", onToggle)
   }, [])
-  const options = useMemo(
+  const options = useMemo<RecursivePartial<IOptions>>(
     () => ({
       fpsLimit: 60,
       background: { color: "transparent" },
@@ -27,7 +28,7 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
         number: { value: 60, density: { enable: true, area: 800 } },
         color: { value: ["#7c3aed", "#06b6d4", "#22c55e"] },
         links: { enable: true, color: "#999", distance: 140, opacity: 0.2, width: 1 },
-        move: { enable: true, speed: 0.8, outModes: { default: "bounce" } },
+        move: { enable: true, speed: 0.8, outModes: { default: "bounce" as const } },
         opacity: { value: 0.5 },
         size: { value: { min: 1, max: 3 } },
       },
@@ -47,5 +48,4 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
     </div>
   )
 }
-
 

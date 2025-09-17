@@ -7,7 +7,7 @@ import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useState } from "react"
 // import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-reveal"
 
@@ -170,12 +170,10 @@ export function Projects() {
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-4">
-                    <DialogTrigger asChild>
-                      <Button size="sm" onClick={() => setActiveProject(project)}>
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        Quick View
+                    <Button size="sm" onClick={() => setActiveProject(project)}>
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      Quick View
                     </Button>
-                    </DialogTrigger>
                     <Button variant="outline" size="sm" asChild>
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
@@ -222,12 +220,10 @@ export function Projects() {
                   </div>
                   
                   <div className="flex space-x-4 pt-2">
-                    <DialogTrigger asChild>
-                      <Button size="sm" onClick={() => setActiveProject(project)}>
-                        Case Study
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                    <Button size="sm" onClick={() => setActiveProject(project)}>
+                      Case Study
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                    </DialogTrigger>
                     <Button variant="ghost" size="sm" asChild>
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
@@ -275,11 +271,9 @@ export function Projects() {
                       </div>
                     </div>
                     <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-2">
-                      <DialogTrigger asChild>
-                        <Button size="sm" variant="secondary" onClick={() => setActiveProject(project)}>
-                          <ExternalLink className="h-4 w-4" />
+                      <Button size="sm" variant="secondary" onClick={() => setActiveProject(project)}>
+                        <ExternalLink className="h-4 w-4" />
                       </Button>
-                      </DialogTrigger>
                       <Button size="sm" variant="secondary" asChild>
                         <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                           <Github className="h-4 w-4" />
