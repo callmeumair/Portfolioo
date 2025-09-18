@@ -1,6 +1,8 @@
+import type { StrList } from "@/types"
+
 export function CaseStudyMeta(props: {
   role: string
-  stack: string[]
+  stack: StrList
   outcomes: Array<{ label: string; value: string }>
   links?: Array<{ label: string; href: string }>
 }) {

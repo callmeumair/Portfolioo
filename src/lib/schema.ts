@@ -26,11 +26,13 @@ export function breadcrumbSchema(items: Array<{ name: string; url: string }>) {
   }
 }
 
+import type { StrList } from "@/types"
+
 export function projectSchema(params: {
   name: string
   url: string
   description: string
-  technologies: string[]
+  technologies: StrList
   metrics?: Array<{ label: string; value: string }>
   image?: string
 }) {
