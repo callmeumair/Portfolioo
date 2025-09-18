@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { Moon, Sun, Menu, X, Stars } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
@@ -16,8 +16,10 @@ const navItems = [
 ]
 
 export function Navbar() {
+  const reduceMotion = useReducedMotion()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [active, setActive] = useState<string>("home")
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
@@ -27,6 +29,27 @@ export function Navbar() {
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const ids = ["home","about","skills","experience","projects","contact"]
+    const sections = ids
+      .map(id => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[]
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a,b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]?.target?.id) setActive(visible[0].target.id)
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    )
+    sections.forEach(s => observer.observe(s))
+    return () => observer.disconnect()
   }, [])
 
   const toggleTheme = () => {
@@ -50,8 +73,8 @@ export function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      initial={reduceMotion ? false : { y: -100 }}
+      animate={reduceMotion ? undefined : { y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       role="navigation" aria-label="Primary"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -60,11 +83,11 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-x">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            whileHover={reduceMotion ? undefined : { scale: 1.05 }}
             className="text-xl font-bold text-gradient"
           >
             Umer Patel
@@ -72,17 +95,28 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                {item.name}
-              </motion.button>
-            ))}
+            {navItems.map((item) => {
+              const isActive = active === item.href.replace('#','')
+              return (
+                <motion.button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  whileHover={reduceMotion ? undefined : { scale: 1.05 }}
+                  whileTap={reduceMotion ? undefined : { scale: 0.95 }}
+                  className={`relative text-sm font-medium transition-colors duration-200 ${
+                    isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {item.name}
+                  <span
+                    aria-hidden
+                    className={`absolute left-0 -bottom-1 h-0.5 rounded-full transition-all duration-300 ${
+                      isActive ? "w-full bg-primary" : "w-0 bg-transparent"
+                    }`}
+                  />
+                </motion.button>
+              )
+            })}
           </div>
 
           {/* Theme Toggle & Mobile Menu */}
@@ -138,9 +172,11 @@ export function Navbar() {
               <motion.button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="block w-full text-left px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                className={`block w-full text-left px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                  active === item.href.replace('#','') ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {item.name}
               </motion.button>

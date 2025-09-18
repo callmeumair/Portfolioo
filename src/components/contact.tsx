@@ -3,6 +3,9 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Mail, MapPin, Send, Github, Linkedin, ShieldCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -50,69 +53,49 @@ const socialLinks = [
   }
 ]
 
+const contactSchema = z.object({
+  name: z.string().min(1, "Please enter your name."),
+  email: z.string().email("Enter a valid email address."),
+  subject: z.string().min(3, "Subject is too short."),
+  message: z.string().min(10, "Message should be at least 10 characters."),
+  resume: z.any().optional(),
+})
+
+type ContactFormValues = z.infer<typeof contactSchema>
+
 export function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { name: "", email: "", subject: "", message: "" }
   })
-  
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
-  const [errors, setErrors] = useState<{[k: string]: string}>({})
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const validate = () => {
-    const newErrors: {[k: string]: string} = {}
-    if (!formData.name.trim()) newErrors.name = 'Please enter your name.'
-    if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Enter a valid email address.'
-    if (formData.subject.trim().length < 3) newErrors.subject = 'Subject is too short.'
-    if (formData.message.trim().length < 10) newErrors.message = 'Message should be at least 10 characters.'
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!validate()) return
-    setIsSubmitting(true)
+  const onSubmit = async (values: ContactFormValues) => {
     setSubmitStatus('idle')
     setSubmitMessage('')
-    
     try {
+      const form = new FormData()
+      form.append('name', values.name)
+      form.append('email', values.email)
+      form.append('subject', values.subject)
+      form.append('message', values.message)
+      const resume = (values as any).resume as File | undefined
+      if (resume) form.append('resume', resume)
+
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: form,
       })
 
       const data = await response.json()
-
       if (response.ok) {
         setSubmitStatus('success')
         setSubmitMessage(data.message || "Message sent successfully! I'll get back to you soon.")
-        
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: ""
-        })
+        reset()
       } else {
         setSubmitStatus('error')
         setSubmitMessage(data.error || 'Failed to send message. Please try again.')
@@ -121,14 +104,12 @@ export function Contact() {
       console.error('Form submission error:', error)
       setSubmitStatus('error')
       setSubmitMessage('Network error. Please check your connection and try again.')
-    } finally {
-      setIsSubmitting(false)
     }
   }
 
   return (
-    <section id="contact" className="py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="section-y">
+      <div className="container-x">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -229,7 +210,7 @@ export function Contact() {
                 <CardTitle>Send me a message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -243,13 +224,12 @@ export function Contact() {
                         type="text"
                         id="name"
                         name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
+                        {...register('name')}
                         required
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                         placeholder="Your name"
                       />
-                      {errors.name && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.name}</p>}
+                      {errors.name && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.name.message as string}</p>}
                     </motion.div>
                     
                     <motion.div
@@ -264,13 +244,12 @@ export function Contact() {
                         type="email"
                         id="email"
                         name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
+                        {...register('email')}
                         required
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                         placeholder="your.email@example.com"
                       />
-                      {errors.email && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
+                      {errors.email && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.email.message as string}</p>}
                     </motion.div>
                   </div>
 
@@ -286,13 +265,12 @@ export function Contact() {
                       type="text"
                       id="subject"
                       name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
+                      {...register('subject')}
                       required
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
                       placeholder="What's this about?"
                     />
-                    {errors.subject && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.subject}</p>}
+                    {errors.subject && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.subject.message as string}</p>}
                   </motion.div>
 
                   <motion.div
@@ -306,14 +284,34 @@ export function Contact() {
                     <textarea
                       id="message"
                       name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
+                      {...register('message')}
                       required
                       rows={6}
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 resize-none"
                       placeholder="Tell me about your project or just say hello!"
                     />
-                    {errors.message && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.message}</p>}
+                    {errors.message && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.message.message as string}</p>}
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ duration: 0.6, delay: 0.95 }}
+                  >
+                    <label htmlFor="resume" className="block text-sm font-medium mb-2">
+                      Resume (optional)
+                    </label>
+                    <input
+                      type="file"
+                      id="resume"
+                      accept="application/pdf"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) (register('resume').onChange as any)({ target: { value: file, name: 'resume' } })
+                      }}
+                      className="w-full border border-border rounded-lg bg-background file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                    />
+                    <p className="mt-2 text-xs text-muted-foreground">PDF only. Max ~2MB recommended.</p>
                   </motion.div>
 
                   {/* Status Message */}

@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef, useEffect } from "react"
 import { ExternalLink, Github, ArrowRight } from "lucide-react"
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 // import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-reveal"
 
 const projects = [
@@ -75,7 +75,9 @@ const projects = [
 ]
 
 export function Projects() {
+  const reduceMotion = useReducedMotion()
   const [activeProject, setActiveProject] = useState<typeof projects[number] | null>(null)
+  const [activeFilter, setActiveFilter] = useState<string>("All")
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const projectCardsRef = useRef<HTMLDivElement[]>([])
@@ -88,7 +90,7 @@ export function Projects() {
   useEffect(() => {
     // Only run GSAP animations on client side
     if (typeof window === "undefined") return
-
+    if (reduceMotion) return
     const initGSAP = async () => {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
       const { gsap } = await import("gsap")
@@ -123,11 +125,29 @@ export function Projects() {
     }
 
     initGSAP()
+  }, [reduceMotion])
+
+  const allTags = useMemo(() => {
+    const s = new Set<string>(["All"]) 
+    projects.forEach(p => p.technologies.forEach(t => s.add(t)))
+    return Array.from(s)
   }, [])
 
+  const filteredFeatured = useMemo(() => {
+    const base = projects.filter(p => p.featured)
+    if (activeFilter === "All") return base
+    return base.filter(p => p.technologies.includes(activeFilter))
+  }, [activeFilter])
+
+  const filteredOthers = useMemo(() => {
+    const base = projects.filter(p => !p.featured)
+    if (activeFilter === "All") return base
+    return base.filter(p => p.technologies.includes(activeFilter))
+  }, [activeFilter])
+
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="section-y bg-muted/30">
+      <div className="container-x">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -143,9 +163,25 @@ export function Projects() {
           </p>
         </motion.div>
 
+        {/* Filters */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => setActiveFilter(tag)}
+              className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
+                activeFilter === tag ? 'bg-primary text-primary-foreground border-primary' : 'bg-background text-foreground border-border hover:bg-muted'
+              }`}
+              aria-pressed={activeFilter === tag}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
         {/* Featured Projects */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
-          {featuredProjects.map((project, index) => (
+          {filteredFeatured.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 50 }}
@@ -246,7 +282,7 @@ export function Projects() {
         >
           <h3 className="text-2xl font-semibold text-center mb-8">Other Projects</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {otherProjects.map((project, index) => (
+          {filteredOthers.map((project, index) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, scale: 0.8 }}

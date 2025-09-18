@@ -3,9 +3,32 @@ import { insertMessage, testConnection } from '@/lib/database'
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse request body
-    const body = await request.json()
-    const { name, email, subject, message } = body
+    const contentType = request.headers.get('content-type') || ''
+    let name = ''
+    let email = ''
+    let subject = ''
+    let message = ''
+    let resumeFile: File | undefined
+
+    if (contentType.includes('application/json')) {
+      const body = await request.json()
+      name = body.name
+      email = body.email
+      subject = body.subject
+      message = body.message
+    } else if (contentType.includes('multipart/form-data')) {
+      const formData = await request.formData()
+      name = String(formData.get('name') || '')
+      email = String(formData.get('email') || '')
+      subject = String(formData.get('subject') || '')
+      message = String(formData.get('message') || '')
+      const file = formData.get('resume')
+      if (file && file instanceof File) {
+        resumeFile = file
+      }
+    } else {
+      return NextResponse.json({ error: 'Unsupported content type' }, { status: 415 })
+    }
 
     // Validate required fields
     if (!name || !email || !subject || !message) {

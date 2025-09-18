@@ -1,15 +1,17 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
+import { trackEvent } from "@/lib/analytics"
 
 const Hero3D = dynamic(() => import("@/components/hero-3d").then(m => m.Hero3D), { ssr: false, loading: () => null })
 
 export function Hero() {
+  const reduceMotion = useReducedMotion()
   const heroRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLHeadingElement>(null)
@@ -27,9 +29,9 @@ export function Hero() {
   }
 
   useEffect(() => {
-    // Only run GSAP animations on client side
+    // Only run GSAP animations on client side and when motion is allowed
     if (typeof window === "undefined") return
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (reduceMotion) return
 
     const initGSAP = async () => {
       const { gsap } = await import("gsap")
@@ -135,39 +137,9 @@ export function Hero() {
     }
 
     initGSAP()
-  }, [])
+  }, [reduceMotion])
 
-  const titles = useMemo(() => [
-    "Full Stack Developer",
-    "Next.js + TypeScript",
-    "Framer Motion + GSAP",
-    "Three.js + R3F",
-  ], [])
-  const [titleIndex, setTitleIndex] = useState(0)
-  const [typed, setTyped] = useState("")
-  const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    const current = titles[titleIndex]
-    const speed = deleting ? 40 : 80
-    const timeout = setTimeout(() => {
-      setTyped(prev => {
-        if (!deleting) {
-          const next = current.slice(0, prev.length + 1)
-          if (next === current) setDeleting(true)
-          return next
-        } else {
-          const next = current.slice(0, prev.length - 1)
-          if (next.length === 0) {
-            setDeleting(false)
-            setTitleIndex((titleIndex + 1) % titles.length)
-          }
-          return next
-        }
-      })
-    }, speed)
-    return () => clearTimeout(timeout)
-  }, [typed, deleting, titleIndex, titles])
+  // Remove typewriter; use concise recruiter-optimized copy
 
   return (
     <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -182,19 +154,15 @@ export function Hero() {
           <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
             <div className="space-y-3 lg:space-y-4">
               <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                Hi, I&apos;m{" "}
-                <span className="text-gradient">Umer Patel</span>
+                Umer Patel — <span className="text-gradient">Frontend Engineer</span> crafting elegant, performant interfaces that convert.
               </h1>
-              <h2 ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-muted-foreground min-h-8">
-                <span className="inline-block">{typed}&nbsp;</span>
-                <span className="inline-block w-3 bg-foreground/70 ml-0.5 animate-pulse" style={{ height: '1.2em' }} />
+              <h2 ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-muted-foreground">
+                I build design-driven products with React/Next.js, turning ambiguity into shipped, measurable outcomes.
               </h2>
             </div>
 
             <p ref={descriptionRef} className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              I&apos;m passionate about creating innovative digital solutions and 
-              beautiful user experiences. I specialize in modern web technologies 
-              and love turning complex problems into simple, elegant solutions.
+              Previously shipped growth-driving UX, shaved seconds off LCP, and built motion systems that feel premium and accessible.
             </p>
 
             {/* CTA Buttons */}
@@ -202,31 +170,23 @@ export function Hero() {
               <Button
                 size="lg"
                 className="group w-full sm:w-auto shadow-lg hover:shadow-xl"
-                onClick={() => scrollToNext()}
+                asChild
+                onClick={() => trackEvent('cta_hire_me_click')}
               >
-                View Projects
-                <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 transition-transform duration-200" />
+                <a href="#contact" aria-label="Hire me">
+                  Hire me
+                </a>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className="group w-full sm:w-auto"
                 asChild
+                onClick={() => trackEvent('cta_download_resume_click')}
               >
-                <a href="/resume.pdf" download>
+                <a href="/resume.pdf" download aria-label="Download resume">
                   <Download className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform duration-200" />
                   Download Resume
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                className="group w-full sm:w-auto"
-                asChild
-              >
-                <a href="#contact">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Contact Me
                 </a>
               </Button>
             </div>
@@ -332,22 +292,24 @@ export function Hero() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.button
-            onClick={scrollToNext}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+        {!reduceMotion && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           >
-            <span className="text-sm font-medium">Scroll Down</span>
-            <ArrowDown className="h-5 w-5" />
-          </motion.button>
-        </motion.div>
+            <motion.button
+              onClick={scrollToNext}
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+            >
+              <span className="text-sm font-medium">Scroll Down</span>
+              <ArrowDown className="h-5 w-5" />
+            </motion.button>
+          </motion.div>
+        )}
       </div>
     </section>
   )
