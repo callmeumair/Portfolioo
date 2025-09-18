@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
+import LottieAccent from "@/components/lottie-accent"
 
 const Hero3D = dynamic(() => import("@/components/hero-3d").then(m => m.Hero3D), { ssr: false, loading: () => null })
 
@@ -210,6 +211,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 bg-gradient" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
       <Hero3D />
+      <LottieAccent />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 lg:py-0">
