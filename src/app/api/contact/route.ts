@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     let email = ''
     let subject = ''
     let message = ''
-    let _resumeFile: File | undefined
+    // Note: resume file is accepted but not persisted for now
 
     if (contentType.includes('application/json')) {
       const body = await request.json()
@@ -22,10 +22,7 @@ export async function POST(request: NextRequest) {
       email = String(formData.get('email') || '')
       subject = String(formData.get('subject') || '')
       message = String(formData.get('message') || '')
-      const file = formData.get('resume')
-      if (file && file instanceof File) {
-        _resumeFile = file
-      }
+      // const resume = formData.get('resume') as File | null
     } else {
       return NextResponse.json({ error: 'Unsupported content type' }, { status: 415 })
     }

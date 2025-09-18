@@ -61,13 +61,13 @@ const contactSchema = z.object({
   resume: z.any().optional(),
 })
 
-type ContactFormValues = z.infer<typeof contactSchema>
+type ContactFormValues = Omit<z.infer<typeof contactSchema>, 'resume'> & { resume?: File }
 
 export function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormValues>({
+  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: { name: "", email: "", subject: "", message: "" }
   })
@@ -83,7 +83,7 @@ export function Contact() {
       form.append('email', values.email)
       form.append('subject', values.subject)
       form.append('message', values.message)
-      const resume = (values as unknown as { resume?: File }).resume
+      const resume = values.resume
       if (resume) form.append('resume', resume)
 
       const response = await fetch('/api/contact', {
@@ -307,7 +307,7 @@ export function Contact() {
                       accept="application/pdf"
                       onChange={(e) => {
                         const file = e.target.files?.[0]
-                        if (file) (register('resume').onChange as any)({ target: { value: file, name: 'resume' } })
+                        if (file) setValue('resume', file)
                       }}
                       className="w-full border border-border rounded-lg bg-background file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
                     />
