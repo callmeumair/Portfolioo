@@ -24,8 +24,10 @@ const CASES = {
   },
 } as const
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const data = (CASES as any)[params.slug]
+type CaseKey = keyof typeof CASES
+
+export default function CaseStudyPage({ params }: { params: { slug: CaseKey } }) {
+  const data = CASES[params.slug]
   if (!data) return notFound()
 
   const schema = projectSchema({

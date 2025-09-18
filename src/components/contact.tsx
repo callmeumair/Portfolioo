@@ -83,7 +83,7 @@ export function Contact() {
       form.append('email', values.email)
       form.append('subject', values.subject)
       form.append('message', values.message)
-      const resume = (values as any).resume as File | undefined
+      const resume = (values as unknown as { resume?: File }).resume
       if (resume) form.append('resume', resume)
 
       const response = await fetch('/api/contact', {

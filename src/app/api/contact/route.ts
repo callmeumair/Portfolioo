@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     let email = ''
     let subject = ''
     let message = ''
-    let resumeFile: File | undefined
+    let _resumeFile: File | undefined
 
     if (contentType.includes('application/json')) {
       const body = await request.json()
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       message = String(formData.get('message') || '')
       const file = formData.get('resume')
       if (file && file instanceof File) {
-        resumeFile = file
+        _resumeFile = file
       }
     } else {
       return NextResponse.json({ error: 'Unsupported content type' }, { status: 415 })

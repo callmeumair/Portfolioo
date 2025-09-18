@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import dynamic from "next/dynamic"
 import { trackEvent } from "@/lib/analytics"
 

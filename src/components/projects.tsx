@@ -83,7 +83,6 @@ export function Projects() {
   const projectCardsRef = useRef<HTMLDivElement[]>([])
 
   const featuredProjects = projects.filter(project => project.featured)
-  const otherProjects = projects.filter(project => !project.featured)
   
   // Debug logging removed for performance
 
