@@ -12,6 +12,8 @@ import { homeSEO } from "@/lib/seo"
 import { TestimonialsMarquee } from "@/components/sections/TestimonialsMarquee"
 import { MobileStickyCTA } from "@/components/mobile-sticky-cta"
 
+export const dynamic = "force-dynamic"
+
 export default function Home() {
   return (
     <div className="min-h-screen relative">
