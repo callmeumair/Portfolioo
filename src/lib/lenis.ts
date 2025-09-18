@@ -15,8 +15,6 @@ export function initLenis(): Lenis | null {
     duration: 1.1,
     easing: (t: number) => 1 - Math.pow(1 - t, 3),
     smoothWheel: true,
-    smoothTouch: false,
-    syncTouch: true,
   })
 
   function raf(time: number) {
