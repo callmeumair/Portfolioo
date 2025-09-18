@@ -173,6 +173,23 @@ html {
 }
 
 @layer utilities {
+  .soft-bg-gradient {
+    position: absolute;
+    inset: -20% -10% 0 -10%;
+    background: radial-gradient(60% 60% at 20% 10%, color-mix(in oklch, var(--primary) 35%, transparent) 0%, transparent 60%),
+                radial-gradient(50% 50% at 80% 0%, color-mix(in oklch, var(--secondary) 28%, transparent) 0%, transparent 60%),
+                radial-gradient(50% 50% at 50% 70%, color-mix(in oklch, var(--accent) 24%, transparent) 0%, transparent 60%);
+    filter: blur(60px);
+    transform: translate3d(0,0,0);
+    animation: bg-float 18s ease-in-out infinite alternate;
+    opacity: 0.8;
+  }
+
+  @keyframes bg-float {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(0, -2%, 0) scale(1.05); }
+    100% { transform: translate3d(0, -4%, 0) scale(1); }
+  }
   .text-gradient {
     @apply bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent;
   }

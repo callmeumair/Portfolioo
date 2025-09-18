@@ -1,6 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import SoftBackground from "@/components/soft-background"
 
 const ParticlesBackground = dynamic(
   () => import("@/components/particles-background").then(m => m.ParticlesBackground),
@@ -8,7 +9,11 @@ const ParticlesBackground = dynamic(
 )
 
 export function BackgroundMount() {
-  return <ParticlesBackground />
+  return (
+    <>
+      <SoftBackground />
+    </>
+  )
 }
 
 export default BackgroundMount
