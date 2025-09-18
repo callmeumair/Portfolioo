@@ -223,7 +223,6 @@ export function Contact() {
                       <input
                         type="text"
                         id="name"
-                        name="name"
                         {...register('name')}
                         required
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
@@ -243,7 +242,6 @@ export function Contact() {
                       <input
                         type="email"
                         id="email"
-                        name="email"
                         {...register('email')}
                         required
                         className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
@@ -264,7 +262,6 @@ export function Contact() {
                     <input
                       type="text"
                       id="subject"
-                      name="subject"
                       {...register('subject')}
                       required
                       className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
@@ -283,7 +280,6 @@ export function Contact() {
                     </label>
                     <textarea
                       id="message"
-                      name="message"
                       {...register('message')}
                       required
                       rows={6}
