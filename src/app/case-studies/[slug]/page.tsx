@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { NextSeo } from "next-seo"
+// Use app router metadata or script tags; avoid next-seo to reduce SSR conflicts
 import CaseStudyHeader from "@/components/sections/CaseStudyHeader"
 import CaseStudyMeta from "@/components/sections/CaseStudyMeta"
 import { projectSchema } from "@/lib/schema"
@@ -40,11 +40,6 @@ export default function CaseStudyPage({ params }: { params: { slug: CaseKey } })
 
   return (
     <div>
-      <NextSeo
-        title={`${data.title} — Case Study`}
-        canonical={`https://umerpatel1.vercel.app/case-studies/${params.slug}`}
-        openGraph={{ url: `https://umerpatel1.vercel.app/case-studies/${params.slug}` }}
-      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <CaseStudyHeader title={data.title} subtitle={data.subtitle} coverEmoji={data.emoji} />
       <CaseStudyMeta role={data.role} stack={data.stack} outcomes={data.outcomes} links={data.links} />

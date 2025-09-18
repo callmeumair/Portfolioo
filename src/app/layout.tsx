@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
-import { DefaultSeo } from "next-seo";
-import { defaultSEO } from "@/../next-seo.config";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -110,7 +108,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <DefaultSeo {...defaultSEO} />
           {children}
           <Analytics />
         </ThemeProvider>
