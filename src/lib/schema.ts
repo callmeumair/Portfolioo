@@ -33,7 +33,7 @@ export function projectSchema(params: {
   url: string
   description: string
   technologies: StrList
-  metrics?: Array<{ label: string; value: string }>
+  metrics?: ReadonlyArray<{ label: string; value: string }>
   image?: string
 }) {
   return {
