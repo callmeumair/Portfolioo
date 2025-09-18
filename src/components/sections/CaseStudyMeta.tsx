@@ -4,7 +4,7 @@ export function CaseStudyMeta(props: {
   role: string
   stack: StrList
   outcomes: ReadonlyArray<{ label: string; value: string }>
-  links?: Array<{ label: string; href: string }>
+  links?: ReadonlyArray<{ label: string; href: string }>
 }) {
   return (
     <section className="section-y">
