@@ -3,7 +3,7 @@ import type { StrList } from "@/types"
 export function CaseStudyMeta(props: {
   role: string
   stack: StrList
-  outcomes: Array<{ label: string; value: string }>
+  outcomes: ReadonlyArray<{ label: string; value: string }>
   links?: Array<{ label: string; href: string }>
 }) {
   return (
