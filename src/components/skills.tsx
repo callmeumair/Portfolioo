@@ -5,24 +5,24 @@ import { GradientBlob } from "@/components/ui/gradient-blob"
 
 // Technology icons and data
 const technologies = [
-  { name: "TypeScript", icon: "⚡", color: "from-blue-500 to-blue-600", bgColor: "bg-blue-500/10" },
-  { name: "React", icon: "⚛️", color: "from-cyan-400 to-cyan-600", bgColor: "bg-cyan-500/10" },
-  { name: "Next.js", icon: "▲", color: "from-white to-gray-300", bgColor: "bg-white/10" },
-  { name: "Node.js", icon: "🟢", color: "from-green-500 to-green-600", bgColor: "bg-green-500/10" },
-  { name: "Tailwind CSS", icon: "🎨", color: "from-cyan-400 to-blue-500", bgColor: "bg-cyan-500/10" },
-  { name: "PostgreSQL", icon: "🐘", color: "from-blue-400 to-blue-600", bgColor: "bg-blue-500/10" },
-  { name: "MongoDB", icon: "🍃", color: "from-green-500 to-green-700", bgColor: "bg-green-500/10" },
-  { name: "Python", icon: "🐍", color: "from-blue-400 to-yellow-500", bgColor: "bg-blue-500/10" },
-  { name: "Git", icon: "🔧", color: "from-orange-500 to-red-600", bgColor: "bg-orange-500/10" },
-  { name: "Docker", icon: "🐳", color: "from-blue-400 to-blue-600", bgColor: "bg-blue-500/10" },
-  { name: "AWS", icon: "☁️", color: "from-orange-400 to-orange-600", bgColor: "bg-orange-500/10" },
-  { name: "Figma", icon: "🎯", color: "from-emerald-400 to-pink-500", bgColor: "bg-purple-500/10" },
-  { name: "React Native", icon: "📱", color: "from-cyan-400 to-blue-500", bgColor: "bg-cyan-500/10" },
-  { name: "Three.js", icon: "🎮", color: "from-black to-gray-700", bgColor: "bg-gray-500/10" },
-  { name: "Framer Motion", icon: "✨", color: "from-emerald-500 to-teal-500", bgColor: "bg-purple-500/10" },
-  { name: "Swift", icon: "🍎", color: "from-orange-500 to-red-500", bgColor: "bg-orange-500/10" },
-  { name: "GraphQL", icon: "◈", color: "from-amber-500 to-emerald-600", bgColor: "bg-pink-500/10" },
-  { name: "Firebase", icon: "🔥", color: "from-yellow-400 to-orange-600", bgColor: "bg-yellow-500/10" },
+  { name: "TypeScript", icon: "⚡", color: "from-blue-500 to-blue-600", bgColor: "bg-white/5" },
+  { name: "React", icon: "⚛️", color: "from-cyan-400 to-cyan-600", bgColor: "bg-white/5" },
+  { name: "Next.js", icon: "▲", color: "from-white to-gray-300", bgColor: "bg-white/5" },
+  { name: "Node.js", icon: "🟢", color: "from-green-500 to-green-600", bgColor: "bg-white/5" },
+  { name: "Tailwind CSS", icon: "🎨", color: "from-cyan-400 to-blue-500", bgColor: "bg-white/5" },
+  { name: "PostgreSQL", icon: "🐘", color: "from-blue-400 to-blue-600", bgColor: "bg-white/5" },
+  { name: "MongoDB", icon: "🍃", color: "from-green-500 to-green-700", bgColor: "bg-white/5" },
+  { name: "Python", icon: "🐍", color: "from-blue-400 to-yellow-500", bgColor: "bg-white/5" },
+  { name: "Git", icon: "🔧", color: "from-orange-500 to-red-600", bgColor: "bg-white/5" },
+  { name: "Docker", icon: "🐳", color: "from-blue-400 to-blue-600", bgColor: "bg-white/5" },
+  { name: "AWS", icon: "☁️", color: "from-orange-400 to-orange-600", bgColor: "bg-white/5" },
+  { name: "Figma", icon: "🎯", color: "from-purple-400 to-pink-500", bgColor: "bg-white/5" },
+  { name: "React Native", icon: "📱", color: "from-cyan-400 to-blue-500", bgColor: "bg-white/5" },
+  { name: "Three.js", icon: "🎮", color: "from-gray-500 to-gray-700", bgColor: "bg-white/5" },
+  { name: "Framer Motion", icon: "✨", color: "from-purple-500 to-pink-500", bgColor: "bg-white/5" },
+  { name: "Swift", icon: "🍎", color: "from-orange-500 to-red-500", bgColor: "bg-white/5" },
+  { name: "GraphQL", icon: "◈", color: "from-pink-500 to-purple-500", bgColor: "bg-white/5" },
+  { name: "Firebase", icon: "🔥", color: "from-yellow-400 to-orange-600", bgColor: "bg-white/5" },
 ]
 
 export function Skills() {
@@ -114,21 +114,21 @@ export function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="mt-16 text-center"
+          className="mt-20 text-center"
         >
           <div className="inline-flex items-center gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10">
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-amber-500">18+</div>
+              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">18+</div>
               <div className="text-sm text-muted-foreground mt-1">Technologies</div>
             </div>
             <div className="w-px h-12 bg-white/10" />
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-600">5+</div>
+              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">5+</div>
               <div className="text-sm text-muted-foreground mt-1">Years Experience</div>
             </div>
             <div className="w-px h-12 bg-white/10" />
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600">50+</div>
+              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">50+</div>
               <div className="text-sm text-muted-foreground mt-1">Projects Built</div>
             </div>
           </div>
