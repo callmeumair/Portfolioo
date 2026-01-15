@@ -1,419 +1,198 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef, useEffect } from "react"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { ExternalLink, Github, ArrowRight } from "lucide-react"
+import { Github, Globe, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useState } from "react"
-// import { ScrollRevealComponent, ScrollRevealPresets } from "@/components/scroll-reveal"
+import { Card3D } from "@/components/ui/3d-card"
+import { cn } from "@/lib/utils"
 
 const projects = [
   {
-    title: "AI-Powered Fitness App",
-    description: "A cutting-edge fitness application that revolutionizes personal training using Artificial Intelligence. Features personalized workout plans, real-time form analysis, and intelligent progress tracking with OpenAI integration.",
-    image: "/fitness-app.jpg",
-    technologies: ["Next.js", "React", "Python", "OpenAI API", "Machine Learning"],
+    title: "Commute Timely",
+    description: "Real-time AI-powered commute prediction app. Launching on App Store & Play Store in Feb 2026. Features intelligent routing and predictive analytics.",
+    technologies: ["React Native", "AI/ML", "Node.js", "Google Maps API"],
+    liveUrl: "https://commutetimely.com",
+    githubUrl: "#",
+    icon: "🚆",
+    featured: true,
+    span: "md:col-span-2 lg:col-span-2",
+  },
+  {
+    title: "PulseFit AI",
+    description: "Advanced fitness coaching platform powered by AI. Personalized workout plans and real-time form analysis.",
+    technologies: ["Next.js", "Python", "OpenAI API", "Tailwind CSS"],
     liveUrl: "https://pulsefitai.vercel.app/",
     githubUrl: "https://github.com/callmeumair/PulseFit.AI",
+    icon: "💪",
     featured: true,
-    highlights: ["AI-Powered", "Real-time Analysis", "Personalized Training", "OpenAI Integration"]
+    span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Full-Stack E-Commerce Platform",
-    description: "A comprehensive e-commerce solution showcasing advanced full-stack development skills. Includes secure user authentication, real-time inventory management, payment processing, and admin dashboard with analytics.",
-    image: "/ecommerce.jpg",
-    technologies: ["React", "Firebase", "Tailwind CSS", "Redux", "Stripe API"],
+    title: "E-Commerce Platform",
+    description: "Full-featured shopping platform with payments, inventory management, and admin dashboard.",
+    technologies: ["React", "Firebase", "Stripe", "Redux"],
     liveUrl: "https://ecom-web3.vercel.app/",
     githubUrl: "https://github.com/callmeumair/E-Commerce",
-    featured: true,
-    highlights: ["Full-Stack", "Payment Integration", "Real-time Updates", "Admin Dashboard"]
+    icon: "🛒",
+    featured: false,
+    span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Social Media Platform",
-    description: "A full-stack social media application built with the MERN stack. Features real-time messaging, user profiles, content sharing, and advanced social features with scalable architecture.",
-    image: "/social-media.jpg",
-    technologies: ["Next.js", "OpenAI API", "Node.js", "MongoDB", "Socket.io"],
+    title: "Social Media App",
+    description: "Real-time social platform with messaging, profiles, and content sharing features.",
+    technologies: ["MERN Stack", "Socket.io", "MongoDB"],
     liveUrl: "https://umerpatel.vercel.app/#",
     githubUrl: "https://github.com/callmeumair/Social-Media-App",
+    icon: "👥",
     featured: false,
-    highlights: ["Real-time Chat", "MERN Stack", "Scalable Architecture", "AI Features"]
+    span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Web3 Token Application",
-    description: "An innovative Web3 project exploring blockchain technologies and decentralized applications. Features token management, smart contracts, and DeFi integration with modern UI/UX.",
-    image: "/web3-app.jpg",
-    technologies: ["React Native", "TypeScript", "D3.js", "Firebase", "Web3.js"],
+    title: "Web3 Token dApp",
+    description: "Decentralized application for token management and smart contract interaction.",
+    technologies: ["React Native", "Web3.js", "Solidity"],
     liveUrl: "https://web3-app1.vercel.app/",
     githubUrl: "https://github.com/callmeumair/web3",
-    featured: true,
-    highlights: ["Web3", "Blockchain", "Smart Contracts", "DeFi Integration"]
+    icon: "⛓️",
+    featured: false,
+    span: "md:col-span-1 lg:col-span-1",
   },
   {
-    title: "Car Rental Management System",
-    description: "A comprehensive car rental web application with advanced booking system, vehicle management, and customer portal. Features real-time availability, pricing algorithms, and integrated payment processing.",
-    image: "/car-rental.jpg",
-    technologies: ["React", "Weather API", "Chart.js", "Styled Components", "Node.js"],
+    title: "Car Rental System",
+    description: "Booking management system with real-time availability and pricing engines.",
+    technologies: ["React", "Node.js", "PostgreSQL"],
     liveUrl: "https://car-web-orpin.vercel.app/",
     githubUrl: "https://github.com/callmeumair/Car-rental",
+    icon: "🚗",
     featured: false,
-    highlights: ["Booking System", "Real-time Data", "Payment Processing", "Admin Panel"]
-  },
-  {
-    title: "Secure Password Manager",
-    description: "A highly secure password management application with end-to-end encryption, biometric authentication, and cross-platform synchronization. Features secure vault, password generator, and breach monitoring.",
-    image: "/password-manager.jpg",
-    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript", "Encryption"],
-    liveUrl: "https://password-manager-eight-sigma.vercel.app/",
-    githubUrl: "https://github.com/callmeumair/Password-Manager",
-    featured: false,
-    highlights: ["End-to-End Encryption", "Biometric Auth", "Cross-Platform", "Security First"]
+    span: "md:col-span-1 lg:col-span-1",
   }
 ]
 
 export function Projects() {
-  const [activeProject, setActiveProject] = useState<typeof projects[number] | null>(null)
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const projectCardsRef = useRef<HTMLDivElement[]>([])
-  const [featuredParent] = useAutoAnimate()
-  const [otherParent] = useAutoAnimate()
-
-  const featuredProjects = projects.filter(project => project.featured)
-  const otherProjects = projects.filter(project => !project.featured)
-  
-  // Debug logging removed for performance
-
-  useEffect(() => {
-    // Only run GSAP animations on client side
-    if (typeof window === "undefined") return
-
-    const initGSAP = async () => {
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-      const { gsap } = await import("gsap")
-
-      const cleanups: Array<() => void> = []
-
-      // Add GSAP hover animations to project cards
-      projectCardsRef.current.forEach((card) => {
-        if (!card) return
-        const image = card.querySelector(".project-image")
-        const overlay = card.querySelector(".project-overlay")
-        if (!image || !overlay) return
-
-        const tl = gsap.timeline({ paused: true })
-
-        tl.to(card, {
-          y: -10,
-          scale: 1.02,
-          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-          duration: 0.3,
-          ease: "power2.out"
-        })
-        .to(image as Element, {
-          scale: 1.1,
-          duration: 0.3,
-          ease: "power2.out"
-        }, 0)
-        .to(overlay as Element, {
-          opacity: 1,
-          duration: 0.3,
-          ease: "power2.out"
-        }, 0)
-
-        const enter = () => tl.play()
-        const leave = () => tl.reverse()
-        card.addEventListener("mouseenter", enter)
-        card.addEventListener("mouseleave", leave)
-        cleanups.push(() => {
-          card.removeEventListener("mouseenter", enter)
-          card.removeEventListener("mouseleave", leave)
-          tl.kill()
-        })
-      })
-
-      return () => cleanups.forEach(fn => fn())
-    }
-
-    let disposer: void | (() => void)
-    initGSAP().then(fn => { if (typeof fn === 'function') disposer = fn })
-    return () => { if (typeof disposer === 'function') disposer() }
-  }, [])
-
   return (
-    <section id="projects" className="py-20 bg-muted/30">
+    <section id="projects" className="py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Featured <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Here are some of my recent projects that showcase my skills and passion for development.
-          </p>
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+              Selected Works
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl">
+              A curated selection of projects that demonstrate my passion for building robust digital solutions.
+            </p>
+          </div>
+          <Button variant="outline" className="rounded-full hidden md:flex" asChild>
+            <a href="https://github.com/callmeumair" target="_blank" rel="noopener noreferrer">
+              View Github <ArrowUpRight className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
         </motion.div>
 
-        {/* Featured Projects */}
-        <div ref={featuredParent} className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
-          {featuredProjects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={cn("group", project.span)}
             >
-              <Card 
-                ref={(el) => {
-                  if (el) projectCardsRef.current[index] = el
-                }}
-                className="h-full group hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
-              >
-                <div className="relative overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center project-image">
-                    <div className="text-6xl opacity-50">
-                      {project.title.includes("Fitness") ? "💪" : 
-                       project.title.includes("E-Commerce") ? "🛒" : 
-                       project.title.includes("Social") ? "👥" : 
-                       project.title.includes("Web3") ? "⛓️" : 
-                       project.title.includes("Car") ? "🚗" : 
-                       project.title.includes("Password") ? "🔐" : "🚀"}
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-4">
-                    <Button size="sm" onClick={() => setActiveProject(project)}>
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Quick View
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-2 h-4 w-4" />
-                        Code
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-                
-                <CardHeader>
-                  <CardTitle className="group-hover:text-primary transition-colors duration-200">
-                    {project.title}
-                  </CardTitle>
-                </CardHeader>
-                
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground">
-                    {project.description}
-                  </p>
-                  
-                  {/* Project Highlights */}
-                  {project.highlights && (
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-foreground">Key Features:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {project.highlights.map((highlight) => (
-                          <Badge key={highlight} variant="default" className="text-xs bg-primary/10 text-primary border-primary/20">
-                            ✨ {highlight}
-                          </Badge>
-                        ))}
+              <Card3D className="h-full">
+                <div className="h-full relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/20 gradient-border-animated">
+                  <div className="p-8 h-full flex flex-col">
+                    <div className="flex justify-between items-start mb-6">
+                      <motion.div
+                        className="p-3 rounded-2xl bg-white/10 text-3xl"
+                        whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {project.icon}
+                      </motion.div>
+                      <div className="flex gap-2">
+                        {project.liveUrl && (
+                          <motion.a
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            whileTap={{ scale: 0.95 }}
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-full bg-white/5 hover:bg-white/20 transition-colors glow-effect-hover"
+                            aria-label="Visit Live Site"
+                          >
+                            <Globe className="h-5 w-5" />
+                          </motion.a>
+                        )}
+                        {project.githubUrl && (
+                          <motion.a
+                            whileHover={{ scale: 1.1, rotate: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-full bg-white/5 hover:bg-white/20 transition-colors glow-effect-hover"
+                            aria-label="View Code"
+                          >
+                            <Github className="h-5 w-5" />
+                          </motion.a>
+                        )}
                       </div>
                     </div>
-                  )}
-                  
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-foreground">Technologies:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <Badge key={tech} variant="secondary" className="text-xs">
-                          {tech}
-                        </Badge>
+
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-bold mb-2 group-hover:text-gradient-primary transition-all duration-300">
+                        {project.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-auto flex flex-wrap gap-2 pt-6">
+                      {project.technologies.map((tech, i) => (
+                        <motion.div
+                          key={tech}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + i * 0.05 }}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                        >
+                          <Badge
+                            variant="secondary"
+                            className="rounded-lg px-2.5 py-0.5 text-xs font-medium bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/10"
+                          >
+                            {tech}
+                          </Badge>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
-                  
-                  <div className="flex space-x-4 pt-2">
-                    <Button size="sm" onClick={() => setActiveProject(project)}>
-                      Case Study
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm" asChild>
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-2 h-4 w-4" />
-                        GitHub
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+
+                  {/* Enhanced Decorative Gradient Blob */}
+                  <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-600/20 blur-[100px] rounded-full pointer-events-none group-hover:from-purple-500/30 group-hover:via-pink-500/30 group-hover:to-purple-600/30 transition-all duration-500" />
+                </div>
+              </Card3D>
             </motion.div>
           ))}
         </div>
 
-        {/* Other Projects */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mb-8"
-        >
-          <h3 className="text-2xl font-semibold text-center mb-8">Other Projects</h3>
-          <div ref={otherParent} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {otherProjects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-              >
-                <Card 
-                  ref={(el) => {
-                    if (el) projectCardsRef.current[featuredProjects.length + index] = el
-                  }}
-                  className="h-full group hover:shadow-lg transition-all duration-300 cursor-pointer"
-                >
-                  <div className="relative overflow-hidden">
-                    <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center project-image">
-                      <div className="text-4xl opacity-50">
-                        {project.title.includes("Fitness") ? "💪" : 
-                         project.title.includes("E-Commerce") ? "🛒" : 
-                         project.title.includes("Social") ? "👥" : 
-                         project.title.includes("Web3") ? "⛓️" : 
-                         project.title.includes("Car") ? "🚗" : 
-                         project.title.includes("Password") ? "🔐" : "💻"}
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 bg-black/50 opacity-0 project-overlay flex items-center justify-center space-x-2">
-                      <Button size="sm" variant="secondary" onClick={() => setActiveProject(project)}>
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="secondary" asChild>
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg group-hover:text-primary transition-colors duration-200">
-                      {project.title}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="space-y-3">
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {project.description}
-                    </p>
-                    
-                    <div className="flex flex-wrap gap-1">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <Badge key={tech} variant="outline" className="text-xs">
-                          {tech}
-                        </Badge>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{project.technologies.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="text-center"
-        >
-          <Card className="max-w-2xl mx-auto">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold mb-4">Interested in Working Together?</h3>
-              <p className="text-muted-foreground mb-6">
-                I&apos;m always excited to take on new challenges and collaborate on interesting projects.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
-                  <a href="#contact">
-                    Get In Touch
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <a href="https://github.com/callmeumair" target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2 h-4 w-4" />
-                    View All Projects
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <div className="mt-12 text-center md:hidden">
+          <Button variant="outline" className="rounded-full" asChild>
+            <a href="https://github.com/callmeumair" target="_blank" rel="noopener noreferrer">
+              View Github <ArrowUpRight className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+        </div>
       </div>
-      <Dialog open={!!activeProject} onOpenChange={(open: boolean) => !open && setActiveProject(null)}>
-        <DialogContent>
-          {activeProject && (
-            <div>
-              <DialogHeader>
-                <DialogTitle>{activeProject.title}</DialogTitle>
-              </DialogHeader>
-              <div className="mt-4 grid gap-4">
-                <p className="text-muted-foreground">{activeProject.description}</p>
-                <div className="aspect-video w-full bg-gradient-to-br from-primary/10 to-secondary/10 rounded-md flex items-center justify-center text-5xl">
-                  {activeProject.title.includes("Fitness") ? "💪" : 
-                   activeProject.title.includes("E-Commerce") ? "🛒" : 
-                   activeProject.title.includes("Social") ? "👥" : 
-                   activeProject.title.includes("Web3") ? "⛓️" : 
-                   activeProject.title.includes("Car") ? "🚗" : 
-                   activeProject.title.includes("Password") ? "🔐" : "🚀"}
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold mb-2">Stack</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {activeProject.technologies.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>
-                    ))}
-                  </div>
-                </div>
-                {activeProject.highlights && (
-                  <div>
-                    <h4 className="text-sm font-semibold mb-2">Highlights</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {activeProject.highlights.map((h) => (
-                        <Badge key={h} className="text-xs bg-primary/10 text-primary border-primary/20">✨ {h}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="flex gap-3 pt-2">
-                  <Button asChild>
-                    <a href={activeProject.liveUrl} target="_blank" rel="noopener noreferrer">
-                      Live Demo
-                    </a>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <a href={activeProject.githubUrl} target="_blank" rel="noopener noreferrer">
-                      GitHub
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </section>
   )
 }

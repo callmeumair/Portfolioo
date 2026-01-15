@@ -1,391 +1,155 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useEffect, useMemo, useRef, useState } from "react"
-import dynamic from "next/dynamic"
-import LottieAccent from "@/components/lottie-accent"
-
-const Hero3D = dynamic(() => import("@/components/hero-3d").then(m => m.Hero3D), { ssr: false, loading: () => null })
+import { Spotlight } from "@/components/ui/spotlight"
+import { ParticleBackground } from "@/components/ui/particle-background"
+import { GradientBlob } from "@/components/ui/gradient-blob"
+import { TextReveal } from "@/components/ui/text-reveal"
+import { Typewriter } from "@/components/ui/typewriter"
+import { MagneticButton } from "@/components/ui/magnetic-button"
 
 export function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const subtitleRef = useRef<HTMLHeadingElement>(null)
-  const descriptionRef = useRef<HTMLParagraphElement>(null)
-  const buttonsRef = useRef<HTMLDivElement>(null)
-  const socialRef = useRef<HTMLDivElement>(null)
-  const avatarRef = useRef<HTMLDivElement>(null)
-  const floatingElementsRef = useRef<HTMLDivElement[]>([])
-
-  const scrollToNext = () => {
-    const aboutSection = document.querySelector("#about")
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" })
+  const scrollToProjects = () => {
+    const projectsSection = document.querySelector("#projects")
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: "smooth" })
     }
   }
 
-  useEffect(() => {
-    // Only run GSAP animations on client side
-    if (typeof window === "undefined") return
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const initGSAP = async () => {
-      const { gsap } = await import("gsap")
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger")
-
-      gsap.registerPlugin(ScrollTrigger)
-
-      const scopeEl = heroRef.current ?? document.body
-      if (!scopeEl) return
-
-      const getExisting = <T extends Element>(els: (T | null | undefined)[]) => els.filter(Boolean) as T[]
-
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline({ delay: 0.5 })
-
-        // Set initial states (only on existing elements)
-        const initialEls = getExisting([
-          titleRef.current,
-          subtitleRef.current,
-          descriptionRef.current,
-          buttonsRef.current,
-          socialRef.current,
-        ])
-        if (initialEls.length) {
-          gsap.set(initialEls, {
-          opacity: 0,
-          y: 50
-          })
-        }
-
-        if (avatarRef.current) {
-          gsap.set(avatarRef.current, {
-            opacity: 0,
-            scale: 0.8,
-            rotation: -10
-          })
-        }
-
-        const floatingEls = getExisting(floatingElementsRef.current)
-        if (floatingEls.length) {
-          gsap.set(floatingEls, {
-            opacity: 0,
-            scale: 0
-          })
-        }
-
-        // Animate elements in sequence
-        if (titleRef.current) {
-          tl.to(titleRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out"
-          })
-        }
-        if (subtitleRef.current) {
-          tl.to(subtitleRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out"
-          }, "-=0.5")
-        }
-        if (descriptionRef.current) {
-          tl.to(descriptionRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out"
-          }, "-=0.3")
-        }
-        if (buttonsRef.current) {
-          tl.to(buttonsRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out"
-          }, "-=0.3")
-        }
-        if (socialRef.current) {
-          tl.to(socialRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out"
-          }, "-=0.3")
-        }
-        if (avatarRef.current) {
-          tl.to(avatarRef.current, {
-            opacity: 1,
-            scale: 1,
-            rotation: 0,
-            duration: 1.2,
-            ease: "back.out(1.7)"
-          }, "-=0.8")
-        }
-        if (floatingEls.length) {
-          tl.to(floatingEls, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            ease: "power2.out",
-            stagger: 0.2
-          }, "-=0.5")
-        }
-
-        // Continuous floating animation for elements
-        if (floatingEls.length) {
-          gsap.to(floatingEls, {
-            y: "random(-20, 20)",
-            x: "random(-10, 10)",
-            rotation: "random(-5, 5)",
-            duration: "random(3, 5)",
-            ease: "power2.inOut",
-            repeat: -1,
-            yoyo: true,
-            stagger: 0.5
-          })
-        }
-
-        // Parallax effect for background elements
-        if (document.querySelector(".bg-gradient")) {
-          gsap.to(".bg-gradient", {
-            y: -100,
-            ease: "none",
-            scrollTrigger: {
-              trigger: scopeEl,
-              start: "top top",
-              end: "bottom top",
-              scrub: true
-            }
-          })
-        }
-
-      }, scopeEl)
-
-      return () => ctx.revert()
-    }
-
-    initGSAP()
-  }, [])
-
-  const titles = useMemo(() => [
-    "Full Stack Developer",
-    "Next.js + TypeScript",
-    "Framer Motion + GSAP",
-    "Three.js + R3F",
-  ], [])
-  const [titleIndex, setTitleIndex] = useState(0)
-  const [typed, setTyped] = useState("")
-  const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    const current = titles[titleIndex]
-    const speed = deleting ? 40 : 80
-    const timeout = setTimeout(() => {
-      setTyped(prev => {
-        if (!deleting) {
-          const next = current.slice(0, prev.length + 1)
-          if (next === current) setDeleting(true)
-          return next
-        } else {
-          const next = current.slice(0, prev.length - 1)
-          if (next.length === 0) {
-            setDeleting(false)
-            setTitleIndex((titleIndex + 1) % titles.length)
-          }
-          return next
-        }
-      })
-    }, speed)
-    return () => clearTimeout(timeout)
-  }, [typed, deleting, titleIndex, titles])
-
   return (
-    <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 bg-gradient" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
-      <Hero3D />
-      <LottieAccent />
-      
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background pt-20">
+      {/* Particle Background */}
+      <ParticleBackground particleCount={60} />
+
+      {/* Premium Spotlight Effects */}
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+      <Spotlight className="-top-40 right-0 md:right-60 md:-top-20" fill="rgba(168, 85, 247, 0.3)" />
+
+      {/* Animated Gradient Blobs */}
+      <GradientBlob className="top-20 -left-20" color="purple" size="xl" />
+      <GradientBlob className="bottom-20 -right-20" color="pink" size="lg" />
+      <GradientBlob className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" color="blue" size="md" />
+
+      {/* Enhanced Background Pattern with Mesh Gradient */}
+      <div className="absolute inset-0 bg-mesh-gradient" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 lg:py-0">
-          {/* Left Column - Text Content */}
-          <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
-            <div className="space-y-3 lg:space-y-4">
-              <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                Hi, I&apos;m{" "}
-                <span className="text-gradient">Umer Patel</span>
-              </h1>
-              <h2 ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-muted-foreground min-h-8">
-                <span className="inline-block">{typed}&nbsp;</span>
-                <span className="inline-block w-3 bg-foreground/70 ml-0.5 animate-pulse" style={{ height: '1.2em' }} />
-              </h2>
-            </div>
+        <div className="flex flex-col items-center text-center space-y-8 max-w-4xl mx-auto">
 
-            <p ref={descriptionRef} className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              I&apos;m passionate about creating innovative digital solutions and 
-              beautiful user experiences. I specialize in modern web technologies 
-              and love turning complex problems into simple, elegant solutions.
-            </p>
-
-            {/* CTA Buttons */}
-            <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-              <Button
-                size="lg"
-                className="group w-full sm:w-auto shadow-lg hover:shadow-xl"
-                onClick={() => scrollToNext()}
-              >
-                View Projects
-                <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 transition-transform duration-200" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="group w-full sm:w-auto"
-                asChild
-              >
-                <a href="/resume.pdf" download>
-                  <Download className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform duration-200" />
-                  Download Resume
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                className="group w-full sm:w-auto"
-                asChild
-              >
-                <a href="#contact">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Contact Me
-                </a>
-              </Button>
-            </div>
-
-            {/* Social Links */}
-            <div ref={socialRef} className="flex justify-center lg:justify-start space-x-3 sm:space-x-4 pt-2 lg:pt-4">
-              <motion.a
-                href="https://github.com/callmeumair"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors duration-200"
-              >
-                <Github className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/umerpatel"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors duration-200"
-              >
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </motion.a>
-              <motion.a
-                href="mailto:umerpatel1540@gmail.com"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors duration-200"
-              >
-                <Mail className="h-5 w-5" />
-                <span className="sr-only">Email</span>
-              </motion.a>
-              <motion.a
-                href="https://x.com/Umerpatel11"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors duration-200"
-              >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-                <span className="sr-only">X (Twitter)</span>
-              </motion.a>
-            </div>
-          </div>
-
-          {/* Right Column - Profile Image */}
-          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-            <div ref={avatarRef} className="relative">
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-                {/* Background Circle */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl" />
-                
-                {/* Profile Image */}
-                <Avatar className="w-full h-full border-4 border-border/50 shadow-2xl">
-                  <AvatarImage 
-                    src="/profile.jpg" 
-                    alt="Umer Patel" 
-                    className="object-cover"
-                  />
-                  <AvatarFallback className="text-4xl font-bold bg-gradient-to-br from-primary to-secondary text-white">
-                    UP
-                  </AvatarFallback>
-                </Avatar>
-                
-                {/* Floating Elements */}
-                <div
-                  ref={(el) => {
-                    if (el) floatingElementsRef.current[0] = el
-                  }}
-                  className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-12 h-12 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
-                >
-                  <span className="text-lg sm:text-2xl">💻</span>
-                </div>
-                
-                <div
-                  ref={(el) => {
-                    if (el) floatingElementsRef.current[1] = el
-                  }}
-                  className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 bg-secondary/20 rounded-full flex items-center justify-center backdrop-blur-sm"
-                >
-                  <span className="text-base sm:text-xl">🚀</span>
-                </div>
-
-                <div
-                  ref={(el) => {
-                    if (el) floatingElementsRef.current[2] = el
-                  }}
-                  className="absolute top-1/2 -right-4 sm:-right-8 w-8 h-8 sm:w-10 sm:h-10 bg-accent/20 rounded-full flex items-center justify-center backdrop-blur-sm"
-                >
-                  <span className="text-sm sm:text-lg">⚡</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.button
-            onClick={scrollToNext}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+          {/* Status Badge with Enhanced Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm shimmer-effect"
           >
-            <span className="text-sm font-medium">Scroll Down</span>
-            <ArrowDown className="h-5 w-5" />
-          </motion.button>
-        </motion.div>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-sm font-medium text-primary">Available for new opportunities</span>
+          </motion.div>
+
+          {/* Main Heading with Text Reveal and 3D Effect */}
+          <div className="perspective-1000">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground transform-3d"
+            >
+              Building <TextReveal text="Exceptional" className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-600 dark:from-neutral-100 dark:to-neutral-500 inline-block" delay={0.3} /> <br />
+              <span className="text-gradient-animated inline-block">Digital Experiences</span>
+            </motion.h1>
+          </div>
+
+          {/* Introduction with Typewriter Effect */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
+          >
+            Hi, I&apos;m{" "}
+            <span className="text-foreground font-semibold">
+              <Typewriter text="Umer Patel" delay={800} speed={100} />
+            </span>
+            . A Full Stack Developer specializing in building accessible, performant, and scalable web applications requiring creative solutions.
+          </motion.p>
+
+          {/* CTA Buttons with Magnetic Effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4"
+          >
+            <MagneticButton onClick={scrollToProjects}>
+              <Button size="xl" className="group text-lg px-8 rounded-full glow-effect-hover">
+                View Work
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </MagneticButton>
+            <MagneticButton>
+              <Button variant="outline" size="xl" className="text-lg px-8 rounded-full" asChild>
+                <a href="/resume.pdf" download>
+                  <Download className="mr-2 h-4 w-4" />
+                  Resume
+                </a>
+              </Button>
+            </MagneticButton>
+          </motion.div>
+
+          {/* Social Links with Floating Animation */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex items-center gap-6 pt-12"
+          >
+            <SocialLink href="https://github.com/callmeumair" icon={Github} label="GitHub" delay={0} />
+            <SocialLink href="https://www.linkedin.com/in/umerpatel" icon={Linkedin} label="LinkedIn" delay={0.1} />
+            <SocialLink
+              href="https://x.com/Umerpatel11"
+              icon={(props: React.SVGProps<SVGSVGElement>) => (
+                <svg {...props} viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              )}
+              label="X (Twitter)"
+              delay={0.2}
+            />
+            <SocialLink href="mailto:umerpatel1540@gmail.com" icon={Mail} label="Email" delay={0.3} />
+          </motion.div>
+        </div>
       </div>
     </section>
+  )
+}
+
+function SocialLink({ href, icon: Icon, label, delay }: { href: string, icon: React.ComponentType<{ className?: string }>, label: string, delay: number }) {
+  return (
+    <motion.a
+      whileHover={{ scale: 1.2, y: -4 }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5 + delay }}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative text-muted-foreground hover:text-foreground transition-colors duration-200 floating-animation p-3 rounded-full hover:bg-white/5 backdrop-blur-sm border border-transparent hover:border-white/10"
+      aria-label={label}
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <Icon className="h-6 w-6" />
+      <motion.div
+        className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-lg opacity-0 hover:opacity-100 transition-opacity -z-10"
+        whileHover={{ scale: 1.5 }}
+      />
+    </motion.a>
   )
 }

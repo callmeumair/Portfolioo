@@ -70,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased custom-scrollbar`}
       >
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] bg-primary text-primary-foreground px-3 py-2 rounded-md">Skip to content</a>
         <Script id="ld-json" type="application/ld+json" strategy="afterInteractive">
