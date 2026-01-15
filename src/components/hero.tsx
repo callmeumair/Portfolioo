@@ -147,7 +147,7 @@ function SocialLink({ href, icon: Icon, label, delay }: { href: string, icon: Re
     >
       <Icon className="h-6 w-6" />
       <motion.div
-        className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-lg opacity-0 hover:opacity-100 transition-opacity -z-10"
+        className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-500/20 blur-lg opacity-0 hover:opacity-100 transition-opacity -z-10"
         whileHover={{ scale: 1.5 }}
       />
     </motion.a>

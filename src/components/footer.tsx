@@ -135,7 +135,7 @@ export function Footer() {
       )}
 
       {/* Background Glow */}
-      <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-purple-500/5 via-pink-500/5 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-purple-500/5 via-amber-500/5 to-transparent pointer-events-none" />
     </footer>
   )
 }
@@ -152,7 +152,7 @@ function SocialLink({ href, icon: Icon, label }: { href: string, icon: React.Com
       aria-label={label}
     >
       <Icon className="h-5 w-5" />
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity blur-lg -z-10" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity blur-lg -z-10" />
     </motion.a>
   )
 }

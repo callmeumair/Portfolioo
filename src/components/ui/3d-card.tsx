@@ -71,7 +71,7 @@ export function Card3D({ children, className = "" }: Card3DProps) {
 
             {isHovered && (
                 <motion.div
-                    className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-3xl blur-xl opacity-30 -z-10"
+                    className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 rounded-3xl blur-xl opacity-30 -z-10"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 0.3 }}
                     exit={{ opacity: 0 }}

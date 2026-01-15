@@ -178,7 +178,7 @@ export function Projects() {
                   </div>
 
                   {/* Enhanced Decorative Gradient Blob */}
-                  <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-600/20 blur-[100px] rounded-full pointer-events-none group-hover:from-purple-500/30 group-hover:via-pink-500/30 group-hover:to-purple-600/30 transition-all duration-500" />
+                  <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-r from-purple-500/20 via-amber-500/20 to-purple-600/20 blur-[100px] rounded-full pointer-events-none group-hover:from-purple-500/30 group-hover:via-amber-500/30 group-hover:to-purple-600/30 transition-all duration-500" />
                 </div>
               </Card3D>
             </motion.div>

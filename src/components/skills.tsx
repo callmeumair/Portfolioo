@@ -16,12 +16,12 @@ const technologies = [
   { name: "Git", icon: "🔧", color: "from-orange-500 to-red-600", bgColor: "bg-orange-500/10" },
   { name: "Docker", icon: "🐳", color: "from-blue-400 to-blue-600", bgColor: "bg-blue-500/10" },
   { name: "AWS", icon: "☁️", color: "from-orange-400 to-orange-600", bgColor: "bg-orange-500/10" },
-  { name: "Figma", icon: "🎯", color: "from-purple-400 to-pink-500", bgColor: "bg-purple-500/10" },
+  { name: "Figma", icon: "🎯", color: "from-emerald-400 to-pink-500", bgColor: "bg-purple-500/10" },
   { name: "React Native", icon: "📱", color: "from-cyan-400 to-blue-500", bgColor: "bg-cyan-500/10" },
   { name: "Three.js", icon: "🎮", color: "from-black to-gray-700", bgColor: "bg-gray-500/10" },
-  { name: "Framer Motion", icon: "✨", color: "from-purple-500 to-pink-500", bgColor: "bg-purple-500/10" },
+  { name: "Framer Motion", icon: "✨", color: "from-emerald-500 to-teal-500", bgColor: "bg-purple-500/10" },
   { name: "Swift", icon: "🍎", color: "from-orange-500 to-red-500", bgColor: "bg-orange-500/10" },
-  { name: "GraphQL", icon: "◈", color: "from-pink-500 to-purple-600", bgColor: "bg-pink-500/10" },
+  { name: "GraphQL", icon: "◈", color: "from-amber-500 to-emerald-600", bgColor: "bg-pink-500/10" },
   { name: "Firebase", icon: "🔥", color: "from-yellow-400 to-orange-600", bgColor: "bg-yellow-500/10" },
 ]
 
@@ -118,7 +118,7 @@ export function Skills() {
         >
           <div className="inline-flex items-center gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10">
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">18+</div>
+              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-amber-500">18+</div>
               <div className="text-sm text-muted-foreground mt-1">Technologies</div>
             </div>
             <div className="w-px h-12 bg-white/10" />
@@ -136,7 +136,7 @@ export function Skills() {
       </div>
 
       {/* Background Gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-purple-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-emerald-500/5 blur-[150px] rounded-full pointer-events-none" />
     </section>
   )
 }

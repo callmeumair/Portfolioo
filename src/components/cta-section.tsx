@@ -104,9 +104,9 @@ export function CTASection() {
 
                 // Create glow effect
                 const gradient = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, size * 3)
-                gradient.addColorStop(0, `rgba(168, 85, 247, ${opacity})`)
-                gradient.addColorStop(0.5, `rgba(236, 72, 153, ${opacity * 0.5})`)
-                gradient.addColorStop(1, 'rgba(168, 85, 247, 0)')
+                gradient.addColorStop(0, `rgba(16, 185, 129, ${opacity})`)
+                gradient.addColorStop(0.5, `rgba(20, 184, 166, ${opacity * 0.5})`)
+                gradient.addColorStop(1, 'rgba(16, 185, 129, 0)')
 
                 ctx.fillStyle = gradient
                 ctx.beginPath()
@@ -177,10 +177,10 @@ export function CTASection() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, type: "spring" }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 mb-8"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-emerald-500/20 mb-8"
                     >
-                        <Sparkles className="w-4 h-4 text-purple-400" />
-                        <span className="text-sm text-purple-300 font-medium">Ready to Collaborate</span>
+                        <Sparkles className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm text-emerald-300 font-medium">Ready to Collaborate</span>
                     </motion.div>
 
                     {/* Heading */}
@@ -193,7 +193,7 @@ export function CTASection() {
                     >
                         Connect and let&apos;s
                         <br />
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400">
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400">
                             engineer excellence.
                         </span>
                     </motion.h2>
@@ -219,7 +219,7 @@ export function CTASection() {
                         <Button
                             size="xl"
                             onClick={scrollToContact}
-                            className="group text-lg px-10 py-6 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+                            className="group text-lg px-10 py-6 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
                         >
                             Start a Project
                             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />

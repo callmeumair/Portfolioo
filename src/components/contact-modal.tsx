@@ -157,7 +157,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                             className="relative w-full max-w-md pointer-events-auto"
                         >
                             {/* Glow Effect */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl blur-xl opacity-20" />
+                            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl blur-xl opacity-20" />
 
                             {/* Modal Content */}
                             <div className="relative bg-gradient-to-br from-zinc-900 to-black border border-white/10 rounded-3xl p-8 shadow-2xl">
@@ -175,10 +175,10 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                         transition={{ delay: 0.1, type: "spring" }}
-                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 mb-4"
+                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-emerald-500/20 mb-4"
                                     >
-                                        <Sparkles className="w-4 h-4 text-purple-400" />
-                                        <span className="text-sm text-purple-300 font-medium">Quick Contact</span>
+                                        <Sparkles className="w-4 h-4 text-emerald-400" />
+                                        <span className="text-sm text-emerald-300 font-medium">Quick Contact</span>
                                     </motion.div>
 
                                     <motion.h2
@@ -218,7 +218,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
                                             required
-                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.name ? 'border-red-500/50' : ''}`}
+                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-emerald-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.name ? 'border-red-500/50' : ''}`}
                                         />
                                         {errors.name && (
                                             <motion.p
@@ -249,7 +249,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
                                             required
-                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.email ? 'border-red-500/50' : ''}`}
+                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-emerald-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.email ? 'border-red-500/50' : ''}`}
                                         />
                                         {errors.email && (
                                             <motion.p
@@ -280,7 +280,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onBlur={handleBlur}
                                             required
                                             rows={5}
-                                            className={`pl-12 pt-4 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none ${errors.message ? 'border-red-500/50' : ''}`}
+                                            className={`pl-12 pt-4 bg-white/5 border-white/10 focus:border-emerald-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none ${errors.message ? 'border-red-500/50' : ''}`}
                                         />
                                         {errors.message && (
                                             <motion.p

@@ -130,7 +130,7 @@ export function Contact() {
                   className="group relative block p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 hover:border-primary/30 transition-all duration-300 overflow-hidden"
                 >
                   {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-purple-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-purple-500/10 transition-all duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-amber-500/0 to-purple-500/0 group-hover:from-purple-500/10 group-hover:via-amber-500/10 group-hover:to-purple-500/10 transition-all duration-500" />
 
                   <div className="relative flex items-start gap-4">
                     <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary group-hover:scale-110 transition-transform duration-300">
@@ -264,7 +264,7 @@ export function Contact() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full h-14 text-base font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300"
+                    className="w-full h-14 text-base font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -287,7 +287,7 @@ export function Contact() {
       </div>
 
       {/* Background Gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-purple-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-emerald-500/5 blur-[150px] rounded-full pointer-events-none" />
     </section>
   )
 }

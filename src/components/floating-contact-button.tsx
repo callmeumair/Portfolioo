@@ -22,10 +22,10 @@ export function FloatingContactButton() {
                 aria-label="Open contact form"
             >
                 {/* Pulsing Ring */}
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-ping opacity-20" />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 animate-ping opacity-20" />
 
                 {/* Button */}
-                <div className="relative flex items-center gap-3 px-6 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 shadow-lg hover:shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">
+                <div className="relative flex items-center gap-3 px-6 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-purple-500 hover:to-pink-500 shadow-lg hover:shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300">
                     <MessageCircle className="w-6 h-6 text-white" />
                     <span className="text-white font-semibold hidden sm:block">Say Hi!</span>
                 </div>
