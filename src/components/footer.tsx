@@ -24,7 +24,7 @@ export function Footer() {
   }
 
   return (
-    <footer id="contact" className="bg-background border-t border-white/10 pt-24 pb-12 relative overflow-hidden">
+    <footer id="contact" className="bg-background/20 backdrop-blur-lg border-t border-white/10 pt-24 pb-12 relative overflow-hidden">
       {/* Animated Wave Divider */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
         <svg className="relative block w-full h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

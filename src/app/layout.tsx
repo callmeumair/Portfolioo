@@ -74,6 +74,23 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased custom-scrollbar`}
       >
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] bg-primary text-primary-foreground px-3 py-2 rounded-md">Skip to content</a>
+
+        {/* Global Video Background */}
+        <div className="fixed inset-0 -z-50">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/video/19641-304075895_medium.mp4" type="video/mp4" />
+          </video>
+          {/* Theme-aware overlay - lighter in light mode, darker in dark mode */}
+          {/* Using bg-background/80 uses the variable from globals.css which switches between white/black */}
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px]" />
+        </div>
+
         <Script id="ld-json" type="application/ld+json" strategy="afterInteractive">
           {JSON.stringify({
             "@context": "https://schema.org",

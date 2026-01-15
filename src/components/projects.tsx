@@ -107,11 +107,11 @@ export function Projects() {
               className={cn("group", project.span)}
             >
               <Card3D className="h-full">
-                <div className="h-full relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:border-white/20 gradient-border-animated">
+                <div className="h-full relative overflow-hidden rounded-3xl border border-primary/10 bg-primary/5 backdrop-blur-sm transition-all duration-500 hover:bg-primary/10 hover:border-primary/20 gradient-border-animated">
                   <div className="p-8 h-full flex flex-col">
                     <div className="flex justify-between items-start mb-6">
                       <motion.div
-                        className="p-3 rounded-2xl bg-white/10 text-3xl"
+                        className="p-3 rounded-2xl bg-primary/10 text-3xl"
                         whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                       >
@@ -125,7 +125,7 @@ export function Projects() {
                             href={project.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-full bg-white/5 hover:bg-white/20 transition-colors glow-effect-hover"
+                            className="p-2 rounded-full bg-primary/5 hover:bg-primary/20 transition-colors glow-effect-hover"
                             aria-label="Visit Live Site"
                           >
                             <Globe className="h-5 w-5" />
@@ -138,7 +138,7 @@ export function Projects() {
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-full bg-white/5 hover:bg-white/20 transition-colors glow-effect-hover"
+                            className="p-2 rounded-full bg-primary/5 hover:bg-primary/20 transition-colors glow-effect-hover"
                             aria-label="View Code"
                           >
                             <Github className="h-5 w-5" />
@@ -168,7 +168,7 @@ export function Projects() {
                         >
                           <Badge
                             variant="secondary"
-                            className="rounded-lg px-2.5 py-0.5 text-xs font-medium bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/10"
+                            className="rounded-lg px-2.5 py-0.5 text-xs font-medium bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/5 hover:border-primary/10"
                           >
                             {tech}
                           </Badge>

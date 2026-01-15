@@ -158,15 +158,15 @@ export function CTASection() {
     }
 
     return (
-        <section className="relative py-32 overflow-hidden bg-black">
+        <section className="relative py-32 overflow-hidden bg-transparent">
             {/* Canvas Background */}
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full opacity-50 pointer-events-none"
             />
 
             {/* Glow Effect */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
 
             {/* Content */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -177,10 +177,10 @@ export function CTASection() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, type: "spring" }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-emerald-500/20 mb-8"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8"
                     >
-                        <Sparkles className="w-4 h-4 text-emerald-400" />
-                        <span className="text-sm text-emerald-300 font-medium">Ready to Collaborate</span>
+                        <Sparkles className="w-4 h-4 text-primary" />
+                        <span className="text-sm text-primary font-medium">Ready to Collaborate</span>
                     </motion.div>
 
                     {/* Heading */}
@@ -189,7 +189,7 @@ export function CTASection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-white leading-tight"
+                        className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-foreground leading-tight"
                     >
                         Connect and let&apos;s
                         <br />
@@ -204,7 +204,7 @@ export function CTASection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto"
+                        className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
                     >
                         Let&apos;s transform your vision into reality with cutting-edge technology and innovative solutions.
                     </motion.p>
