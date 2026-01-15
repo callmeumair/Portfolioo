@@ -18,19 +18,81 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         email: "",
         message: ""
     })
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        message: ""
+    })
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
     const [submitMessage, setSubmitMessage] = useState('')
 
+    const validateField = (name: string, value: string) => {
+        switch (name) {
+            case 'name':
+                if (value.trim().length < 4) {
+                    return 'Name must be at least 4 characters'
+                }
+                return ''
+            case 'email':
+                if (!value.includes('@')) {
+                    return 'Email must contain @'
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    return 'Please enter a valid email address'
+                }
+                return ''
+            case 'message':
+                const wordCount = value.trim().split(/\s+/).filter(word => word.length > 0).length
+                if (wordCount < 10) {
+                    return `Message must be at least 10 words (currently ${wordCount})`
+                }
+                return ''
+            default:
+                return ''
+        }
+    }
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({ ...prev, [name]: value }))
+
+        // Clear error when user starts typing
+        if (errors[name as keyof typeof errors]) {
+            setErrors(prev => ({ ...prev, [name]: '' }))
+        }
+    }
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        const error = validateField(name, value)
+        setErrors(prev => ({ ...prev, [name]: error }))
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        // Validate all fields
+        const nameError = validateField('name', formData.name)
+        const emailError = validateField('email', formData.email)
+        const messageError = validateField('message', formData.message)
+
+        setErrors({
+            name: nameError,
+            email: emailError,
+            message: messageError
+        })
+
+        // Stop submission if there are errors
+        if (nameError || emailError || messageError) {
+            setSubmitStatus('error')
+            setSubmitMessage('Please fix the errors above')
+            return
+        }
+
         setIsSubmitting(true)
         setSubmitStatus('idle')
+        setSubmitMessage('')
 
         try {
             const response = await fetch('/api/contact', {
@@ -50,6 +112,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 setSubmitStatus('success')
                 setSubmitMessage(data.message || "Message sent successfully!")
                 setFormData({ name: "", email: "", message: "" })
+                setErrors({ name: "", email: "", message: "" })
 
                 // Close modal after 2 seconds on success
                 setTimeout(() => {
@@ -153,9 +216,19 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             placeholder="Name"
                                             value={formData.name}
                                             onChange={handleInputChange}
+                                            onBlur={handleBlur}
                                             required
-                                            className="h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30"
+                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.name ? 'border-red-500/50' : ''}`}
                                         />
+                                        {errors.name && (
+                                            <motion.p
+                                                initial={{ opacity: 0, y: -5 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-xs text-red-400 mt-1.5 ml-1"
+                                            >
+                                                {errors.name}
+                                            </motion.p>
+                                        )}
                                     </motion.div>
 
                                     {/* Email Input */}
@@ -174,9 +247,19 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             placeholder="Email"
                                             value={formData.email}
                                             onChange={handleInputChange}
+                                            onBlur={handleBlur}
                                             required
-                                            className="h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30"
+                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.email ? 'border-red-500/50' : ''}`}
                                         />
+                                        {errors.email && (
+                                            <motion.p
+                                                initial={{ opacity: 0, y: -5 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-xs text-red-400 mt-1.5 ml-1"
+                                            >
+                                                {errors.email}
+                                            </motion.p>
+                                        )}
                                     </motion.div>
 
                                     {/* Message Textarea */}
@@ -194,10 +277,20 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             placeholder="How can I help you?"
                                             value={formData.message}
                                             onChange={handleInputChange}
+                                            onBlur={handleBlur}
                                             required
                                             rows={5}
-                                            className="pl-12 pt-4 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none"
+                                            className={`pl-12 pt-4 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none ${errors.message ? 'border-red-500/50' : ''}`}
                                         />
+                                        {errors.message && (
+                                            <motion.p
+                                                initial={{ opacity: 0, y: -5 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-xs text-red-400 mt-1.5 ml-1"
+                                            >
+                                                {errors.message}
+                                            </motion.p>
+                                        )}
                                     </motion.div>
 
                                     {/* Status Message */}
