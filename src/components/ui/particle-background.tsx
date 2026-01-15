@@ -11,7 +11,7 @@ interface ParticleBackgroundProps {
 export function ParticleBackground({
     className = "",
     particleCount = 50,
-    color = "rgba(168, 85, 247, 0.3)"
+    color = "rgba(16, 185, 129, 0.3)"
 }: ParticleBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
