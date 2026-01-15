@@ -5,6 +5,7 @@ import { Skills } from "@/components/skills"
 import { Projects } from "@/components/projects"
 import { Footer } from "@/components/footer"
 import { Experience } from "@/components/experience"
+import { CTASection } from "@/components/cta-section"
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Experience />
         <About />
       </main>
+      <CTASection />
       <Footer />
     </div>
   )
