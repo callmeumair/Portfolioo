@@ -145,8 +145,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         transition={{ delay: 0.4 }}
                                         className="relative"
                                     >
-                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
-                                            <User className="w-5 h-5" />
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 pointer-events-none z-10">
+                                            <User className="w-5 h-5" strokeWidth={2.5} />
                                         </div>
                                         <Input
                                             name="name"
@@ -154,7 +154,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             value={formData.name}
                                             onChange={handleInputChange}
                                             required
-                                            className="h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 backdrop-blur-sm"
+                                            className="h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30"
                                         />
                                     </motion.div>
 
@@ -165,8 +165,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         transition={{ delay: 0.5 }}
                                         className="relative"
                                     >
-                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
-                                            <Mail className="w-5 h-5" />
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 pointer-events-none z-10">
+                                            <Mail className="w-5 h-5" strokeWidth={2.5} />
                                         </div>
                                         <Input
                                             name="email"
@@ -175,7 +175,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             required
-                                            className="h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 backdrop-blur-sm"
+                                            className="h-14 pl-12 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30"
                                         />
                                     </motion.div>
 
@@ -186,8 +186,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         transition={{ delay: 0.6 }}
                                         className="relative"
                                     >
-                                        <div className="absolute left-4 top-4 text-white/40 pointer-events-none">
-                                            <MessageSquare className="w-5 h-5" />
+                                        <div className="absolute left-4 top-4 text-white/70 pointer-events-none z-10">
+                                            <MessageSquare className="w-5 h-5" strokeWidth={2.5} />
                                         </div>
                                         <Textarea
                                             name="message"
@@ -196,7 +196,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onChange={handleInputChange}
                                             required
                                             rows={5}
-                                            className="pl-12 pt-4 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none backdrop-blur-sm"
+                                            className="pl-12 pt-4 bg-white/5 border-white/10 focus:border-purple-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none"
                                         />
                                     </motion.div>
 
@@ -208,8 +208,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -10 }}
                                                 className={`p-4 rounded-xl text-sm font-medium text-center ${submitStatus === 'success'
-                                                        ? 'bg-green-500/10 text-green-400 border border-green-500/20'
-                                                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                                                    ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                                                    : 'bg-red-500/10 text-red-400 border border-red-500/20'
                                                     }`}
                                             >
                                                 {submitMessage}
