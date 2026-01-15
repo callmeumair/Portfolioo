@@ -25,7 +25,7 @@ export function TextReveal({ text, className = "", delay = 0, type = "word" }: T
 
     const container = {
         hidden: { opacity: 0 },
-        visible: (i = 1) => ({
+        visible: () => ({
             opacity: 1,
             transition: {
                 staggerChildren: type === "character" ? 0.03 : 0.08,

@@ -96,14 +96,14 @@ export function Contact() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 backdrop-blur-sm border border-primary/20"
           >
             <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Let's Work Together</span>
+            <span className="text-sm font-medium">Let&apos;s Work Together</span>
           </motion.div>
 
           <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/60">
             Get In Touch
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Have an exciting project or opportunity? I'd love to hear about it.
+            Have an exciting project or opportunity? I&apos;d love to hear about it.
           </p>
         </motion.div>
 
@@ -253,8 +253,8 @@ export function Contact() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`p-4 rounded-xl text-sm font-medium ${submitStatus === 'success'
-                          ? 'bg-green-500/10 text-green-400 border border-green-500/20'
-                          : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                        ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
                         }`}
                     >
                       {submitMessage}
