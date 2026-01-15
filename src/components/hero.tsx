@@ -59,9 +59,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground transform-3d"
+              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground transform-3d leading-tight"
             >
-              Building <TextReveal text="Exceptional" className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-600 dark:from-neutral-100 dark:to-neutral-500 inline-block" delay={0.3} /> <br />
+              Building <TextReveal text="Exceptional" className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-600 dark:from-neutral-100 dark:to-neutral-500 inline-block" delay={0.3} />{" "}
               <span className="text-gradient-animated inline-block">Digital Experiences</span>
             </motion.h1>
           </div>
