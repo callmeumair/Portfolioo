@@ -27,46 +27,69 @@ const EXPERIENCES: ExperienceItem[] = [
 export function Experience() {
   return (
     <section id="experience" className="py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-16"
+          transition={{ duration: 0.6 }}
+          className="mb-20"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Work Experience</h2>
+          <h2
+            className="font-bold tracking-tight mb-4 text-gradient-accent"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 1 }}
+          >
+            Work Experience
+          </h2>
         </motion.div>
 
-        <div className="space-y-12">
+        <div className="space-y-0">
           {EXPERIENCES.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative pl-8 md:pl-0 border-l border-white/10 md:border-none ml-2 md:ml-0"
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="md:grid md:grid-cols-[200px_2rem_1fr] md:gap-6 items-start">
-                {/* Period (Left Side) */}
-                <div className="hidden md:block text-right pt-1">
-                  <span className="text-sm font-medium text-muted-foreground">{exp.period}</span>
+              {/* Divider */}
+              <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+
+              <div
+                className="py-12 md:py-16 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 md:gap-16 items-start transition-all duration-300 group"
+              >
+                {/* Period */}
+                <div>
+                  <span
+                    className="text-sm font-medium tracking-wider text-gradient-accent"
+                  >
+                    {exp.period}
+                  </span>
                 </div>
 
-                {/* Timeline Dot (Center) */}
-                <div className="hidden md:flex justify-center pt-2">
-                  <div className="w-2 h-2 rounded-full bg-primary ring-4 ring-background" />
-                </div>
-
-                {/* Content (Right Side) */}
-                <div className="pb-8 relative">
-                  {/* Mobile Period */}
-                  <span className="md:hidden text-xs font-mono text-primary mb-2 block">{exp.period}</span>
-
-                  <h3 className="text-xl font-bold">{exp.role}</h3>
-                  <p className="text-lg text-primary mb-2">{exp.company}</p>
-                  <p className="text-muted-foreground mb-4 leading-relaxed max-w-lg">
+                {/* Content */}
+                <div
+                  className="transition-transform duration-300 group-hover:-translate-y-1"
+                >
+                  <h3
+                    className="font-bold tracking-tight mb-2"
+                    style={{
+                      fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                      color: '#D7E2EA',
+                    }}
+                  >
+                    {exp.role}
+                  </h3>
+                  <p
+                    className="text-lg font-medium mb-4 text-gradient-accent"
+                  >
+                    {exp.company}
+                  </p>
+                  <p
+                    className="font-light leading-relaxed max-w-lg mb-6"
+                    style={{ color: 'rgba(215,226,234,0.55)' }}
+                  >
                     {exp.summary}
                   </p>
                   {/* <ul className="space-y-2">
@@ -79,6 +102,11 @@ export function Experience() {
                     </ul> */}
                 </div>
               </div>
+
+              {/* Bottom Divider for last item */}
+              {index === EXPERIENCES.length - 1 && (
+                <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+              )}
             </motion.div>
           ))}
         </div>

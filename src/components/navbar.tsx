@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Moon, Sun, Menu, X, Code, User, Briefcase, Zap, Mail, Home } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useTheme } from "next-themes"
+import { Menu, X, Code, User, Briefcase, Zap, Mail, Home } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ScrollProgress } from "@/components/ui/scroll-progress"
 
@@ -20,12 +18,9 @@ const navItems = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
   const [activeSection, setActiveSection] = useState("Home")
 
   useEffect(() => {
-    setMounted(true)
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
 
@@ -46,14 +41,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
-  }
-
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
-      const offset = 100 // Height of navbar + padding
+      const offset = 100
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.scrollY - offset
 
@@ -64,8 +55,6 @@ export function Navbar() {
     }
     setIsMobileMenuOpen(false)
   }
-
-  if (!mounted) return null
 
   return (
     <>
@@ -78,17 +67,25 @@ export function Navbar() {
       >
         <div
           className={cn(
-            "flex items-center justify-between px-4 py-2 rounded-full transition-all duration-300 backdrop-blur-xl border border-white/10 shadow-lg",
-            isScrolled ? "bg-background/80 w-full max-w-2xl" : "bg-transparent border-transparent w-full max-w-5xl"
+            "flex items-center justify-between px-4 py-2 rounded-full transition-all duration-500",
+            isScrolled ? "w-full max-w-2xl" : "w-full max-w-5xl"
           )}
+          style={{
+            background: isScrolled ? 'rgba(17,17,17,0.85)' : 'transparent',
+            backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+            WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
+            border: isScrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+          }}
         >
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-lg font-bold tracking-tight cursor-pointer px-2"
+            className="cursor-pointer px-2"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <span className="text-primary font-mono">&lt;Umer /&gt;</span>
+            <span className="text-base font-semibold tracking-tight" style={{ color: '#D7E2EA' }}>
+              UMER PATEL
+            </span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -100,14 +97,23 @@ export function Navbar() {
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
                   className={cn(
-                    "relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200",
-                    isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
+                    "relative px-4 py-2 text-sm font-light rounded-full transition-colors duration-200"
                   )}
+                  style={{
+                    color: isActive ? '#D7E2EA' : 'rgba(215,226,234,0.5)',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) e.currentTarget.style.color = 'rgba(215,226,234,0.8)'
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) e.currentTarget.style.color = 'rgba(215,226,234,0.5)'
+                  }}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-secondary rounded-full -z-10"
+                      className="absolute inset-0 rounded-full -z-10"
+                      style={{ background: 'rgba(255,255,255,0.06)' }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -117,28 +123,14 @@ export function Navbar() {
             })}
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="h-9 w-9 rounded-full hover:bg-secondary transition-colors"
-            >
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-
-            {/* Mobile Menu Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden h-9 w-9 rounded-full hover:bg-secondary"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-          </div>
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden h-9 w-9 flex items-center justify-center rounded-full transition-colors"
+            style={{ color: '#D7E2EA' }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </button>
         </div>
       </motion.nav>
 
@@ -149,7 +141,8 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-40 md:hidden"
+            style={{ background: 'rgba(12,12,12,0.9)', backdropFilter: 'blur(8px)' }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <motion.div
@@ -157,14 +150,22 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 bottom-0 w-3/4 max-w-sm bg-background border-l border-border p-6 shadow-2xl"
+              className="absolute right-0 top-0 bottom-0 w-3/4 max-w-sm p-6"
+              style={{
+                background: '#111111',
+                borderLeft: '1px solid rgba(255,255,255,0.08)',
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-8">
-                <span className="text-xl font-bold">Menu</span>
-                <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
+                <span className="text-xl font-semibold" style={{ color: '#D7E2EA' }}>Menu</span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="h-9 w-9 flex items-center justify-center rounded-full"
+                  style={{ color: 'rgba(215,226,234,0.65)' }}
+                >
                   <X className="h-5 w-5" />
-                </Button>
+                </button>
               </div>
               <div className="flex flex-col gap-2">
                 {navItems.map((item) => (
@@ -172,11 +173,12 @@ export function Navbar() {
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
                     className={cn(
-                      "flex items-center gap-4 px-4 py-3 text-lg font-medium rounded-lg transition-colors",
-                      activeSection === item.name
-                        ? "bg-primary/10 text-primary"
-                        : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                      "flex items-center gap-4 px-4 py-3 text-lg font-light rounded-lg transition-colors"
                     )}
+                    style={{
+                      color: activeSection === item.name ? '#D7E2EA' : 'rgba(215,226,234,0.5)',
+                      background: activeSection === item.name ? 'rgba(255,255,255,0.04)' : 'transparent',
+                    }}
                   >
                     <item.icon className="h-5 w-5" />
                     {item.name}

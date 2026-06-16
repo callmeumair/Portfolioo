@@ -9,7 +9,7 @@ import { CTASection } from "@/components/cta-section"
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative bg-background font-sans selection:bg-primary/30">
+    <div className="min-h-screen relative" style={{ backgroundColor: '#0C0C0C' }}>
       <Navbar />
       <main id="main" role="main">
         <Hero />

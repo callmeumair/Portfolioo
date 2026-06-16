@@ -3,10 +3,8 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { Mail, MapPin, Send, Github, Linkedin, Twitter, Sparkles } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { GradientBlob } from "@/components/ui/gradient-blob"
 
 const contactInfo = [
   {
@@ -76,10 +74,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
-      {/* Animated Background Blobs */}
-      <GradientBlob className="top-0 left-1/4" color="purple" size="xl" />
-      <GradientBlob className="bottom-0 right-1/4" color="pink" size="xl" />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -93,16 +87,26 @@ export function Contact() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 backdrop-blur-sm border border-primary/20"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8"
+            style={{
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(22,22,22,0.6)',
+            }}
           >
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Let&apos;s Work Together</span>
+            <Sparkles className="w-4 h-4" style={{ color: '#BBCCD7' }} />
+            <span className="text-sm font-light" style={{ color: 'rgba(215,226,234,0.65)' }}>Let&apos;s Work Together</span>
           </motion.div>
 
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/60">
+          <h2
+            className="font-bold mb-6 text-gradient-accent tracking-tight"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 1 }}
+          >
             Get In Touch
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p
+            className="text-xl font-light max-w-2xl mx-auto leading-relaxed"
+            style={{ color: 'rgba(215,226,234,0.55)' }}
+          >
             Have an exciting project or opportunity? I&apos;d love to hear about it.
           </p>
         </motion.div>
@@ -114,7 +118,7 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 space-y-8"
+            className="lg:col-span-2 space-y-6"
           >
             {/* Info Cards */}
             <div className="space-y-4">
@@ -126,20 +130,35 @@ export function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 + 0.3 }}
-                  whileHover={{ scale: 1.02, x: 8 }}
-                  className="group relative block p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 hover:border-primary/30 transition-all duration-300 overflow-hidden"
+                  className="group relative block p-6 rounded-2xl transition-all duration-300 overflow-hidden"
+                  style={{
+                    background: 'rgba(22,22,22,0.6)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    backdropFilter: 'blur(12px)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(187,204,215,0.15)'
+                    e.currentTarget.style.transform = 'translateX(4px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
+                    e.currentTarget.style.transform = 'translateX(0)'
+                  }}
                 >
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-amber-500/0 to-purple-500/0 group-hover:from-purple-500/10 group-hover:via-amber-500/10 group-hover:to-purple-500/10 transition-all duration-500" />
-
                   <div className="relative flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary group-hover:scale-110 transition-transform duration-300">
+                    <div
+                      className="p-3 rounded-xl transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        background: 'rgba(187,204,215,0.08)',
+                        color: '#BBCCD7',
+                      }}
+                    >
                       <info.icon className="h-6 w-6" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-lg mb-1">{info.title}</h4>
-                      <p className="text-muted-foreground text-sm mb-1">{info.description}</p>
-                      <p className="text-foreground font-medium">{info.value}</p>
+                      <h4 className="font-semibold text-lg mb-1" style={{ color: '#D7E2EA' }}>{info.title}</h4>
+                      <p className="text-sm mb-1 font-light" style={{ color: 'rgba(215,226,234,0.45)' }}>{info.description}</p>
+                      <p className="font-medium" style={{ color: '#D7E2EA' }}>{info.value}</p>
                     </div>
                   </div>
                 </motion.a>
@@ -152,9 +171,13 @@ export function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10"
+              className="p-6 rounded-2xl"
+              style={{
+                background: 'rgba(22,22,22,0.6)',
+                border: '1px solid rgba(255,255,255,0.06)',
+              }}
             >
-              <h4 className="font-semibold mb-4 text-lg">Connect With Me</h4>
+              <h4 className="font-semibold mb-4 text-lg" style={{ color: '#D7E2EA' }}>Connect With Me</h4>
               <div className="flex gap-3">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -167,9 +190,21 @@ export function Contact() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.6 + index * 0.1, type: "spring" }}
                     whileHover={{ scale: 1.1, y: -4 }}
-                    className="group relative p-3 rounded-xl bg-gradient-to-br from-white/10 to-white/5 hover:from-primary/20 hover:to-primary/10 border border-white/10 hover:border-primary/30 transition-all duration-300"
+                    className="group relative p-3 rounded-xl transition-all duration-300"
+                    style={{
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      background: 'rgba(255,255,255,0.02)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(187,204,215,0.2)'
+                      e.currentTarget.style.background = 'rgba(187,204,215,0.08)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
+                    }}
                   >
-                    <social.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <social.icon className="h-5 w-5" style={{ color: 'rgba(215,226,234,0.5)' }} />
                   </motion.a>
                 ))}
               </div>
@@ -184,18 +219,22 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="lg:col-span-3"
           >
-            <div className="relative p-8 rounded-3xl bg-gradient-to-br from-white/10 to-white/[0.02] backdrop-blur-2xl border border-white/10 shadow-2xl">
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5 rounded-3xl pointer-events-none" />
-
+            <div
+              className="relative p-8 rounded-3xl"
+              style={{
+                background: 'rgba(22,22,22,0.6)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(20px)',
+              }}
+            >
               <div className="relative">
-                <h3 className="text-2xl font-bold mb-2">Send a Message</h3>
-                <p className="text-muted-foreground mb-8">I typically respond within 24 hours</p>
+                <h3 className="text-2xl font-semibold mb-2" style={{ color: '#D7E2EA' }}>Send a Message</h3>
+                <p className="font-light mb-8" style={{ color: 'rgba(215,226,234,0.45)' }}>I typically respond within 24 hours</p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium text-muted-foreground">Your Name</label>
+                      <label htmlFor="name" className="text-sm font-light" style={{ color: 'rgba(215,226,234,0.5)' }}>Your Name</label>
                       <Input
                         id="name"
                         name="name"
@@ -203,11 +242,16 @@ export function Contact() {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="h-12 bg-white/5 border-white/10 focus:border-primary/50 focus:bg-white/10 transition-all backdrop-blur-sm"
+                        className="h-12 rounded-xl"
+                        style={{
+                          background: 'rgba(255,255,255,0.03)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          color: '#D7E2EA',
+                        }}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium text-muted-foreground">Email Address</label>
+                      <label htmlFor="email" className="text-sm font-light" style={{ color: 'rgba(215,226,234,0.5)' }}>Email Address</label>
                       <Input
                         id="email"
                         name="email"
@@ -216,13 +260,18 @@ export function Contact() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="h-12 bg-white/5 border-white/10 focus:border-primary/50 focus:bg-white/10 transition-all backdrop-blur-sm"
+                        className="h-12 rounded-xl"
+                        style={{
+                          background: 'rgba(255,255,255,0.03)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          color: '#D7E2EA',
+                        }}
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium text-muted-foreground">Subject</label>
+                    <label htmlFor="subject" className="text-sm font-light" style={{ color: 'rgba(215,226,234,0.5)' }}>Subject</label>
                     <Input
                       id="subject"
                       name="subject"
@@ -230,12 +279,17 @@ export function Contact() {
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
-                      className="h-12 bg-white/5 border-white/10 focus:border-primary/50 focus:bg-white/10 transition-all backdrop-blur-sm"
+                      className="h-12 rounded-xl"
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        color: '#D7E2EA',
+                      }}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium text-muted-foreground">Your Message</label>
+                    <label htmlFor="message" className="text-sm font-light" style={{ color: 'rgba(215,226,234,0.5)' }}>Your Message</label>
                     <Textarea
                       id="message"
                       name="message"
@@ -244,7 +298,12 @@ export function Contact() {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
-                      className="resize-none bg-white/5 border-white/10 focus:border-primary/50 focus:bg-white/10 transition-all backdrop-blur-sm"
+                      className="resize-none rounded-xl"
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        color: '#D7E2EA',
+                      }}
                     />
                   </div>
 
@@ -261,15 +320,18 @@ export function Contact() {
                     </motion.div>
                   )}
 
-                  <Button
+                  <button
                     type="submit"
-                    size="lg"
-                    className="w-full h-14 text-base font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300"
+                    className="w-full h-14 rounded-xl text-base font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+                    style={{
+                      background: 'linear-gradient(180deg, #646973 0%, #BBCCD7 100%)',
+                      color: '#0C0C0C',
+                    }}
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                         Sending...
                       </span>
                     ) : (
@@ -278,7 +340,7 @@ export function Contact() {
                         <Send className="h-4 w-4" />
                       </span>
                     )}
-                  </Button>
+                  </button>
                 </form>
               </div>
             </div>
@@ -287,7 +349,12 @@ export function Contact() {
       </div>
 
       {/* Background Gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-emerald-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(187,204,215,0.03) 0%, transparent 60%)',
+        }}
+      />
     </section>
   )
 }

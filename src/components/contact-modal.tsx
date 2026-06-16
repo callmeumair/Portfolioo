@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, User, Mail, MessageSquare, Send, Sparkles } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
@@ -143,7 +142,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                        className="fixed inset-0 z-50"
+                        style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}
                     />
 
                     {/* Modal */}
@@ -157,14 +157,32 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                             className="relative w-full max-w-md pointer-events-auto"
                         >
                             {/* Glow Effect */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl blur-xl opacity-20" />
+                            <div
+                                className="absolute -inset-1 rounded-3xl blur-xl opacity-15"
+                                style={{ background: 'linear-gradient(180deg, #646973, #BBCCD7)' }}
+                            />
 
                             {/* Modal Content */}
-                            <div className="relative bg-gradient-to-br from-zinc-900 to-black border border-white/10 rounded-3xl p-8 shadow-2xl">
+                            <div
+                                className="relative rounded-3xl p-8"
+                                style={{
+                                    background: 'linear-gradient(135deg, #141414, #0C0C0C)',
+                                    border: '1px solid rgba(255,255,255,0.08)',
+                                }}
+                            >
                                 {/* Close Button */}
                                 <button
                                     onClick={onClose}
-                                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
+                                    className="absolute top-4 right-4 p-2 rounded-full transition-colors"
+                                    style={{ color: 'rgba(215,226,234,0.4)' }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.color = '#D7E2EA'
+                                        e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.color = 'rgba(215,226,234,0.4)'
+                                        e.currentTarget.style.background = 'transparent'
+                                    }}
                                 >
                                     <X className="w-5 h-5" />
                                 </button>
@@ -175,17 +193,21 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                         transition={{ delay: 0.1, type: "spring" }}
-                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-emerald-500/20 mb-4"
+                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
+                                        style={{
+                                            border: '1px solid rgba(187,204,215,0.15)',
+                                            background: 'rgba(187,204,215,0.05)',
+                                        }}
                                     >
-                                        <Sparkles className="w-4 h-4 text-emerald-400" />
-                                        <span className="text-sm text-emerald-300 font-medium">Quick Contact</span>
+                                        <Sparkles className="w-4 h-4" style={{ color: '#BBCCD7' }} />
+                                        <span className="text-sm font-light" style={{ color: '#BBCCD7' }}>Quick Contact</span>
                                     </motion.div>
 
                                     <motion.h2
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.2 }}
-                                        className="text-5xl font-bold mb-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent"
+                                        className="text-5xl font-bold mb-3 text-gradient-accent"
                                     >
                                         Say hi!
                                     </motion.h2>
@@ -193,7 +215,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ delay: 0.3 }}
-                                        className="text-white/60"
+                                        style={{ color: 'rgba(215,226,234,0.5)' }}
+                                        className="font-light"
                                     >
                                         I usually respond within 24 hours.
                                     </motion.p>
@@ -208,7 +231,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         transition={{ delay: 0.4 }}
                                         className="relative"
                                     >
-                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 pointer-events-none z-10">
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10" style={{ color: 'rgba(215,226,234,0.4)' }}>
                                             <User className="w-5 h-5" strokeWidth={2.5} />
                                         </div>
                                         <Input
@@ -218,7 +241,12 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
                                             required
-                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-emerald-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.name ? 'border-red-500/50' : ''}`}
+                                            className={`h-14 pl-12 rounded-2xl ${errors.name ? 'border-red-500/50' : ''}`}
+                                            style={{
+                                                background: 'rgba(255,255,255,0.03)',
+                                                border: `1px solid ${errors.name ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.08)'}`,
+                                                color: '#D7E2EA',
+                                            }}
                                         />
                                         {errors.name && (
                                             <motion.p
@@ -238,7 +266,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         transition={{ delay: 0.5 }}
                                         className="relative"
                                     >
-                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 pointer-events-none z-10">
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10" style={{ color: 'rgba(215,226,234,0.4)' }}>
                                             <Mail className="w-5 h-5" strokeWidth={2.5} />
                                         </div>
                                         <Input
@@ -249,7 +277,12 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
                                             required
-                                            className={`h-14 pl-12 bg-white/5 border-white/10 focus:border-emerald-500/50 rounded-2xl text-white placeholder:text-white/30 ${errors.email ? 'border-red-500/50' : ''}`}
+                                            className={`h-14 pl-12 rounded-2xl ${errors.email ? 'border-red-500/50' : ''}`}
+                                            style={{
+                                                background: 'rgba(255,255,255,0.03)',
+                                                border: `1px solid ${errors.email ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.08)'}`,
+                                                color: '#D7E2EA',
+                                            }}
                                         />
                                         {errors.email && (
                                             <motion.p
@@ -269,7 +302,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         transition={{ delay: 0.6 }}
                                         className="relative"
                                     >
-                                        <div className="absolute left-4 top-4 text-white/70 pointer-events-none z-10">
+                                        <div className="absolute left-4 top-4 pointer-events-none z-10" style={{ color: 'rgba(215,226,234,0.4)' }}>
                                             <MessageSquare className="w-5 h-5" strokeWidth={2.5} />
                                         </div>
                                         <Textarea
@@ -280,7 +313,12 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                             onBlur={handleBlur}
                                             required
                                             rows={5}
-                                            className={`pl-12 pt-4 bg-white/5 border-white/10 focus:border-emerald-500/50 rounded-2xl text-white placeholder:text-white/30 resize-none ${errors.message ? 'border-red-500/50' : ''}`}
+                                            className={`pl-12 pt-4 rounded-2xl resize-none ${errors.message ? 'border-red-500/50' : ''}`}
+                                            style={{
+                                                background: 'rgba(255,255,255,0.03)',
+                                                border: `1px solid ${errors.message ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.08)'}`,
+                                                color: '#D7E2EA',
+                                            }}
                                         />
                                         {errors.message && (
                                             <motion.p
@@ -316,10 +354,14 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.7 }}
                                     >
-                                        <Button
+                                        <button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full h-14 text-base font-semibold bg-white hover:bg-white/90 text-black rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                                            className="w-full h-14 text-base font-semibold rounded-2xl transition-all duration-300 flex items-center justify-center gap-2"
+                                            style={{
+                                                background: 'linear-gradient(180deg, #646973 0%, #BBCCD7 100%)',
+                                                color: '#0C0C0C',
+                                            }}
                                         >
                                             {isSubmitting ? (
                                                 <span className="flex items-center gap-2">
@@ -332,7 +374,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                                     <Send className="w-4 h-4" />
                                                 </span>
                                             )}
-                                        </Button>
+                                        </button>
                                     </motion.div>
                                 </form>
                             </div>

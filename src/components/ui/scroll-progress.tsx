@@ -23,8 +23,8 @@ export function ScrollProgress() {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-amber-500 to-emerald-600 origin-left z-50"
-            style={{ scaleX }}
+            className="fixed top-0 left-0 right-0 h-[2px] origin-left z-50"
+            style={{ scaleX, background: 'linear-gradient(90deg, #646973, #BBCCD7)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.2 }}

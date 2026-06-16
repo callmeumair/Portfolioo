@@ -1,13 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Kanit } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { FloatingContactButton } from "@/components/floating-contact-button";
 import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const kanit = Kanit({
+  variable: "--font-kanit",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -60,7 +62,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#11181C" }, { media: "(prefers-color-scheme: dark)", color: "#ffffff" }],
+  themeColor: "#0C0C0C",
 };
 
 export default function RootLayout({
@@ -69,27 +71,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased custom-scrollbar`}
+        className={`${kanit.variable} ${geistMono.variable} antialiased custom-scrollbar`}
+        style={{ fontFamily: "var(--font-kanit), system-ui, sans-serif" }}
       >
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] bg-primary text-primary-foreground px-3 py-2 rounded-md">Skip to content</a>
-
-        {/* Global Video Background */}
-        <div className="fixed inset-0 -z-50">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/video/19641-304075895_medium.mp4" type="video/mp4" />
-          </video>
-          {/* Theme-aware overlay - lighter in light mode, darker in dark mode */}
-          {/* Using bg-background/80 uses the variable from globals.css which switches between white/black */}
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px]" />
-        </div>
 
         <Script id="ld-json" type="application/ld+json" strategy="afterInteractive">
           {JSON.stringify({
@@ -119,15 +106,8 @@ export default function RootLayout({
             }
           })}
         </Script>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <FloatingContactButton />
-        </ThemeProvider>
+        {children}
+        <FloatingContactButton />
       </body>
     </html>
   );

@@ -1,142 +1,201 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { GradientBlob } from "@/components/ui/gradient-blob"
 
-// Technology icons and data
-const technologies = [
-  { name: "TypeScript", icon: "⚡", color: "from-blue-500 to-blue-600", bgColor: "bg-primary/5" },
-  { name: "React", icon: "⚛️", color: "from-cyan-400 to-cyan-600", bgColor: "bg-primary/5" },
-  { name: "Next.js", icon: "▲", color: "from-white to-gray-300", bgColor: "bg-primary/5" },
-  { name: "Node.js", icon: "🟢", color: "from-green-500 to-green-600", bgColor: "bg-primary/5" },
-  { name: "Tailwind CSS", icon: "🎨", color: "from-cyan-400 to-blue-500", bgColor: "bg-primary/5" },
-  { name: "PostgreSQL", icon: "🐘", color: "from-blue-400 to-blue-600", bgColor: "bg-primary/5" },
-  { name: "MongoDB", icon: "🍃", color: "from-green-500 to-green-700", bgColor: "bg-primary/5" },
-  { name: "Python", icon: "🐍", color: "from-blue-400 to-yellow-500", bgColor: "bg-primary/5" },
-  { name: "Git", icon: "🔧", color: "from-orange-500 to-red-600", bgColor: "bg-primary/5" },
-  { name: "Docker", icon: "🐳", color: "from-blue-400 to-blue-600", bgColor: "bg-primary/5" },
-  { name: "AWS", icon: "☁️", color: "from-orange-400 to-orange-600", bgColor: "bg-primary/5" },
-  { name: "Figma", icon: "🎯", color: "from-purple-400 to-pink-500", bgColor: "bg-primary/5" },
-  { name: "React Native", icon: "📱", color: "from-cyan-400 to-blue-500", bgColor: "bg-primary/5" },
-  { name: "Three.js", icon: "🎮", color: "from-gray-500 to-gray-700", bgColor: "bg-primary/5" },
-  { name: "Framer Motion", icon: "✨", color: "from-purple-500 to-pink-500", bgColor: "bg-primary/5" },
-  { name: "Swift", icon: "🍎", color: "from-orange-500 to-red-500", bgColor: "bg-primary/5" },
-  { name: "GraphQL", icon: "◈", color: "from-pink-500 to-purple-500", bgColor: "bg-primary/5" },
-  { name: "Firebase", icon: "🔥", color: "from-yellow-400 to-orange-600", bgColor: "bg-primary/5" },
+const skillCategories = [
+  {
+    number: "01",
+    title: "Frontend Engineering",
+    description: "Building pixel-perfect, responsive, and performant user interfaces with modern frameworks.",
+    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js"],
+  },
+  {
+    number: "02",
+    title: "AI & Machine Learning",
+    description: "Integrating AI capabilities into products, from LLM-powered features to intelligent automation.",
+    technologies: ["Python", "OpenAI API", "AI/ML", "Swift"],
+  },
+  {
+    number: "03",
+    title: "Mobile Development",
+    description: "Cross-platform mobile applications with native performance and beautiful interfaces.",
+    technologies: ["React Native", "Swift"],
+  },
+  {
+    number: "04",
+    title: "Backend & Databases",
+    description: "Scalable server architecture, API design, and data management systems.",
+    technologies: ["Node.js", "PostgreSQL", "MongoDB", "Firebase", "GraphQL"],
+  },
+  {
+    number: "05",
+    title: "DevOps & Design",
+    description: "Cloud infrastructure, containerization, version control, and product design.",
+    technologies: ["Docker", "AWS", "Git", "Figma"],
+  },
 ]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.215, 0.61, 0.355, 1] as const,
+    },
+  },
+}
 
 export function Skills() {
   return (
     <section id="skills" className="py-32 relative overflow-hidden">
-      {/* Gradient Blobs */}
-      <GradientBlob className="top-1/4 left-0" color="purple" size="xl" />
-      <GradientBlob className="bottom-1/4 right-0" color="pink" size="xl" />
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-20"
+          transition={{ duration: 0.6 }}
+          className="mb-20"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 backdrop-blur-sm border border-primary/20"
+          <h2
+            className="font-bold tracking-tight mb-6 text-gradient-accent"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 1 }}
           >
-            <span className="text-2xl">💻</span>
-            <span className="text-sm font-medium">My Tech Arsenal</span>
-          </motion.div>
-
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/60">
             Technology Stack
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p
+            className="text-lg max-w-xl font-light"
+            style={{ color: 'rgba(215,226,234,0.55)' }}
+          >
             Cutting-edge tools and frameworks I use to build exceptional digital experiences
           </p>
         </motion.div>
 
-        {/* Technology Grid */}
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 md:gap-6">
-            {technologies.map((tech, index) => (
-              <motion.div
-                key={tech.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                  delay: index * 0.03,
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 10
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  y: -8,
-                  transition: { type: "spring", stiffness: 400, damping: 10 }
-                }}
-                className="group relative"
+        {/* Editorial Skill Categories */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {skillCategories.map((category, index) => (
+            <motion.div
+              key={category.number}
+              variants={itemVariants}
+              className="group"
+            >
+              {/* Divider */}
+              {index === 0 && (
+                <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+              )}
+
+              <div
+                className="py-10 md:py-14 grid grid-cols-1 md:grid-cols-[120px_1fr_1fr] gap-6 md:gap-12 items-start transition-all duration-300 group-hover:pl-2"
               >
-                {/* Glow Effect on Hover */}
-                <div className={`absolute -inset-1 bg-gradient-to-r ${tech.color} rounded-2xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500`} />
+                {/* Number */}
+                <span
+                  className="text-gradient-accent font-bold"
+                  style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}
+                >
+                  {category.number}
+                </span>
 
-                {/* Card */}
-                <div className={`relative h-28 md:h-32 rounded-2xl ${tech.bgColor} backdrop-blur-xl border border-white/10 group-hover:border-white/30 transition-all duration-300 flex flex-col items-center justify-center gap-2 overflow-hidden`}>
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Icon */}
-                  <div className="relative text-4xl md:text-5xl transform group-hover:scale-110 transition-transform duration-300">
-                    {tech.icon}
-                  </div>
-
-                  {/* Label */}
-                  <div className={`relative text-xs md:text-sm font-semibold text-center px-2 bg-clip-text text-transparent bg-gradient-to-r ${tech.color} group-hover:scale-105 transition-transform duration-300`}>
-                    {tech.name}
-                  </div>
-
-                  {/* Shimmer Effect */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                {/* Title + Description */}
+                <div>
+                  <h3
+                    className="font-semibold tracking-tight mb-2"
+                    style={{
+                      fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)',
+                      color: '#D7E2EA',
+                    }}
+                  >
+                    {category.title}
+                  </h3>
+                  <p
+                    className="font-light leading-relaxed"
+                    style={{ color: 'rgba(215,226,234,0.5)' }}
+                  >
+                    {category.description}
+                  </p>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
 
-        {/* Stats or Additional Info */}
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-2 md:justify-end">
+                  {category.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1.5 rounded-full text-xs font-light tracking-wide transition-all duration-300"
+                      style={{
+                        border: '1px solid rgba(255,255,255,0.06)',
+                        color: 'rgba(215,226,234,0.5)',
+                        background: 'rgba(255,255,255,0.02)',
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-20 text-center"
+          transition={{ delay: 0.4 }}
+          className="mt-20"
         >
-          <div className="inline-flex items-center gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10">
+          <div
+            className="inline-flex items-center gap-8 md:gap-12 px-8 py-5 rounded-2xl"
+            style={{
+              background: 'rgba(22,22,22,0.6)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              backdropFilter: 'blur(12px)',
+            }}
+          >
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">18+</div>
-              <div className="text-sm text-muted-foreground mt-1">Technologies</div>
+              <div className="text-3xl font-bold text-gradient-accent">18+</div>
+              <div className="text-sm font-light mt-1" style={{ color: 'rgba(215,226,234,0.45)' }}>Technologies</div>
             </div>
-            <div className="w-px h-12 bg-white/10" />
+            <div style={{ width: '1px', height: '48px', background: 'rgba(255,255,255,0.08)' }} />
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">5+</div>
-              <div className="text-sm text-muted-foreground mt-1">Years Experience</div>
+              <div className="text-3xl font-bold text-gradient-accent">5+</div>
+              <div className="text-sm font-light mt-1" style={{ color: 'rgba(215,226,234,0.45)' }}>Years Experience</div>
             </div>
-            <div className="w-px h-12 bg-white/10" />
+            <div style={{ width: '1px', height: '48px', background: 'rgba(255,255,255,0.08)' }} />
             <div className="text-center">
-              <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">50+</div>
-              <div className="text-sm text-muted-foreground mt-1">Projects Built</div>
+              <div className="text-3xl font-bold text-gradient-accent">50+</div>
+              <div className="text-sm font-light mt-1" style={{ color: 'rgba(215,226,234,0.45)' }}>Projects Built</div>
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Background Gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-emerald-500/5 blur-[150px] rounded-full pointer-events-none" />
+      {/* Ambient Background */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(187,204,215,0.03) 0%, transparent 60%)',
+        }}
+      />
     </section>
   )
 }

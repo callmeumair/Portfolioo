@@ -56,7 +56,8 @@ export function MagneticButton({ children, className = "", onClick }: MagneticBu
             {children}
             {isHovered && (
                 <motion.span
-                    className="absolute inset-0 rounded-full bg-primary/20 blur-xl -z-10"
+                    className="absolute inset-0 rounded-full blur-xl -z-10"
+                    style={{ background: 'rgba(187, 204, 215, 0.12)' }}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1.2 }}
                     exit={{ opacity: 0, scale: 0.8 }}

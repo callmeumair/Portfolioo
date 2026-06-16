@@ -4,21 +4,21 @@ import { motion } from "framer-motion"
 
 interface GradientBlobProps {
     className?: string
-    color?: "purple" | "pink" | "blue"
+    color?: "steel" | "silver" | "muted"
     size?: "sm" | "md" | "lg" | "xl"
     animate?: boolean
 }
 
 export function GradientBlob({
     className = "",
-    color = "purple",
+    color = "steel",
     size = "md",
     animate = true
 }: GradientBlobProps) {
     const colors = {
-        purple: "from-purple-500/30 via-purple-600/20 to-purple-700/10",
-        pink: "from-pink-500/30 via-pink-600/20 to-pink-700/10",
-        blue: "from-blue-500/30 via-blue-600/20 to-blue-700/10",
+        steel: "from-[#646973]/20 via-[#646973]/10 to-[#646973]/5",
+        silver: "from-[#BBCCD7]/15 via-[#BBCCD7]/8 to-[#BBCCD7]/3",
+        muted: "from-white/5 via-white/3 to-transparent",
     }
 
     const sizes = {
@@ -30,14 +30,13 @@ export function GradientBlob({
 
     return (
         <motion.div
-            className={`absolute rounded-full bg-gradient-to-br ${colors[color]} ${sizes[size]} blur-3xl opacity-50 ${className}`}
+            className={`absolute rounded-full bg-gradient-to-br ${colors[color]} ${sizes[size]} blur-3xl opacity-50 pointer-events-none ${className}`}
             animate={animate ? {
-                scale: [1, 1.2, 1],
+                scale: [1, 1.15, 1],
                 opacity: [0.3, 0.5, 0.3],
-                rotate: [0, 90, 0],
             } : {}}
             transition={{
-                duration: 10,
+                duration: 12,
                 repeat: Infinity,
                 ease: "easeInOut",
             }}
