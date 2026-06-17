@@ -119,24 +119,6 @@ export function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <p className="font-light">© {currentYear} Umer Patel. All rights reserved.</p>
-          <div className="flex gap-8">
-            <a
-              href="#"
-              className="font-light transition-colors hover:underline underline-offset-4"
-              onMouseEnter={(e) => e.currentTarget.style.color = '#D7E2EA'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(215,226,234,0.4)'}
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="font-light transition-colors hover:underline underline-offset-4"
-              onMouseEnter={(e) => e.currentTarget.style.color = '#D7E2EA'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(215,226,234,0.4)'}
-            >
-              Terms of Service
-            </a>
-          </div>
         </motion.div>
       </div>
 
