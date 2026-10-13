@@ -5,33 +5,33 @@ import { motion } from "framer-motion"
 const skillCategories = [
   {
     number: "01",
-    title: "Frontend Engineering",
-    description: "Building pixel-perfect, responsive, and performant user interfaces with modern frameworks.",
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js"],
+    title: "Scientific Computing",
+    description: "Numerical modeling, data reduction, simulation workflows, and reproducible computational benchmark tasks.",
+    technologies: ["Python", "NumPy", "Numerical Modeling", "Data Reduction", "Simulation Workflows", "Linux Terminal", "Docker"],
   },
   {
     number: "02",
-    title: "AI & Machine Learning",
-    description: "Integrating AI capabilities into products, from LLM-powered features to intelligent automation.",
-    technologies: ["Python", "OpenAI API", "AI/ML", "Swift"],
+    title: "AI & Model Evaluation",
+    description: "Evaluating frontier LLMs and coding agents, RLHF data labeling, rubric-based grading, and red-teaming.",
+    technologies: ["LLM Evaluation", "RLHF / SFT", "Rubric Grading", "Red-Teaming", "Prompt Engineering", "Coding Agents", "LangChain"],
   },
   {
     number: "03",
-    title: "Mobile Development",
-    description: "Cross-platform mobile applications with native performance and beautiful interfaces.",
-    technologies: ["React Native", "Swift"],
+    title: "iOS Development",
+    description: "Building and shipping native iOS applications with modern MVVM architecture to the App Store.",
+    technologies: ["Swift", "SwiftUI", "MVVM", "Mapbox", "Firebase", "Push Notifications", "REST APIs", "App Store Deployment"],
   },
   {
     number: "04",
-    title: "Backend & Databases",
-    description: "Scalable server architecture, API design, and data management systems.",
-    technologies: ["Node.js", "PostgreSQL", "MongoDB", "Firebase", "GraphQL"],
+    title: "Web & Backend Architecture",
+    description: "High-performance full-stack web applications, REST/FastAPI endpoints, and robust database architectures.",
+    technologies: ["Next.js", "React", "TypeScript", "Node.js", "FastAPI", "Tailwind CSS", "Prisma", "PostgreSQL", "MongoDB"],
   },
   {
     number: "05",
-    title: "DevOps & Design",
-    description: "Cloud infrastructure, containerization, version control, and product design.",
-    technologies: ["Docker", "AWS", "Git", "Figma"],
+    title: "Tools & Testing",
+    description: "Reliable verification pipelines, containerization, automated testing, and continuous delivery.",
+    technologies: ["Git", "GitHub", "CI/CD", "Docker", "Vercel", "Jest", "Playwright", "Postman"],
   },
 ]
 

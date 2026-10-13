@@ -1,13 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Code, Lightbulb, Flag, Monitor, Users, Zap } from "lucide-react"
+import { Code, Lightbulb, Flag, Monitor, Users, Zap, Terminal, Sparkles } from "lucide-react"
 
 const stats = [
   { label: "Experience", value: "3+", suffix: "Years", icon: Flag },
   { label: "Projects", value: "50", suffix: "+", icon: Code },
+  { label: "Academic GPA", value: "9.0", suffix: "/10", icon: Sparkles },
   { label: "Commits", value: "2k", suffix: "+", icon: Zap },
-  { label: "Satisfied Clients", value: "25", suffix: "+", icon: Users },
 ]
 
 const charRevealVariants = {
@@ -87,17 +87,17 @@ export function About() {
               className="text-2xl font-semibold"
               style={{ color: '#D7E2EA' }}
             >
-              Driven by curiosity, fueled by coffee.
+              Scientific rigor meets AI-native software engineering.
             </h3>
             <div className="space-y-5 font-light leading-relaxed" style={{ color: 'rgba(215,226,234,0.6)' }}>
               <p>
-                <CharReveal text="My journey into tech started with a simple website edit and evolved into a full-blown obsession with building scalable web applications. I love solving complex problems and turning abstract ideas into functional, beautiful software." />
+                <CharReveal text="I specialize in building terminal-based scientific computing benchmarks, evaluating frontier AI models and coding agents, and shipping production-ready web and native iOS applications." />
               </p>
               <p>
-                <CharReveal text="I specialize in the functionality of the MERN stack and Next.js, but I'm always exploring new tools. I believe in writing code that is not only functional but also clean, maintainable, and accessible." />
+                <CharReveal text="With deep hands-on expertise in Python numerical modeling, RLHF/SFT evaluation pipelines, and modern full-stack architectures (Next.js, TypeScript, Swift/SwiftUI), I focus on deterministic correctness, verifiable difficulty, and scalable performance." />
               </p>
               <p>
-                <CharReveal text="When I'm not coding, you'll find me exploring the latest in AI, contributing to open source, or gaming." />
+                <CharReveal text="Daily practitioner of Claude Code, Cursor, Windsurf, GitHub Copilot, and OpenAI Codex — bridging bleeding-edge AI evaluation with real-world engineering." />
               </p>
             </div>
 
@@ -110,9 +110,9 @@ export function About() {
                     color: '#BBCCD7',
                   }}
                 >
-                  <Monitor className="h-5 w-5" />
+                  <Terminal className="h-5 w-5" />
                 </div>
-                <span className="font-medium" style={{ color: '#D7E2EA' }}>Web Development</span>
+                <span className="font-medium" style={{ color: '#D7E2EA' }}>Scientific Computing</span>
               </div>
               <div className="flex items-center gap-3">
                 <div
@@ -122,9 +122,9 @@ export function About() {
                     color: '#BBCCD7',
                   }}
                 >
-                  <Lightbulb className="h-5 w-5" />
+                  <Sparkles className="h-5 w-5" />
                 </div>
-                <span className="font-medium" style={{ color: '#D7E2EA' }}>Problem Solving</span>
+                <span className="font-medium" style={{ color: '#D7E2EA' }}>AI Model Evaluation</span>
               </div>
             </div>
           </motion.div>

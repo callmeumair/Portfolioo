@@ -133,7 +133,7 @@ export function Hero() {
             className="text-gradient-accent font-medium tracking-[0.2em] uppercase mb-8"
             style={{ fontSize: 'clamp(0.875rem, 2vw, 1.25rem)' }}
           >
-            AI Product Engineer
+            Scientific Computing &amp; AI-Native Software Engineer
           </motion.p>
 
           {/* Description */}
@@ -144,7 +144,7 @@ export function Hero() {
             className="text-lg md:text-xl max-w-2xl leading-relaxed mb-12 font-light"
             style={{ color: 'rgba(215,226,234,0.65)' }}
           >
-            Full Stack Developer specializing in building accessible, performant, and scalable web applications requiring creative solutions.
+            Scientific computing expert and AI-native iOS/full-stack engineer with a shipped App Store application. Building terminal-based benchmarks for Turing, and evaluating frontier AI models &amp; coding agents for Handshake AI and Mercor.
           </motion.p>
 
           {/* CTA Buttons — MotionSites Pill Style */}

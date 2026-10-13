@@ -18,10 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://umerpatel1.vercel.app"),
-  title: "Umer Patel - Full Stack Developer",
-  description: "Portfolio of Umer Patel, a passionate full-stack developer specializing in modern web technologies and creating innovative digital solutions.",
-  keywords: ["Umer Patel", "Full Stack Developer", "Web Developer", "React", "Next.js", "TypeScript", "Portfolio"],
+  metadataBase: new URL("https://umerpatel.vercel.app"),
+  title: "Umer Patel - Scientific Computing & AI-Native Software Engineer",
+  description: "Portfolio of Umer Patel, Scientific Computing Expert & AI-Native Software Engineer. Shipped App Store iOS apps, AI benchmark authoring, and evaluation for frontier LLMs.",
+  keywords: ["Umer Patel", "Scientific Computing", "AI Engineer", "Terminal Bench", "TB-Science", "SwiftUI", "iOS Developer", "Next.js", "Python", "RLHF Evaluation", "Portfolio"],
   authors: [{ name: "Umer Patel" }],
   creator: "Umer Patel",
   alternates: {
@@ -33,23 +33,23 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://umerpatel1.vercel.app",
-    title: "Umer Patel - Full Stack Developer",
-    description: "Portfolio of Umer Patel, a passionate full-stack developer specializing in modern web technologies.",
+    url: "https://umerpatel.vercel.app",
+    title: "Umer Patel - Scientific Computing & AI-Native Software Engineer",
+    description: "Portfolio of Umer Patel, Scientific Computing Expert & AI-Native Software Engineer.",
     siteName: "Umer Patel Portfolio",
     images: [
       {
         url: "/profile.jpg",
         width: 1200,
         height: 630,
-        alt: "Umer Patel - Full Stack Developer",
+        alt: "Umer Patel - Scientific Computing & AI-Native Software Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Umer Patel - Full Stack Developer",
-    description: "Portfolio of Umer Patel, a passionate full-stack developer specializing in modern web technologies.",
+    title: "Umer Patel - Scientific Computing & AI-Native Software Engineer",
+    description: "Portfolio of Umer Patel, Scientific Computing Expert & AI-Native Software Engineer.",
     images: ["/profile.jpg"],
   },
   robots: {
@@ -83,9 +83,9 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "Person",
             name: "Umer Patel",
-            url: "https://umerpatel1.vercel.app",
-            image: "https://umerpatel1.vercel.app/profile.jpg",
-            jobTitle: "Full Stack Developer",
+            url: "https://umerpatel.vercel.app",
+            image: "https://umerpatel.vercel.app/profile.jpg",
+            jobTitle: "Scientific Computing & AI-Native Software Engineer",
             sameAs: [
               "https://github.com/callmeumair",
               "https://www.linkedin.com/in/umerpatel",
@@ -98,10 +98,10 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: "Umer Patel Portfolio",
-            url: "https://umerpatel1.vercel.app",
+            url: "https://umerpatel.vercel.app",
             potentialAction: {
               "@type": "SearchAction",
-              target: "https://umerpatel1.vercel.app/?q={search_term_string}",
+              target: "https://umerpatel.vercel.app/?q={search_term_string}",
               "query-input": "required name=search_term_string"
             }
           })}
